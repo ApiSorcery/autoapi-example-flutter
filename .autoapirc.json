@@ -2,7 +2,7 @@
   "application": {
     "name": "产品管理平台",
     "language": "dart",
-    "outputDir": "./lib/api/auto"
+    "outputDir": "./lib/apis/auto"
   },
   "servers": [
     {
@@ -11,7 +11,7 @@
       "token": "682db637-0f31-4847-9cdf-3232432dfsfd",
       "version": 3,
       "enabled": true,
-      "source": "./lib/api/swagger/product.json",
+      "source": "./lib/apis/swagger/product.json",
       "returnLevel": "second",
       "returnSecondField": "data",
       "tagNameMap": {
