@@ -1,0 +1,26 @@
+{
+  "application": {
+    "name": "产品管理平台",
+    "language": "dart",
+    "outputDir": "./lib/api/auto"
+  },
+  "servers": [
+    {
+      "code":"product",
+      "name": "产品后台服务",
+      "token": "682db637-0f31-4847-9cdf-3232432dfsfd",
+      "version": 3,
+      "enabled": true,
+      "source": "./lib/api/swagger/product.json",
+      "returnLevel": "second",
+      "returnSecondField": "data",
+      "tagNameMap": {
+        "用户管理": "User",
+        "用户认证": "Auth",
+        "应用管理": "Application",
+        "服务管理": "Server",
+        "统计管理": "Report"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1642 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/user": {
+            "get": {
+                "operationId": "getUserInfo",
+                "summary": "获取用户信息",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/UserInfoResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            },
+            "post": {
+                "operationId": "addUser",
+                "summary": "新增用户",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            },
+            "patch": {
+                "operationId": "modifyUser",
+                "summary": "修改用户信息",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            }
+        },
+        "/user/validateNickName": {
+            "get": {
+                "operationId": "validateNickName",
+                "summary": "校验用户昵称是否存在",
+                "parameters": [
+                    {
+                        "name": "nickName",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            }
+        },
+        "/user/validateEmail": {
+            "get": {
+                "operationId": "validateEmail",
+                "summary": "校验用户邮箱是否存在",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/UserInfoResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            }
+        },
+        "/user/{id}": {
+            "delete": {
+                "operationId": "removeUser",
+                "summary": "删除用户",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户管理"
+                ]
+            }
+        },
+        "/auth/signIn": {
+            "post": {
+                "operationId": "authSignIn",
+                "summary": "用户登录",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignInRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/SignInResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/auth/signUp": {
+            "post": {
+                "operationId": "authSignUp",
+                "summary": "新增用户",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SignUpRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/auth/modifyPassword": {
+            "post": {
+                "operationId": "modifyPassword",
+                "summary": "修改密码",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ModifyPasswordRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/auth/sendEmailCaptcha": {
+            "post": {
+                "operationId": "sendEmailCaptcha",
+                "summary": "发送邮箱验证码",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendEmailCaptchaRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/auth/findPassword": {
+            "post": {
+                "operationId": "findPassword",
+                "summary": "找回密码",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FindPasswordRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/auth/captcha": {
+            "get": {
+                "operationId": "generateCaptcha",
+                "summary": "生成验证码",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ImageCaptchaResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "用户认证"
+                ]
+            }
+        },
+        "/application/list": {
+            "get": {
+                "operationId": "getApplicationList",
+                "summary": "获取应用列表（所有）",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/ApplicationResponseDto"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            }
+        },
+        "/application/paged": {
+            "post": {
+                "operationId": "getApplicationPaged",
+                "summary": "获取应用列表（分页）",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApplicationQueryRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "results": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/components/schemas/ApplicationResponseDto"
+                                                            }
+                                                        },
+                                                        "total": {
+                                                            "type": "number",
+                                                            "default": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            }
+        },
+        "/application/{id}": {
+            "get": {
+                "operationId": "getApplicationInfo",
+                "summary": "获取应用详情",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ApplicationResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            },
+            "delete": {
+                "operationId": "removeApplication",
+                "summary": "删除应用",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            }
+        },
+        "/application": {
+            "post": {
+                "operationId": "addApplication",
+                "summary": "新增应用",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApplicationAddRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            },
+            "patch": {
+                "operationId": "modifyApplication",
+                "summary": "修改应用",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ApplicationEditRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "应用管理"
+                ]
+            }
+        },
+        "/server/list": {
+            "get": {
+                "operationId": "getServerList",
+                "summary": "获取应用列表（所有）",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/ServerResponseDto"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            }
+        },
+        "/server/paged": {
+            "post": {
+                "operationId": "getServerPaged",
+                "summary": "获取服务列表（分页）",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServerQueryRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "results": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/components/schemas/ServerResponseDto"
+                                                            }
+                                                        },
+                                                        "total": {
+                                                            "type": "number",
+                                                            "default": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            }
+        },
+        "/server/{id}": {
+            "get": {
+                "operationId": "getServerInfo",
+                "summary": "获取服务详情",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ServerResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            },
+            "delete": {
+                "operationId": "removeServer",
+                "summary": "删除服务",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            }
+        },
+        "/server": {
+            "post": {
+                "operationId": "addServer",
+                "summary": "新增服务",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServerAddRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            },
+            "patch": {
+                "operationId": "modifyServer",
+                "summary": "修改服务",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServerEditRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "null",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "服务管理"
+                ]
+            }
+        },
+        "/report/day": {
+            "post": {
+                "operationId": "getReportDay",
+                "summary": "获取按日统计数据",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportQueryRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ReportResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "统计管理"
+                ]
+            }
+        },
+        "/report/hour": {
+            "post": {
+                "operationId": "getReportHour",
+                "summary": "获取按小时统计数据",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportQueryRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ReportResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "统计管理"
+                ]
+            }
+        },
+        "/report/minute": {
+            "post": {
+                "operationId": "getReportMinute",
+                "summary": "获取按分钟统计数据",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReportQueryRequestDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ResultData"
+                                        },
+                                        {
+                                            "properties": {
+                                                "data": {
+                                                    "$ref": "#/components/schemas/ReportResponseDto"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "统计管理"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Product-Back-Api",
+        "description": "Product-Back-Api 接口文档",
+        "version": "1.0.0",
+        "contact": {}
+    },
+    "tags": [
+        {
+            "name": "用户管理",
+            "description": ""
+        },
+        {
+            "name": "用户认证",
+            "description": ""
+        },
+        {
+            "name": "应用管理",
+            "description": ""
+        },
+        {
+            "name": "服务管理",
+            "description": ""
+        },
+        {
+            "name": "统计管理",
+            "description": ""
+        }
+    ],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
+        "schemas": {
+            "ResultData": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "number",
+                        "default": 0,
+                        "description": "状态码"
+                    },
+                    "message": {
+                        "type": "string",
+                        "default": "OK",
+                        "description": "状态描述"
+                    },
+                    "data": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "status",
+                    "message",
+                    "data"
+                ]
+            },
+            "UserInfoResponseDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "用户ID"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "用户邮箱"
+                    },
+                    "nickName": {
+                        "type": "string",
+                        "description": "用户昵称"
+                    },
+                    "userName": {
+                        "type": "string",
+                        "description": "用户名称"
+                    }
+                },
+                "required": [
+                    "id",
+                    "email",
+                    "nickName",
+                    "userName"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {}
+            },
+            "SignInResponseDto": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "description": "登录令牌"
+                    }
+                },
+                "required": [
+                    "token"
+                ]
+            },
+            "SignInRequestDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "用户邮箱"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "登录密码"
+                    },
+                    "bindKey": {
+                        "type": "string",
+                        "description": "验证码绑定键"
+                    },
+                    "captcha": {
+                        "type": "string",
+                        "description": "验证码"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password",
+                    "bindKey",
+                    "captcha"
+                ]
+            },
+            "SignUpRequestDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "邮箱"
+                    },
+                    "captcha": {
+                        "type": "number",
+                        "description": "验证码"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "密码"
+                    }
+                },
+                "required": [
+                    "email",
+                    "captcha",
+                    "password"
+                ]
+            },
+            "ModifyPasswordRequestDto": {
+                "type": "object",
+                "properties": {
+                    "oldPassword": {
+                        "type": "string",
+                        "description": "原始密码"
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "description": "新密码"
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "description": "确认密码"
+                    }
+                },
+                "required": [
+                    "oldPassword",
+                    "newPassword",
+                    "confirmPassword"
+                ]
+            },
+            "SendEmailCaptchaRequestDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "邮箱"
+                    }
+                },
+                "required": [
+                    "email"
+                ]
+            },
+            "FindPasswordRequestDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "邮箱"
+                    },
+                    "captcha": {
+                        "type": "number",
+                        "description": "验证码"
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "description": "新密码"
+                    }
+                },
+                "required": [
+                    "email",
+                    "captcha",
+                    "newPassword"
+                ]
+            },
+            "ImageCaptchaResponseDto": {
+                "type": "object",
+                "properties": {
+                    "bindKey": {
+                        "type": "string",
+                        "description": "验证码绑定键"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "验证码SVG图片"
+                    }
+                },
+                "required": [
+                    "bindKey",
+                    "image"
+                ]
+            },
+            "Application": {
+                "type": "object",
+                "properties": {}
+            },
+            "ApplicationResponseDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "应用名称"
+                    },
+                    "createdAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "创建时间"
+                    },
+                    "updatedAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "修改时间"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            },
+            "Pagination": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "type": "number",
+                        "description": "页码"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "description": "每页数量"
+                    },
+                    "sortBy": {
+                        "type": "string",
+                        "description": "排序字段"
+                    },
+                    "order": {
+                        "type": "string",
+                        "description": "排序方式"
+                    }
+                }
+            },
+            "ApplicationQueryRequestDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "应用名称"
+                    },
+                    "pagination": {
+                        "description": "分页信息",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Pagination"
+                            }
+                        ]
+                    }
+                }
+            },
+            "ApplicationAddRequestDto": {
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "number",
+                        "description": "产品ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "应用名称"
+                    }
+                },
+                "required": [
+                    "productId",
+                    "name"
+                ]
+            },
+            "ApplicationEditRequestDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "应用名称"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "Server": {
+                "type": "object",
+                "properties": {}
+            },
+            "ServerResponseDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "服务ID"
+                    },
+                    "applicationId": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "productId": {
+                        "type": "number",
+                        "description": "产品ID"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "服务令牌"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "服务编号"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "服务名称"
+                    },
+                    "createdAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "创建时间"
+                    },
+                    "updatedAt": {
+                        "format": "date-time",
+                        "type": "string",
+                        "description": "修改时间"
+                    }
+                },
+                "required": [
+                    "id",
+                    "applicationId",
+                    "productId",
+                    "code",
+                    "name",
+                    "createdAt",
+                    "updatedAt"
+                ]
+            },
+            "ServerQueryRequestDto": {
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "服务名称"
+                    },
+                    "pagination": {
+                        "description": "分页信息",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Pagination"
+                            }
+                        ]
+                    }
+                }
+            },
+            "ServerAddRequestDto": {
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "number",
+                        "description": "产品ID"
+                    },
+                    "applicationId": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "服务编号"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "服务名称"
+                    }
+                },
+                "required": [
+                    "productId",
+                    "applicationId",
+                    "code",
+                    "name"
+                ]
+            },
+            "ServerEditRequestDto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "服务ID"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "服务编号"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "服务名称"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            },
+            "ReportResponseDto": {
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "description": "统计结果",
+                        "example": [
+                            [
+                                "2021-01-01",
+                                100
+                            ],
+                            [
+                                "2021-01-02",
+                                200
+                            ]
+                        ],
+                        "items": {
+                            "type": "array"
+                        },
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "results"
+                ]
+            },
+            "ReportQueryRequestDto": {
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "type": "number",
+                        "description": "应用ID"
+                    },
+                    "serverId": {
+                        "type": "number",
+                        "description": "服务ID"
+                    },
+                    "startTime": {
+                        "type": "string",
+                        "description": "开始时间"
+                    },
+                    "endTime": {
+                        "type": "string",
+                        "description": "结束时间"
+                    }
+                },
+                "required": [
+                    "startTime",
+                    "endTime"
+                ]
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Json文档",
+        "url": "/swagger-json"
+    }
+}
