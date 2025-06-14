@@ -1,17 +1,17 @@
 {
   "application": {
-    "name": "产品管理平台",
+    "name": "示例应用",
     "language": "dart",
     "outputDir": "./lib/apis/auto"
   },
   "servers": [
     {
-      "code":"product",
-      "name": "产品后台服务",
-      "token": "682db637-0f31-4847-9cdf-3232432dfsfd",
+      "code": "demo",
+      "name": "示例服务",
+      "token": "72735b33815c4e5c9c2a924a8f4907ef",
       "version": 3,
       "enabled": true,
-      "source": "./lib/apis/swagger/product.json",
+      "source": "./lib/apis/swagger/demo.json",
       "returnLevel": "second",
       "returnSecondField": "data",
       "tagNameMap": {
