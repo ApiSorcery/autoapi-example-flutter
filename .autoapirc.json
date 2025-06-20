@@ -11,15 +11,13 @@
       "token": "72735b33815c4e5c9c2a924a8f4907ef",
       "version": 3,
       "enabled": true,
-      "source": "./lib/apis/swagger/demo.json",
+      "source": "http://150.158.52.214:9015/swagger-json",
       "returnLevel": "second",
       "returnSecondField": "data",
       "tagNameMap": {
         "用户管理": "User",
         "用户认证": "Auth",
-        "应用管理": "Application",
-        "服务管理": "Server",
-        "统计管理": "Report"
+        "文件管理": "File"
       }
     }
   ]

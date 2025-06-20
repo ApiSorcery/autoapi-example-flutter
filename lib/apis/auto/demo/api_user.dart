@@ -14,13 +14,43 @@ class ApiUser {
     return response.data;
   }
 
-  /// 获取用户信息
-  static Future<UserInfoResponseDto> getUserInfo() async {
+  /// 批量导出用户（Excel）
+  static Future<BlobResp?> exportUsers(ExportUsersRequest req) async {
+    var response = await createBlobRequest(
+      url: '/user/export',
+      method: 'GET',
+      queryParameters: {'code': req.code,'name': req.name,'email': req.email},
+    );
+    return response.data;
+  }
+
+  /// 获取登录用户信息
+  static Future<UserInfoResponseDto> getLoginUserInfo() async {
     var response = await createNoParamsJsonRequest(
-      url: '/user',
+      url: '/user/info',
       method: 'GET'
     );
     return UserInfoResponseDto.fromJson(response.data);
+  }
+
+  /// 获取单个用户
+  static Future<User> getUserOne(GetUserOneRequest req) async {
+    var response = await createJsonRequest(
+      url: '/user/${req.id}',
+      method: 'GET',
+    );
+    return User.fromJson(response.data);
+  }
+
+  /// 分页查询用户列表
+  static Future<GetUserPageResponse> getUserPage(UserPageQueryDto req) async {
+    var response = await createJsonRequest(
+      url: '/user/paged',
+      method: 'POST',
+      contentType: 'application/json',
+      data: req.toJson()
+    );
+    return GetUserPageResponse.fromJson(response.data);
   }
 
   /// 修改用户信息
@@ -39,6 +69,16 @@ class ApiUser {
     );
   }
 
+  /// 校验用户编号是否存在
+  static Future<bool> validateCode(ValidateCodeRequest req) async {
+    var response = await createJsonRequest(
+      url: '/user/validateCode',
+      method: 'GET',
+      queryParameters: {'code': req.code},
+    );
+    return response.data;
+  }
+
   /// 校验用户邮箱是否存在
   static Future<UserInfoResponseDto> validateEmail(ValidateEmailRequest req) async {
     var response = await createJsonRequest(
@@ -47,16 +87,6 @@ class ApiUser {
       queryParameters: {'email': req.email},
     );
     return UserInfoResponseDto.fromJson(response.data);
-  }
-
-  /// 校验用户昵称是否存在
-  static Future<bool> validateNickName(ValidateNickNameRequest req) async {
-    var response = await createJsonRequest(
-      url: '/user/validateNickName',
-      method: 'GET',
-      queryParameters: {'nickName': req.nickName},
-    );
-    return response.data;
   }
 
 }
