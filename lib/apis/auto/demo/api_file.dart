@@ -1,6 +1,6 @@
+import 'package:dio/dio.dart';
 import 'base.dart';
 import 'model.dart';
-import 'package:dio/dio.dart';
 
 /// 文件管理
 class ApiFile {
@@ -22,11 +22,12 @@ class ApiFile {
   }
 
   /// 上传文件
-  static Future<String> uploadFile(MultipartFile req) async {
-    var response = await createMultipartRequest(
+  static Future<String> uploadFile(UploadFileRequest req, {ProgressCallback? onSendProgress}) async {
+    var response = await createUploadRequest(
       url: '/file/upload',
       method: 'POST',
-      data: {'file': req}
+      data: req.toFormData(),
+      onSendProgress: onSendProgress,
     );
     return response.data;
   }

@@ -16,7 +16,7 @@ class ApiUser {
 
   /// 批量导出用户（Excel）
   static Future<BlobResp?> exportUsers(ExportUsersRequest req) async {
-    var response = await createBlobRequest(
+    var response = await createDownloadRequest(
       url: '/user/export',
       method: 'GET',
       queryParameters: {'code': req.code,'name': req.name,'email': req.email},

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:typed_data';
 
@@ -6,6 +7,11 @@ part 'model.g.dart';
 /// 报文基类
 class TBase extends Object {
   Map<String, dynamic> toJson() => {};
+}
+
+/// FormData基类
+class TFormData extends Object {
+  FormData toFormData() => FormData.fromMap({});
 }
 
 /// 二进制数据返回类型
@@ -122,7 +128,24 @@ class GetFileRequest extends TBase {
   Map<String, dynamic> toJson() => _$GetFileRequestToJson(this);
 }
 
-/// 分页查询用户列表请求参数
+/// 上传文件请求参数
+class UploadFileRequest extends TFormData {
+  MultipartFile? file;
+
+  String? description;
+
+  UploadFileRequest(this.file,this.description);
+
+  @override
+  FormData toFormData() {
+    return FormData.fromMap({
+      'file': file,
+      'description': description,
+    });
+  }
+}
+
+/// 分页查询用户列表响应参数
 @JsonSerializable()
 class GetUserPageResponse extends TBase {
   @JsonKey(name: 'results')

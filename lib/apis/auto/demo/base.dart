@@ -26,7 +26,7 @@ Future<Response> createNoParamsJsonRequest({
   return dioClient.request(url, options: Options(method: method));
 }
 
-Future<Response<BlobResp>> createBlobRequest({
+Future<Response<BlobResp>> createDownloadRequest({
   required String url,
   required String method,
   String contentType = 'application/json',
@@ -40,7 +40,7 @@ Future<Response<BlobResp>> createBlobRequest({
       data: data);
 }
 
-Future<Response<BlobResp>> createNoParamsBlobRequest({
+Future<Response<BlobResp>> createNoParamsDownloadRequest({
   required String url,
   required String method,
 }) async {
@@ -48,15 +48,17 @@ Future<Response<BlobResp>> createNoParamsBlobRequest({
   return dioClient.request(url, options: Options(method: method));
 }
 
-Future<Response> createMultipartRequest({
+Future<Response> createUploadRequest({
   required String url,
   required String method,
   Map<String, dynamic>? queryParameters,
-  Map<String, MultipartFile>? data,
+  FormData? data,
+  ProgressCallback? onSendProgress,
 }) async {
   var dioClient = await DioJsonClient.getInstance();
   return dioClient.request(url,
       options: Options(method: method, contentType: 'multipart/form-data'),
       queryParameters: queryParameters,
-      data: FormData.fromMap(data ?? {}));
+      data: data ?? FormData.fromMap({}),
+      onSendProgress: onSendProgress);
 }
