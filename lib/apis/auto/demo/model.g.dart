@@ -8,9 +8,9 @@ part of 'model.dart';
 
 ExportUsersRequest _$ExportUsersRequestFromJson(Map<String, dynamic> json) =>
     ExportUsersRequest(
-      json['code'] as String,
-      json['name'] as String,
-      json['email'] as String,
+      code: json['code'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
     );
 
 Map<String, dynamic> _$ExportUsersRequestToJson(ExportUsersRequest instance) =>
@@ -22,7 +22,7 @@ Map<String, dynamic> _$ExportUsersRequestToJson(ExportUsersRequest instance) =>
 
 GetUserOneRequest _$GetUserOneRequestFromJson(Map<String, dynamic> json) =>
     GetUserOneRequest(
-      json['id'] as String,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$GetUserOneRequestToJson(GetUserOneRequest instance) =>
@@ -32,7 +32,7 @@ Map<String, dynamic> _$GetUserOneRequestToJson(GetUserOneRequest instance) =>
 
 RemoveUserRequest _$RemoveUserRequestFromJson(Map<String, dynamic> json) =>
     RemoveUserRequest(
-      (json['id'] as num).toDouble(),
+      id: (json['id'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$RemoveUserRequestToJson(RemoveUserRequest instance) =>
@@ -42,7 +42,7 @@ Map<String, dynamic> _$RemoveUserRequestToJson(RemoveUserRequest instance) =>
 
 ValidateCodeRequest _$ValidateCodeRequestFromJson(Map<String, dynamic> json) =>
     ValidateCodeRequest(
-      json['code'] as String,
+      code: json['code'] as String,
     );
 
 Map<String, dynamic> _$ValidateCodeRequestToJson(
@@ -54,7 +54,7 @@ Map<String, dynamic> _$ValidateCodeRequestToJson(
 ValidateEmailRequest _$ValidateEmailRequestFromJson(
         Map<String, dynamic> json) =>
     ValidateEmailRequest(
-      json['email'] as String,
+      email: json['email'] as String,
     );
 
 Map<String, dynamic> _$ValidateEmailRequestToJson(
@@ -65,7 +65,7 @@ Map<String, dynamic> _$ValidateEmailRequestToJson(
 
 DeleteFileRequest _$DeleteFileRequestFromJson(Map<String, dynamic> json) =>
     DeleteFileRequest(
-      json['id'] as String,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$DeleteFileRequestToJson(DeleteFileRequest instance) =>
@@ -75,7 +75,7 @@ Map<String, dynamic> _$DeleteFileRequestToJson(DeleteFileRequest instance) =>
 
 GetFileRequest _$GetFileRequestFromJson(Map<String, dynamic> json) =>
     GetFileRequest(
-      json['id'] as String,
+      id: json['id'] as String,
     );
 
 Map<String, dynamic> _$GetFileRequestToJson(GetFileRequest instance) =>
@@ -86,10 +86,10 @@ Map<String, dynamic> _$GetFileRequestToJson(GetFileRequest instance) =>
 GetUserPagedResponse _$GetUserPagedResponseFromJson(
         Map<String, dynamic> json) =>
     GetUserPagedResponse(
-      (json['results'] as List<dynamic>?)
+      results: (json['results'] as List<dynamic>?)
           ?.map((e) => UserInfoDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      (json['total'] as num?)?.toDouble(),
+      total: (json['total'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$GetUserPagedResponseToJson(
@@ -100,9 +100,9 @@ Map<String, dynamic> _$GetUserPagedResponseToJson(
     };
 
 ResultData _$ResultDataFromJson(Map<String, dynamic> json) => ResultData(
-      (json['status'] as num?)?.toDouble(),
-      json['message'] as String?,
-      json['data'],
+      status: (json['status'] as num?)?.toDouble(),
+      message: json['message'] as String?,
+      data: json['data'],
     );
 
 Map<String, dynamic> _$ResultDataToJson(ResultData instance) =>
@@ -113,16 +113,16 @@ Map<String, dynamic> _$ResultDataToJson(ResultData instance) =>
     };
 
 UserInfoDto _$UserInfoDtoFromJson(Map<String, dynamic> json) => UserInfoDto(
-      (json['id'] as num?)?.toDouble(),
-      json['code'] as String?,
-      json['name'] as String?,
-      json['email'] as String?,
-      (json['gender'] as num?)?.toDouble(),
-      json['avatar'] as String?,
-      json['address'] as String?,
-      json['status'] as bool?,
-      json['createdAt'] as String?,
-      json['updatedAt'] as String?,
+      id: (json['id'] as num?)?.toInt(),
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      gender: (json['gender'] as num?)?.toInt(),
+      avatar: json['avatar'] as String?,
+      address: json['address'] as String?,
+      status: json['status'] as bool?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$UserInfoDtoToJson(UserInfoDto instance) =>
@@ -138,10 +138,6 @@ Map<String, dynamic> _$UserInfoDtoToJson(UserInfoDto instance) =>
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };
-
-User _$UserFromJson(Map<String, dynamic> json) => User();
-
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{};
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
       page: (json['page'] as num?)?.toInt(),
@@ -178,13 +174,13 @@ Map<String, dynamic> _$UserPageQueryDtoToJson(UserPageQueryDto instance) =>
 
 UserAddRequestDto _$UserAddRequestDtoFromJson(Map<String, dynamic> json) =>
     UserAddRequestDto(
-      json['code'] as String?,
-      json['name'] as String?,
-      json['email'] as String?,
-      (json['gender'] as num?)?.toDouble(),
-      json['avatar'] as String?,
-      json['address'] as String?,
-      json['status'] as bool?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      gender: (json['gender'] as num?)?.toInt(),
+      avatar: json['avatar'] as String?,
+      address: json['address'] as String?,
+      status: json['status'] as bool?,
     );
 
 Map<String, dynamic> _$UserAddRequestDtoToJson(UserAddRequestDto instance) =>
@@ -201,14 +197,14 @@ Map<String, dynamic> _$UserAddRequestDtoToJson(UserAddRequestDto instance) =>
 UserModifyRequestDto _$UserModifyRequestDtoFromJson(
         Map<String, dynamic> json) =>
     UserModifyRequestDto(
-      (json['id'] as num?)?.toDouble(),
-      json['code'] as String?,
-      json['name'] as String?,
-      json['email'] as String?,
-      (json['gender'] as num?)?.toDouble(),
-      json['avatar'] as String?,
-      json['address'] as String?,
-      json['status'] as bool?,
+      id: (json['id'] as num?)?.toInt(),
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      gender: (json['gender'] as num?)?.toInt(),
+      avatar: json['avatar'] as String?,
+      address: json['address'] as String?,
+      status: json['status'] as bool?,
     );
 
 Map<String, dynamic> _$UserModifyRequestDtoToJson(

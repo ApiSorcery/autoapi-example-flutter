@@ -542,7 +542,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
+            "type": "integer",
             "description": "用户ID"
           },
           "code": {
@@ -558,7 +558,7 @@
             "description": "邮箱"
           },
           "gender": {
-            "type": "number",
+            "type": "integer",
             "description": "性别"
           },
           "avatar": {
@@ -592,19 +592,15 @@
           "createdAt"
         ]
       },
-      "User": {
-        "type": "object",
-        "properties": {}
-      },
       "Pagination": {
         "type": "object",
         "properties": {
           "page": {
-            "type": "number",
+            "type": "integer",
             "description": "页码"
           },
           "limit": {
-            "type": "number",
+            "type": "integer",
             "description": "每页数量"
           },
           "sortBy": {
@@ -658,9 +654,9 @@
             "description": "邮箱"
           },
           "gender": {
-            "type": "number",
-            "default": 0,
-            "description": "性别"
+            "type": "integer",
+            "description": "性别",
+            "default": 0
           },
           "avatar": {
             "type": "string",
@@ -688,7 +684,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
+            "type": "integer",
             "description": "用户ID"
           },
           "code": {
@@ -704,7 +700,7 @@
             "description": "邮箱"
           },
           "gender": {
-            "type": "number",
+            "type": "integer",
             "description": "性别"
           },
           "avatar": {

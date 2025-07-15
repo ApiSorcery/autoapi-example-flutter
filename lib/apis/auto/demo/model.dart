@@ -40,7 +40,7 @@ class ExportUsersRequest extends TBase {
   @JsonKey(name: 'email')
   String email;
 
-  ExportUsersRequest(this.code,this.name,this.email);
+  ExportUsersRequest({this.code,this.name,this.email});
 
   factory ExportUsersRequest.fromJson(Map<String, dynamic> srcJson) => _$ExportUsersRequestFromJson(srcJson);
 
@@ -54,7 +54,7 @@ class GetUserOneRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  GetUserOneRequest(this.id);
+  GetUserOneRequest({this.id});
 
   factory GetUserOneRequest.fromJson(Map<String, dynamic> srcJson) => _$GetUserOneRequestFromJson(srcJson);
 
@@ -68,7 +68,7 @@ class RemoveUserRequest extends TBase {
   @JsonKey(name: 'id')
   double id;
 
-  RemoveUserRequest(this.id);
+  RemoveUserRequest({this.id});
 
   factory RemoveUserRequest.fromJson(Map<String, dynamic> srcJson) => _$RemoveUserRequestFromJson(srcJson);
 
@@ -82,7 +82,7 @@ class ValidateCodeRequest extends TBase {
   @JsonKey(name: 'code')
   String code;
 
-  ValidateCodeRequest(this.code);
+  ValidateCodeRequest({this.code});
 
   factory ValidateCodeRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateCodeRequestFromJson(srcJson);
 
@@ -96,7 +96,7 @@ class ValidateEmailRequest extends TBase {
   @JsonKey(name: 'email')
   String email;
 
-  ValidateEmailRequest(this.email);
+  ValidateEmailRequest({this.email});
 
   factory ValidateEmailRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateEmailRequestFromJson(srcJson);
 
@@ -111,7 +111,7 @@ class DeleteFileRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  DeleteFileRequest(this.id);
+  DeleteFileRequest({this.id});
 
   factory DeleteFileRequest.fromJson(Map<String, dynamic> srcJson) => _$DeleteFileRequestFromJson(srcJson);
 
@@ -126,7 +126,7 @@ class GetFileRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  GetFileRequest(this.id);
+  GetFileRequest({this.id});
 
   factory GetFileRequest.fromJson(Map<String, dynamic> srcJson) => _$GetFileRequestFromJson(srcJson);
 
@@ -142,7 +142,7 @@ class UploadFileRequest extends TFormData {
   /// 文件描述（可选）
   String? description;
 
-  UploadFileRequest(this.file,this.description);
+  UploadFileRequest({this.file,this.description});
 
   @override
   FormData toFormData() {
@@ -162,7 +162,7 @@ class GetUserPagedResponse extends TBase {
   @JsonKey(name: 'total')
   double? total;
 
-  GetUserPagedResponse(this.results,this.total);
+  GetUserPagedResponse({this.results,this.total});
 
   factory GetUserPagedResponse.fromJson(Map<String, dynamic> srcJson) => _$GetUserPagedResponseFromJson(srcJson);
 
@@ -184,7 +184,7 @@ class ResultData extends TBase {
   @JsonKey(name: 'data')
   dynamic data;
 
-  ResultData(this.status,this.message,this.data);
+  ResultData({this.status,this.message,this.data});
 
   factory ResultData.fromJson(Map<String, dynamic> srcJson) => _$ResultDataFromJson(srcJson);
 
@@ -196,7 +196,7 @@ class ResultData extends TBase {
 class UserInfoDto extends TBase {
   /// 用户ID
   @JsonKey(name: 'id')
-  double? id;
+  int? id;
 
   /// 用户编号
   @JsonKey(name: 'code')
@@ -212,7 +212,7 @@ class UserInfoDto extends TBase {
 
   /// 性别
   @JsonKey(name: 'gender')
-  double? gender;
+  int? gender;
 
   /// 头像
   @JsonKey(name: 'avatar')
@@ -234,22 +234,12 @@ class UserInfoDto extends TBase {
   @JsonKey(name: 'updatedAt')
   String? updatedAt;
 
-  UserInfoDto(this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status,this.createdAt,this.updatedAt);
+  UserInfoDto({this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status,this.createdAt,this.updatedAt});
 
   factory UserInfoDto.fromJson(Map<String, dynamic> srcJson) => _$UserInfoDtoFromJson(srcJson);
 
   @override
   Map<String, dynamic> toJson() => _$UserInfoDtoToJson(this);
-}
-
-@JsonSerializable()
-class User extends TBase {
-  User();
-
-  factory User.fromJson(Map<String, dynamic> srcJson) => _$UserFromJson(srcJson);
-
-  @override
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 
 @JsonSerializable()
@@ -282,7 +272,7 @@ class Pagination extends TBase {
 class UserPageQueryDto extends TBase {
   /// 分页参数
   @JsonKey(name: 'pagination')
-  dynamic pagination;
+  Pagination? pagination;
 
   /// 用户编码
   @JsonKey(name: 'code')
@@ -320,7 +310,7 @@ class UserAddRequestDto extends TBase {
 
   /// 性别
   @JsonKey(name: 'gender')
-  double? gender;
+  int? gender;
 
   /// 头像
   @JsonKey(name: 'avatar')
@@ -334,7 +324,7 @@ class UserAddRequestDto extends TBase {
   @JsonKey(name: 'status')
   bool? status;
 
-  UserAddRequestDto(this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status);
+  UserAddRequestDto({this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status});
 
   factory UserAddRequestDto.fromJson(Map<String, dynamic> srcJson) => _$UserAddRequestDtoFromJson(srcJson);
 
@@ -346,7 +336,7 @@ class UserAddRequestDto extends TBase {
 class UserModifyRequestDto extends TBase {
   /// 用户ID
   @JsonKey(name: 'id')
-  double? id;
+  int? id;
 
   /// 用户编号
   @JsonKey(name: 'code')
@@ -362,7 +352,7 @@ class UserModifyRequestDto extends TBase {
 
   /// 性别
   @JsonKey(name: 'gender')
-  double? gender;
+  int? gender;
 
   /// 头像
   @JsonKey(name: 'avatar')
@@ -376,7 +366,7 @@ class UserModifyRequestDto extends TBase {
   @JsonKey(name: 'status')
   bool? status;
 
-  UserModifyRequestDto(this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status);
+  UserModifyRequestDto({this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status});
 
   factory UserModifyRequestDto.fromJson(Map<String, dynamic> srcJson) => _$UserModifyRequestDtoFromJson(srcJson);
 
