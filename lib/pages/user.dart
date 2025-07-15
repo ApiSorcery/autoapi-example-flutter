@@ -1,3 +1,4 @@
+import 'package:autoapi_example_flutter/utils/router.dart';
 import 'package:flutter/material.dart';
 
 class UserPage extends StatefulWidget {
@@ -19,7 +20,9 @@ class _UserPageState extends State<UserPage> {
         child: Text('用户管理'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Routes.push(context, Routes.userAdd, null);
+        },
         tooltip: '添加用户',
         child: const Icon(Icons.add),
       ),
