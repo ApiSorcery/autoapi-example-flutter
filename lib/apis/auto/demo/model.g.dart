@@ -22,7 +22,7 @@ Map<String, dynamic> _$ExportUsersRequestToJson(ExportUsersRequest instance) =>
 
 GetUserOneRequest _$GetUserOneRequestFromJson(Map<String, dynamic> json) =>
     GetUserOneRequest(
-      (json['id'] as num).toDouble(),
+      json['id'] as String,
     );
 
 Map<String, dynamic> _$GetUserOneRequestToJson(GetUserOneRequest instance) =>
@@ -83,16 +83,17 @@ Map<String, dynamic> _$GetFileRequestToJson(GetFileRequest instance) =>
       'id': instance.id,
     };
 
-GetUserPageResponse _$GetUserPageResponseFromJson(Map<String, dynamic> json) =>
-    GetUserPageResponse(
+GetUserPagedResponse _$GetUserPagedResponseFromJson(
+        Map<String, dynamic> json) =>
+    GetUserPagedResponse(
       (json['results'] as List<dynamic>?)
-          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => UserInfoDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['total'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$GetUserPageResponseToJson(
-        GetUserPageResponse instance) =>
+Map<String, dynamic> _$GetUserPagedResponseToJson(
+        GetUserPagedResponse instance) =>
     <String, dynamic>{
       'results': instance.results,
       'total': instance.total,
@@ -111,19 +112,31 @@ Map<String, dynamic> _$ResultDataToJson(ResultData instance) =>
       'data': instance.data,
     };
 
-UserInfoResponseDto _$UserInfoResponseDtoFromJson(Map<String, dynamic> json) =>
-    UserInfoResponseDto(
+UserInfoDto _$UserInfoDtoFromJson(Map<String, dynamic> json) => UserInfoDto(
       (json['id'] as num?)?.toDouble(),
       json['code'] as String?,
       json['name'] as String?,
+      json['email'] as String?,
+      (json['gender'] as num?)?.toDouble(),
+      json['avatar'] as String?,
+      json['address'] as String?,
+      json['status'] as bool?,
+      json['createdAt'] as String?,
+      json['updatedAt'] as String?,
     );
 
-Map<String, dynamic> _$UserInfoResponseDtoToJson(
-        UserInfoResponseDto instance) =>
+Map<String, dynamic> _$UserInfoDtoToJson(UserInfoDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,
+      'email': instance.email,
+      'gender': instance.gender,
+      'avatar': instance.avatar,
+      'address': instance.address,
+      'status': instance.status,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User();
@@ -150,7 +163,7 @@ UserPageQueryDto _$UserPageQueryDtoFromJson(Map<String, dynamic> json) =>
       json['pagination'],
       json['code'] as String?,
       json['name'] as String?,
-      json['email'] as String?,
+      json['status'] as bool?,
     );
 
 Map<String, dynamic> _$UserPageQueryDtoToJson(UserPageQueryDto instance) =>
@@ -158,45 +171,53 @@ Map<String, dynamic> _$UserPageQueryDtoToJson(UserPageQueryDto instance) =>
       'pagination': instance.pagination,
       'code': instance.code,
       'name': instance.name,
-      'email': instance.email,
+      'status': instance.status,
     };
 
-SignInResponseDto _$SignInResponseDtoFromJson(Map<String, dynamic> json) =>
-    SignInResponseDto(
-      json['token'] as String?,
-    );
-
-Map<String, dynamic> _$SignInResponseDtoToJson(SignInResponseDto instance) =>
-    <String, dynamic>{
-      'token': instance.token,
-    };
-
-SignInRequestDto _$SignInRequestDtoFromJson(Map<String, dynamic> json) =>
-    SignInRequestDto(
+UserAddRequestDto _$UserAddRequestDtoFromJson(Map<String, dynamic> json) =>
+    UserAddRequestDto(
       json['code'] as String?,
-      json['password'] as String?,
-      json['bindKey'] as String?,
-      json['captcha'] as String?,
+      json['name'] as String?,
+      json['email'] as String?,
+      (json['gender'] as num?)?.toDouble(),
+      json['avatar'] as String?,
+      json['address'] as String?,
+      json['status'] as bool?,
     );
 
-Map<String, dynamic> _$SignInRequestDtoToJson(SignInRequestDto instance) =>
+Map<String, dynamic> _$UserAddRequestDtoToJson(UserAddRequestDto instance) =>
     <String, dynamic>{
       'code': instance.code,
-      'password': instance.password,
-      'bindKey': instance.bindKey,
-      'captcha': instance.captcha,
+      'name': instance.name,
+      'email': instance.email,
+      'gender': instance.gender,
+      'avatar': instance.avatar,
+      'address': instance.address,
+      'status': instance.status,
     };
 
-ImageCaptchaResponseDto _$ImageCaptchaResponseDtoFromJson(
+UserModifyRequestDto _$UserModifyRequestDtoFromJson(
         Map<String, dynamic> json) =>
-    ImageCaptchaResponseDto(
-      json['bindKey'] as String?,
-      json['image'] as String?,
+    UserModifyRequestDto(
+      (json['id'] as num?)?.toDouble(),
+      json['code'] as String?,
+      json['name'] as String?,
+      json['email'] as String?,
+      (json['gender'] as num?)?.toDouble(),
+      json['avatar'] as String?,
+      json['address'] as String?,
+      json['status'] as bool?,
     );
 
-Map<String, dynamic> _$ImageCaptchaResponseDtoToJson(
-        ImageCaptchaResponseDto instance) =>
+Map<String, dynamic> _$UserModifyRequestDtoToJson(
+        UserModifyRequestDto instance) =>
     <String, dynamic>{
-      'bindKey': instance.bindKey,
-      'image': instance.image,
+      'id': instance.id,
+      'code': instance.code,
+      'name': instance.name,
+      'email': instance.email,
+      'gender': instance.gender,
+      'avatar': instance.avatar,
+      'address': instance.address,
+      'status': instance.status,
     };

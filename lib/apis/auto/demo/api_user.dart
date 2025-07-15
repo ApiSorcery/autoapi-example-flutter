@@ -4,7 +4,7 @@ import 'model.dart';
 /// 用户管理
 class ApiUser {
   /// 新增用户
-  static Future<double> addUser(User req) async {
+  static Future<double> addUser(UserAddRequestDto req) async {
     var response = await createJsonRequest(
       url: '/user',
       method: 'POST',
@@ -24,40 +24,33 @@ class ApiUser {
     return response.data;
   }
 
-  /// 获取登录用户信息
-  static Future<UserInfoResponseDto> getLoginUserInfo() async {
-    var response = await createNoParamsJsonRequest(
-      url: '/user/info',
-      method: 'GET'
-    );
-    return UserInfoResponseDto.fromJson(response.data);
-  }
-
   /// 获取单个用户
-  static Future<User> getUserOne(GetUserOneRequest req) async {
+  static Future<UserInfoDto> getUserOne(GetUserOneRequest req) async {
     var response = await createJsonRequest(
       url: '/user/${req.id}',
       method: 'GET',
     );
-    return User.fromJson(response.data);
+    return UserInfoDto.fromJson(response.data);
   }
 
   /// 分页查询用户列表
-  static Future<GetUserPageResponse> getUserPage(UserPageQueryDto req) async {
+  static Future<GetUserPagedResponse> getUserPaged(UserPageQueryDto req) async {
     var response = await createJsonRequest(
       url: '/user/paged',
       method: 'POST',
       contentType: 'application/json',
       data: req.toJson()
     );
-    return GetUserPageResponse.fromJson(response.data);
+    return GetUserPagedResponse.fromJson(response.data);
   }
 
   /// 修改用户信息
-  static Future modifyUser() async {
-    await createNoParamsJsonRequest(
+  static Future modifyUser(UserModifyRequestDto req) async {
+    await createJsonRequest(
       url: '/user',
-      method: 'PATCH'
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: req.toJson()
     );
   }
 
@@ -80,13 +73,13 @@ class ApiUser {
   }
 
   /// 校验用户邮箱是否存在
-  static Future<UserInfoResponseDto> validateEmail(ValidateEmailRequest req) async {
+  static Future<bool> validateEmail(ValidateEmailRequest req) async {
     var response = await createJsonRequest(
       url: '/user/validateEmail',
       method: 'GET',
       queryParameters: {'email': req.email},
     );
-    return UserInfoResponseDto.fromJson(response.data);
+    return response.data;
   }
 
 }

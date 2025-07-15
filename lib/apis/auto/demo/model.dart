@@ -16,9 +16,15 @@ class TFormData extends Object {
 
 /// 二进制数据返回类型
 class BlobResp extends Object {
+/// 文件类型
   String? type;
+
+/// 文件名
   String? name;
+
+/// 文件内容
   Uint8List? data;
+
   BlobResp({this.type, this.name, this.data});
 }
 
@@ -46,7 +52,7 @@ class ExportUsersRequest extends TBase {
 @JsonSerializable()
 class GetUserOneRequest extends TBase {
   @JsonKey(name: 'id')
-  double id;
+  String id;
 
   GetUserOneRequest(this.id);
 
@@ -130,8 +136,10 @@ class GetFileRequest extends TBase {
 
 /// 上传文件请求参数
 class UploadFileRequest extends TFormData {
+  /// 要上传的文件
   MultipartFile? file;
 
+  /// 文件描述（可选）
   String? description;
 
   UploadFileRequest(this.file,this.description);
@@ -147,19 +155,19 @@ class UploadFileRequest extends TFormData {
 
 /// 分页查询用户列表响应参数
 @JsonSerializable()
-class GetUserPageResponse extends TBase {
+class GetUserPagedResponse extends TBase {
   @JsonKey(name: 'results')
-  List<User>? results;
+  List<UserInfoDto>? results;
 
   @JsonKey(name: 'total')
   double? total;
 
-  GetUserPageResponse(this.results,this.total);
+  GetUserPagedResponse(this.results,this.total);
 
-  factory GetUserPageResponse.fromJson(Map<String, dynamic> srcJson) => _$GetUserPageResponseFromJson(srcJson);
+  factory GetUserPagedResponse.fromJson(Map<String, dynamic> srcJson) => _$GetUserPagedResponseFromJson(srcJson);
 
   @override
-  Map<String, dynamic> toJson() => _$GetUserPageResponseToJson(this);
+  Map<String, dynamic> toJson() => _$GetUserPagedResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -172,6 +180,7 @@ class ResultData extends TBase {
   @JsonKey(name: 'message')
   String? message;
 
+  /// 返回结果
   @JsonKey(name: 'data')
   dynamic data;
 
@@ -184,7 +193,7 @@ class ResultData extends TBase {
 }
 
 @JsonSerializable()
-class UserInfoResponseDto extends TBase {
+class UserInfoDto extends TBase {
   /// 用户ID
   @JsonKey(name: 'id')
   double? id;
@@ -197,12 +206,40 @@ class UserInfoResponseDto extends TBase {
   @JsonKey(name: 'name')
   String? name;
 
-  UserInfoResponseDto(this.id,this.code,this.name);
+  /// 邮箱
+  @JsonKey(name: 'email')
+  String? email;
 
-  factory UserInfoResponseDto.fromJson(Map<String, dynamic> srcJson) => _$UserInfoResponseDtoFromJson(srcJson);
+  /// 性别
+  @JsonKey(name: 'gender')
+  double? gender;
+
+  /// 头像
+  @JsonKey(name: 'avatar')
+  String? avatar;
+
+  /// 地址
+  @JsonKey(name: 'address')
+  String? address;
+
+  /// 状态
+  @JsonKey(name: 'status')
+  bool? status;
+
+  /// 创建时间
+  @JsonKey(name: 'createdAt')
+  String? createdAt;
+
+  /// 更新时间
+  @JsonKey(name: 'updatedAt')
+  String? updatedAt;
+
+  UserInfoDto(this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status,this.createdAt,this.updatedAt);
+
+  factory UserInfoDto.fromJson(Map<String, dynamic> srcJson) => _$UserInfoDtoFromJson(srcJson);
 
   @override
-  Map<String, dynamic> toJson() => _$UserInfoResponseDtoToJson(this);
+  Map<String, dynamic> toJson() => _$UserInfoDtoToJson(this);
 }
 
 @JsonSerializable()
@@ -255,11 +292,11 @@ class UserPageQueryDto extends TBase {
   @JsonKey(name: 'name')
   String? name;
 
-  /// 用户邮箱
-  @JsonKey(name: 'email')
-  String? email;
+  /// 用户状态
+  @JsonKey(name: 'status')
+  bool? status;
 
-  UserPageQueryDto(this.pagination,this.code,this.name,this.email);
+  UserPageQueryDto(this.pagination,this.code,this.name,this.status);
 
   factory UserPageQueryDto.fromJson(Map<String, dynamic> srcJson) => _$UserPageQueryDtoFromJson(srcJson);
 
@@ -268,59 +305,81 @@ class UserPageQueryDto extends TBase {
 }
 
 @JsonSerializable()
-class SignInResponseDto extends TBase {
-  /// 登录令牌
-  @JsonKey(name: 'token')
-  String? token;
-
-  SignInResponseDto(this.token);
-
-  factory SignInResponseDto.fromJson(Map<String, dynamic> srcJson) => _$SignInResponseDtoFromJson(srcJson);
-
-  @override
-  Map<String, dynamic> toJson() => _$SignInResponseDtoToJson(this);
-}
-
-@JsonSerializable()
-class SignInRequestDto extends TBase {
+class UserAddRequestDto extends TBase {
   /// 用户编号
   @JsonKey(name: 'code')
   String? code;
 
-  /// 登录密码
-  @JsonKey(name: 'password')
-  String? password;
+  /// 用户名称
+  @JsonKey(name: 'name')
+  String? name;
 
-  /// 验证码绑定键
-  @JsonKey(name: 'bindKey')
-  String? bindKey;
+  /// 邮箱
+  @JsonKey(name: 'email')
+  String? email;
 
-  /// 验证码
-  @JsonKey(name: 'captcha')
-  String? captcha;
+  /// 性别
+  @JsonKey(name: 'gender')
+  double? gender;
 
-  SignInRequestDto(this.code,this.password,this.bindKey,this.captcha);
+  /// 头像
+  @JsonKey(name: 'avatar')
+  String? avatar;
 
-  factory SignInRequestDto.fromJson(Map<String, dynamic> srcJson) => _$SignInRequestDtoFromJson(srcJson);
+  /// 地址
+  @JsonKey(name: 'address')
+  String? address;
+
+  /// 状态
+  @JsonKey(name: 'status')
+  bool? status;
+
+  UserAddRequestDto(this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status);
+
+  factory UserAddRequestDto.fromJson(Map<String, dynamic> srcJson) => _$UserAddRequestDtoFromJson(srcJson);
 
   @override
-  Map<String, dynamic> toJson() => _$SignInRequestDtoToJson(this);
+  Map<String, dynamic> toJson() => _$UserAddRequestDtoToJson(this);
 }
 
 @JsonSerializable()
-class ImageCaptchaResponseDto extends TBase {
-  /// 验证码绑定键
-  @JsonKey(name: 'bindKey')
-  String? bindKey;
+class UserModifyRequestDto extends TBase {
+  /// 用户ID
+  @JsonKey(name: 'id')
+  double? id;
 
-  /// 验证码SVG图片
-  @JsonKey(name: 'image')
-  String? image;
+  /// 用户编号
+  @JsonKey(name: 'code')
+  String? code;
 
-  ImageCaptchaResponseDto(this.bindKey,this.image);
+  /// 用户名称
+  @JsonKey(name: 'name')
+  String? name;
 
-  factory ImageCaptchaResponseDto.fromJson(Map<String, dynamic> srcJson) => _$ImageCaptchaResponseDtoFromJson(srcJson);
+  /// 邮箱
+  @JsonKey(name: 'email')
+  String? email;
+
+  /// 性别
+  @JsonKey(name: 'gender')
+  double? gender;
+
+  /// 头像
+  @JsonKey(name: 'avatar')
+  String? avatar;
+
+  /// 地址
+  @JsonKey(name: 'address')
+  String? address;
+
+  /// 状态
+  @JsonKey(name: 'status')
+  bool? status;
+
+  UserModifyRequestDto(this.id,this.code,this.name,this.email,this.gender,this.avatar,this.address,this.status);
+
+  factory UserModifyRequestDto.fromJson(Map<String, dynamic> srcJson) => _$UserModifyRequestDtoFromJson(srcJson);
 
   @override
-  Map<String, dynamic> toJson() => _$ImageCaptchaResponseDtoToJson(this);
+  Map<String, dynamic> toJson() => _$UserModifyRequestDtoToJson(this);
 }

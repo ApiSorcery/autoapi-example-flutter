@@ -1,42 +1,9 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/user/info": {
-      "get": {
-        "operationId": "getLoginUserInfo",
-        "summary": "获取登录用户信息",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ResultData"
-                    },
-                    {
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/UserInfoResponseDto"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "用户管理"
-        ]
-      }
-    },
     "/user/paged": {
       "post": {
-        "operationId": "getUserPage",
+        "operationId": "getUserPaged",
         "summary": "分页查询用户列表",
         "parameters": [],
         "requestBody": {
@@ -67,7 +34,7 @@
                             "results": {
                               "type": "array",
                               "items": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/UserInfoDto"
                               }
                             },
                             "total": {
@@ -139,7 +106,7 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "string"
             }
           }
         ],
@@ -156,7 +123,7 @@
                     {
                       "properties": {
                         "data": {
-                          "$ref": "#/components/schemas/User"
+                          "$ref": "#/components/schemas/UserInfoDto"
                         }
                       }
                     }
@@ -281,7 +248,7 @@
                     {
                       "properties": {
                         "data": {
-                          "$ref": "#/components/schemas/UserInfoResponseDto"
+                          "type": "boolean"
                         }
                       }
                     }
@@ -306,7 +273,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserAddRequestDto"
               }
             }
           }
@@ -342,6 +309,16 @@
         "operationId": "modifyUser",
         "summary": "修改用户信息",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserModifyRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "",
@@ -509,97 +486,17 @@
           "文件管理"
         ]
       }
-    },
-    "/auth/signIn": {
-      "post": {
-        "operationId": "authSignIn",
-        "summary": "用户登录",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SignInRequestDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ResultData"
-                    },
-                    {
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/SignInResponseDto"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "用户认证"
-        ]
-      }
-    },
-    "/auth/captcha": {
-      "get": {
-        "operationId": "generateCaptcha",
-        "summary": "生成验证码",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ResultData"
-                    },
-                    {
-                      "properties": {
-                        "data": {
-                          "$ref": "#/components/schemas/ImageCaptchaResponseDto"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "用户认证"
-        ]
-      }
     }
   },
   "info": {
-    "title": "Product-Back-Api",
-    "description": "Product-Back-Api 接口文档",
+    "title": "Demo-Api",
+    "description": "Demo-Api 接口文档",
     "version": "1.0.0",
     "contact": {}
   },
   "tags": [
     {
       "name": "用户管理",
-      "description": ""
-    },
-    {
-      "name": "用户认证",
       "description": ""
     },
     {
@@ -631,7 +528,8 @@
             "description": "状态描述"
           },
           "data": {
-            "type": "object"
+            "type": "object",
+            "description": "返回结果"
           }
         },
         "required": [
@@ -640,7 +538,7 @@
           "data"
         ]
       },
-      "UserInfoResponseDto": {
+      "UserInfoDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -654,12 +552,44 @@
           "name": {
             "type": "string",
             "description": "用户名称"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱"
+          },
+          "gender": {
+            "type": "number",
+            "description": "性别"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像"
+          },
+          "address": {
+            "type": "string",
+            "description": "地址"
+          },
+          "status": {
+            "type": "boolean",
+            "description": "状态"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "创建时间"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "更新时间"
           }
         },
         "required": [
           "id",
           "code",
-          "name"
+          "name",
+          "email",
+          "createdAt"
         ]
       },
       "User": {
@@ -706,66 +636,94 @@
             "type": "string",
             "description": "用户姓名"
           },
-          "email": {
-            "type": "string",
-            "description": "用户邮箱"
+          "status": {
+            "type": "boolean",
+            "description": "用户状态"
           }
         }
       },
-      "SignInResponseDto": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "登录令牌"
-          }
-        },
-        "required": [
-          "token"
-        ]
-      },
-      "SignInRequestDto": {
+      "UserAddRequestDto": {
         "type": "object",
         "properties": {
           "code": {
             "type": "string",
             "description": "用户编号"
           },
-          "password": {
+          "name": {
             "type": "string",
-            "description": "登录密码"
+            "description": "用户名称"
           },
-          "bindKey": {
+          "email": {
             "type": "string",
-            "description": "验证码绑定键"
+            "description": "邮箱"
           },
-          "captcha": {
+          "gender": {
+            "type": "number",
+            "default": 0,
+            "description": "性别"
+          },
+          "avatar": {
             "type": "string",
-            "description": "验证码"
+            "default": "",
+            "description": "头像"
+          },
+          "address": {
+            "type": "string",
+            "default": "",
+            "description": "地址"
+          },
+          "status": {
+            "type": "boolean",
+            "default": false,
+            "description": "状态"
           }
         },
         "required": [
           "code",
-          "password",
-          "bindKey",
-          "captcha"
+          "name",
+          "email"
         ]
       },
-      "ImageCaptchaResponseDto": {
+      "UserModifyRequestDto": {
         "type": "object",
         "properties": {
-          "bindKey": {
-            "type": "string",
-            "description": "验证码绑定键"
+          "id": {
+            "type": "number",
+            "description": "用户ID"
           },
-          "image": {
+          "code": {
             "type": "string",
-            "description": "验证码SVG图片"
+            "description": "用户编号"
+          },
+          "name": {
+            "type": "string",
+            "description": "用户名称"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱"
+          },
+          "gender": {
+            "type": "number",
+            "description": "性别"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像"
+          },
+          "address": {
+            "type": "string",
+            "default": "",
+            "description": "地址"
+          },
+          "status": {
+            "type": "boolean",
+            "default": false,
+            "description": "状态"
           }
         },
         "required": [
-          "bindKey",
-          "image"
+          "id"
         ]
       }
     }

@@ -1,5 +1,5 @@
 class Config {
   static get apiHost {
-    return "http://localhost:9002/";
+    return "https://apisorcery.com/demo-api/";
   }
 }

@@ -11,7 +11,7 @@
       "token": "72735b33815c4e5c9c2a924a8f4907ef",
       "version": 3,
       "enabled": true,
-      "source": "http://150.158.52.214:9015/swagger-json",
+      "source": "https://apisorcery.com/demo-api/swagger-json",
       "returnLevel": "second",
       "returnSecondField": "data",
       "tagNameMap": {
