@@ -144,10 +144,10 @@ User _$UserFromJson(Map<String, dynamic> json) => User();
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{};
 
 Pagination _$PaginationFromJson(Map<String, dynamic> json) => Pagination(
-      (json['page'] as num?)?.toDouble(),
-      (json['limit'] as num?)?.toDouble(),
-      json['sortBy'] as String?,
-      json['order'] as String?,
+      page: (json['page'] as num?)?.toInt(),
+      limit: (json['limit'] as num?)?.toInt(),
+      sortBy: json['sortBy'] as String?,
+      order: json['order'] as String?,
     );
 
 Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
@@ -160,10 +160,12 @@ Map<String, dynamic> _$PaginationToJson(Pagination instance) =>
 
 UserPageQueryDto _$UserPageQueryDtoFromJson(Map<String, dynamic> json) =>
     UserPageQueryDto(
-      json['pagination'],
-      json['code'] as String?,
-      json['name'] as String?,
-      json['status'] as bool?,
+      pagination: json['pagination'] == null
+          ? null
+          : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      status: json['status'] as bool?,
     );
 
 Map<String, dynamic> _$UserPageQueryDtoToJson(UserPageQueryDto instance) =>

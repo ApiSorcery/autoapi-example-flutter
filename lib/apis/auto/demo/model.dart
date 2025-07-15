@@ -256,11 +256,11 @@ class User extends TBase {
 class Pagination extends TBase {
   /// 页码
   @JsonKey(name: 'page')
-  double? page;
+  int? page;
 
   /// 每页数量
   @JsonKey(name: 'limit')
-  double? limit;
+  int? limit;
 
   /// 排序字段
   @JsonKey(name: 'sortBy')
@@ -270,7 +270,7 @@ class Pagination extends TBase {
   @JsonKey(name: 'order')
   String? order;
 
-  Pagination(this.page,this.limit,this.sortBy,this.order);
+  Pagination({this.page,this.limit,this.sortBy,this.order});
 
   factory Pagination.fromJson(Map<String, dynamic> srcJson) => _$PaginationFromJson(srcJson);
 
@@ -296,7 +296,7 @@ class UserPageQueryDto extends TBase {
   @JsonKey(name: 'status')
   bool? status;
 
-  UserPageQueryDto(this.pagination,this.code,this.name,this.status);
+  UserPageQueryDto({this.pagination,this.code,this.name,this.status});
 
   factory UserPageQueryDto.fromJson(Map<String, dynamic> srcJson) => _$UserPageQueryDtoFromJson(srcJson);
 
