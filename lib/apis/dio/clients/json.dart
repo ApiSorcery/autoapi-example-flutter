@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../../utils/config.dart';
 import '../interceptors/json_response.dart';
 import '../interceptors/request.dart';
 
@@ -7,7 +8,7 @@ class DioJsonClient {
   static Dio? _dio;
   // 基本设置
   static BaseOptions options = BaseOptions(
-      baseUrl: 'http://localhost:9002',
+      baseUrl: Config.apiHost,
       responseType: ResponseType.json,
       connectTimeout: Duration(seconds: 15),
       receiveTimeout: Duration(seconds: 5),
