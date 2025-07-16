@@ -41,8 +41,7 @@ Widget cardTitleStatus(BuildContext context, String? title, String status,
 Padding cardText(title, text) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
-    child:
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
           padding: const EdgeInsets.only(bottom: 4),
           child: Text((title ?? '').isEmpty ? '暂无' : title,
@@ -61,8 +60,7 @@ Padding cardText(title, text) {
 Padding cardSelect({String? title, String? value, List<KeyValue>? options}) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
-    child:
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
           padding: const EdgeInsets.only(bottom: 4),
           child: Text(title ?? '暂无', style: TextStyle(color: Colors.black87))),

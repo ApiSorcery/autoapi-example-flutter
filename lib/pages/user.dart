@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/key_value.dart';
@@ -123,43 +125,58 @@ class _UserPageState extends State<UserPage> {
 
   Widget userCard(BuildContext context, UserInfoDto item) {
     return Padding(
-        padding: const EdgeInsets.only(top: 2, left: 10, right: 10, bottom: 8),
+        padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
         child: Card(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4))),
-          elevation: 2,
-          child: Column(children: <Widget>[
-            cardTitleStatus(context, '${item.name} - ${item.code}',
-                item.status.toString(), userStatusConst),
-            Padding(
-              padding: EdgeInsets.only(left: 8, right: 8),
-              child: Divider(color: Color.fromRGBO(0, 0, 0, 0.3)),
-            ),
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                      child: cardSelect(
-                          title: '性别：',
-                          value: item.gender.toString(),
-                          options: userGenderConst)),
-                  Expanded(child: cardText('邮箱：', item.email)),
-                ]),
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(child: cardText('地址：', item.address)),
-                  Expanded(
-                      child: cardText(
-                          '创建时间：',
-                          item.createdAt != null
-                              ? DateTimeUtil.formatDateTime(item.createdAt!)
-                              : '')),
-                ]),
-          ]),
-        ));
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4))),
+            child: Column(
+              children: [
+                cardTitleStatus(context, '${item.name} - ${item.code}',
+                    item.status.toString(), userStatusConst),
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Divider(color: Color.fromRGBO(0, 0, 0, 0.3)),
+                ),
+                Padding(
+                    padding:
+                        EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 8),
+                          width: 120,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            image: DecorationImage(
+                              image: (item.avatar ?? '').isEmpty
+                                  ? MemoryImage(
+                                          base64.decode(defaultImageBase64))
+                                      as ImageProvider
+                                  : NetworkImage(item.avatar!),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(children: <Widget>[
+                          cardSelect(
+                              title: '性别：',
+                              value: item.gender.toString(),
+                              options: userGenderConst),
+                          cardText('邮箱：', item.email),
+                          cardText('地址：', item.address),
+                          cardText(
+                              '创建时间：',
+                              item.createdAt != null
+                                  ? DateTimeUtil.formatDateTime(item.createdAt!)
+                                  : ''),
+                        ]))
+                      ],
+                    )),
+              ],
+            )));
   }
 
   @override
