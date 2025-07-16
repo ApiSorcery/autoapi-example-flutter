@@ -8,6 +8,7 @@
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "分页查询用户列表请求参数",
           "content": {
             "application/json": {
               "schema": {
@@ -108,8 +109,9 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "用户ID",
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -148,8 +150,9 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "用户ID",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -191,6 +194,7 @@
             "name": "code",
             "required": true,
             "in": "query",
+            "description": "用户编号",
             "schema": {
               "type": "string"
             }
@@ -233,6 +237,7 @@
             "name": "email",
             "required": true,
             "in": "query",
+            "description": "邮箱",
             "schema": {
               "type": "string"
             }

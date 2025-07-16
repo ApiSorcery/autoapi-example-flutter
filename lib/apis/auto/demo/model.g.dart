@@ -22,7 +22,7 @@ Map<String, dynamic> _$ExportUsersRequestToJson(ExportUsersRequest instance) =>
 
 GetUserOneRequest _$GetUserOneRequestFromJson(Map<String, dynamic> json) =>
     GetUserOneRequest(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$GetUserOneRequestToJson(GetUserOneRequest instance) =>
@@ -32,7 +32,7 @@ Map<String, dynamic> _$GetUserOneRequestToJson(GetUserOneRequest instance) =>
 
 RemoveUserRequest _$RemoveUserRequestFromJson(Map<String, dynamic> json) =>
     RemoveUserRequest(
-      id: (json['id'] as num).toDouble(),
+      id: (json['id'] as num).toInt(),
     );
 
 Map<String, dynamic> _$RemoveUserRequestToJson(RemoveUserRequest instance) =>

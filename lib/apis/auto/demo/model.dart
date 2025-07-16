@@ -54,8 +54,9 @@ class ExportUsersRequest extends TBase {
 /// 获取单个用户请求参数
 @JsonSerializable()
 class GetUserOneRequest extends TBase {
+  /// 用户ID
   @JsonKey(name: 'id')
-  String id;
+  int id;
 
   GetUserOneRequest({required this.id});
 
@@ -68,8 +69,9 @@ class GetUserOneRequest extends TBase {
 /// 删除用户请求参数
 @JsonSerializable()
 class RemoveUserRequest extends TBase {
+  /// 用户ID
   @JsonKey(name: 'id')
-  double id;
+  int id;
 
   RemoveUserRequest({required this.id});
 
@@ -82,6 +84,7 @@ class RemoveUserRequest extends TBase {
 /// 校验用户编号是否存在请求参数
 @JsonSerializable()
 class ValidateCodeRequest extends TBase {
+  /// 用户编号
   @JsonKey(name: 'code')
   String code;
 
@@ -96,6 +99,7 @@ class ValidateCodeRequest extends TBase {
 /// 校验用户邮箱是否存在请求参数
 @JsonSerializable()
 class ValidateEmailRequest extends TBase {
+  /// 邮箱
   @JsonKey(name: 'email')
   String email;
 
