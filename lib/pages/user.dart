@@ -197,6 +197,7 @@ class _UserPageState extends State<UserPage> {
                   : ListView.builder(
                       controller: _scrollController,
                       physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 6, bottom: 10),
                       itemCount: _resultDatas?.length ?? 0,
                       itemBuilder: (context, index) {
                         var item = _resultDatas![index];
