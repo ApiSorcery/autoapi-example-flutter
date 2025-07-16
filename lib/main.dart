@@ -1,4 +1,5 @@
 import 'package:autoapi_example_flutter/pages/user.dart';
+import 'package:autoapi_example_flutter/utils/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -24,6 +25,11 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        FallbackCupertinoLocalisationsDelegate()
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // 英语
+        Locale('zh', 'CN'), // 中文
       ],
     );
   }
