@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF004099)),
         useMaterial3: true,
+        fontFamily: 'SourceSansPro',
       ),
       home: const UserPage(),
       // 本地化代理
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         FallbackCupertinoLocalisationsDelegate()
       ],
+      locale: const Locale('zh', 'CN'),
       supportedLocales: const [
         Locale('en', 'US'), // 英语
         Locale('zh', 'CN'), // 中文

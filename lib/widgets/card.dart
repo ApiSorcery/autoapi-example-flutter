@@ -23,7 +23,7 @@ Widget cardTitleStatus(BuildContext context, String? title, String status,
                 style: TextStyle(
                     fontSize: 14,
                     color: option.color,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w500),
                 softWrap: true,
               ),
               const Icon(
