@@ -7,19 +7,26 @@
     {
       "name": "autoapi_example_flutter",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "flutterMode": "debug",
+      "deviceId": "chrome",
+      "program": "lib/main.dart"
     },
     {
       "name": "autoapi_example_flutter (profile mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "profile",
+      "deviceId": "chrome",
+      "program": "lib/main.dart"
     },
     {
       "name": "autoapi_example_flutter (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "release",
+      "deviceId": "chrome",
+      "program": "lib/main.dart"
     }
   ]
 }
