@@ -1,9 +1,12 @@
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
+import 'package:autoapi_example_flutter/entities/key_value.dart';
 import 'package:autoapi_example_flutter/utils/constants.dart';
 import 'package:autoapi_example_flutter/utils/datetime.dart';
 import 'package:autoapi_example_flutter/utils/router.dart';
+import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:autoapi_example_flutter/widgets/card.dart';
+import 'package:autoapi_example_flutter/widgets/filter.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,9 @@ class _UserPageState extends State<UserPage> {
   int? _pages; // 总页数
   final ScrollController _scrollController = ScrollController();
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final TextEditingController _userCodeController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  KeyValue? _userStatus;
 
   @override
   void initState() {
@@ -46,6 +52,9 @@ class _UserPageState extends State<UserPage> {
           page: currentPage,
           limit: 10,
         ),
+        code: _userCodeController.text,
+        name: _userNameController.text,
+        status: _userStatus == null ? null : (_userStatus!.id == 'true'),
       );
       var response = await ApiUser.getUserPaged(params);
       setState(() {
@@ -60,6 +69,56 @@ class _UserPageState extends State<UserPage> {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  void clear() {
+    setState(() {
+      _userCodeController.clear();
+      _userNameController.clear();
+      _userStatus = null;
+    });
+  }
+
+  void commit() {
+    Navigator.pop(context);
+    _refreshIndicatorKey.currentState?.show();
+  }
+
+  DropdownButton _getUserStatus() {
+    return DropdownButton<KeyValue>(
+      isExpanded: true,
+      value: _userStatus,
+      onChanged: (KeyValue? newValue) {
+        setState(() {
+          _userStatus = newValue;
+        });
+      },
+      items: userStatusConst.map((KeyValue value) {
+        return DropdownMenuItem<KeyValue>(
+          value: value,
+          child: Text(value.name, style: AppTextStyle.filterValue),
+        );
+      }).toList(),
+    );
+  }
+
+  Drawer filter() {
+    return Drawer(
+      child: Column(children: <Widget>[
+        ListView(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const ListTile(
+                title: Text('快速查找', style: AppTextStyle.filterTitle)),
+            filterInput('用户编号：', _userCodeController),
+            filterInput('用户名称：', _userNameController),
+            filterSelect('用户状态：', _getUserStatus()),
+          ],
+        ),
+        filterButton(clear, commit)
+      ]),
+    );
   }
 
   Widget userCard(BuildContext context, UserInfoDto item) {
@@ -110,6 +169,7 @@ class _UserPageState extends State<UserPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('用户管理'),
       ),
+      endDrawer: filter(),
       body: _resultDatas == null
           ? const Loading()
           : RefreshIndicator(
