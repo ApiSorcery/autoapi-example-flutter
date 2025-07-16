@@ -2,18 +2,19 @@ import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:flutter/material.dart';
 
 // 查询页侧边栏输入框
-ListTile filterInput(String? title, TextEditingController controller) {
+ListTile filterInput(
+    BuildContext context, String? title, TextEditingController controller) {
   return ListTile(
       title: Text(title ?? '暂无', style: AppTextStyle.filterLabel),
       subtitle: TextField(
         style: AppTextStyle.filterValue,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             enabledBorder: UnderlineInputBorder(
                 borderSide:
                     BorderSide(color: Color.fromRGBO(0, 0, 0, 0.12), width: 1)),
             focusedBorder: UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: AppTextStyle.primaryColor, width: 1))),
+                borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary, width: 1))),
         controller: controller,
       ));
 }
@@ -27,7 +28,8 @@ ListTile filterSelect(String? title, childWidget) {
 }
 
 // 抽屉底部按钮组件
-Widget filterButton(Function clearFunc, Function commitFunc) {
+Widget filterButton(
+    BuildContext context, Function clearFunc, Function commitFunc) {
   return Expanded(
       child: Container(
           alignment: Alignment.bottomCenter,
@@ -38,10 +40,11 @@ Widget filterButton(Function clearFunc, Function commitFunc) {
               Expanded(
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                          foregroundColor: AppTextStyle.primaryColor,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.primary,
                           padding: const EdgeInsets.all(8),
-                          side: const BorderSide(
-                              color: AppTextStyle.primaryColor),
+                          side: BorderSide(
+                              color: Theme.of(context).colorScheme.primary),
                           textStyle: TextStyle(fontSize: 16)),
                       child: const Text('清空'),
                       onPressed: () => clearFunc())),
@@ -50,10 +53,11 @@ Widget filterButton(Function clearFunc, Function commitFunc) {
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: AppTextStyle.primaryColor,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           padding: const EdgeInsets.all(8),
-                          side: const BorderSide(
-                              color: AppTextStyle.primaryColor),
+                          side: BorderSide(
+                              color: Theme.of(context).colorScheme.primary),
                           textStyle: TextStyle(fontSize: 16)),
                       child: const Text('确认'),
                       onPressed: () => commitFunc()))

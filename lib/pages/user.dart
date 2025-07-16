@@ -111,12 +111,12 @@ class _UserPageState extends State<UserPage> {
           children: <Widget>[
             const ListTile(
                 title: Text('快速查找', style: AppTextStyle.filterTitle)),
-            filterInput('用户编号：', _userCodeController),
-            filterInput('用户名称：', _userNameController),
+            filterInput(context, '用户编号：', _userCodeController),
+            filterInput(context, '用户名称：', _userNameController),
             filterSelect('用户状态：', _getUserStatus()),
           ],
         ),
-        filterButton(clear, commit)
+        filterButton(context, clear, commit)
       ]),
     );
   }
