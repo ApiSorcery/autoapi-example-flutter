@@ -31,14 +31,17 @@ class BlobResp extends Object {
 /// 批量导出用户（Excel）请求参数
 @JsonSerializable()
 class ExportUsersRequest extends TBase {
+  /// 用户编号
   @JsonKey(name: 'code')
-  String code;
+  String? code;
 
+  /// 用户名称
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
+  /// 邮箱
   @JsonKey(name: 'email')
-  String email;
+  String? email;
 
   ExportUsersRequest({this.code,this.name,this.email});
 
@@ -54,7 +57,7 @@ class GetUserOneRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  GetUserOneRequest({this.id});
+  GetUserOneRequest({required this.id});
 
   factory GetUserOneRequest.fromJson(Map<String, dynamic> srcJson) => _$GetUserOneRequestFromJson(srcJson);
 
@@ -68,7 +71,7 @@ class RemoveUserRequest extends TBase {
   @JsonKey(name: 'id')
   double id;
 
-  RemoveUserRequest({this.id});
+  RemoveUserRequest({required this.id});
 
   factory RemoveUserRequest.fromJson(Map<String, dynamic> srcJson) => _$RemoveUserRequestFromJson(srcJson);
 
@@ -82,7 +85,7 @@ class ValidateCodeRequest extends TBase {
   @JsonKey(name: 'code')
   String code;
 
-  ValidateCodeRequest({this.code});
+  ValidateCodeRequest({required this.code});
 
   factory ValidateCodeRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateCodeRequestFromJson(srcJson);
 
@@ -96,7 +99,7 @@ class ValidateEmailRequest extends TBase {
   @JsonKey(name: 'email')
   String email;
 
-  ValidateEmailRequest({this.email});
+  ValidateEmailRequest({required this.email});
 
   factory ValidateEmailRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateEmailRequestFromJson(srcJson);
 
@@ -111,7 +114,7 @@ class DeleteFileRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  DeleteFileRequest({this.id});
+  DeleteFileRequest({required this.id});
 
   factory DeleteFileRequest.fromJson(Map<String, dynamic> srcJson) => _$DeleteFileRequestFromJson(srcJson);
 
@@ -126,7 +129,7 @@ class GetFileRequest extends TBase {
   @JsonKey(name: 'id')
   String id;
 
-  GetFileRequest({this.id});
+  GetFileRequest({required this.id});
 
   factory GetFileRequest.fromJson(Map<String, dynamic> srcJson) => _$GetFileRequestFromJson(srcJson);
 
@@ -274,7 +277,7 @@ class UserPageQueryDto extends TBase {
   @JsonKey(name: 'pagination')
   Pagination? pagination;
 
-  /// 用户编码
+  /// 用户编号
   @JsonKey(name: 'code')
   String? code;
 

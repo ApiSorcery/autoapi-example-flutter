@@ -63,24 +63,27 @@
         "parameters": [
           {
             "name": "code",
-            "required": true,
+            "required": false,
             "in": "query",
+            "description": "用户编号",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "name",
-            "required": true,
+            "required": false,
             "in": "query",
+            "description": "用户名称",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "email",
-            "required": true,
+            "required": false,
             "in": "query",
+            "description": "邮箱",
             "schema": {
               "type": "string"
             }
@@ -626,7 +629,7 @@
           },
           "code": {
             "type": "string",
-            "description": "用户编码"
+            "description": "用户编号"
           },
           "name": {
             "type": "string",

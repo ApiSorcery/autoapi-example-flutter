@@ -8,9 +8,9 @@ part of 'model.dart';
 
 ExportUsersRequest _$ExportUsersRequestFromJson(Map<String, dynamic> json) =>
     ExportUsersRequest(
-      code: json['code'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$ExportUsersRequestToJson(ExportUsersRequest instance) =>
