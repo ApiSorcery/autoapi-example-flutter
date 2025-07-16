@@ -16,9 +16,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AutoAPI 示例',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF004099)),
         useMaterial3: true,
         fontFamily: 'SourceSansPro',
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF004099)),
+        scaffoldBackgroundColor: Color.fromRGBO(245, 245, 245, 1),
+        appBarTheme: AppBarTheme(shadowColor: Colors.grey[100], elevation: 2),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+          },
+        ),
+        cardTheme: const CardTheme(
+          color: Colors.white,
+        ),
+        drawerTheme: const DrawerThemeData(
+          backgroundColor: Colors.white,
+        ),
       ),
       home: const UserPage(),
       // 本地化代理

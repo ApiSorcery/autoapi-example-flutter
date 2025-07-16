@@ -12,7 +12,7 @@ class _UserAddPageState extends State<UserAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.white,
         title: const Text('添加用户'),
       ),
       body: const Center(
