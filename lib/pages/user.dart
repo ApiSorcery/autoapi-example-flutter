@@ -227,6 +227,7 @@ class _UserPageState extends State<UserPage> {
                             child: item.status == false
                                 ? Slidable(
                                     endActionPane: ActionPane(
+                                      extentRatio: 0.2,
                                       motion: const ScrollMotion(),
                                       children: [
                                         SlidableAction(
@@ -234,6 +235,7 @@ class _UserPageState extends State<UserPage> {
                                               _handleRemoveUser(context, item),
                                           backgroundColor: Colors.transparent,
                                           foregroundColor: Colors.red,
+                                          padding: EdgeInsets.only(right: 20),
                                           icon: Icons.delete,
                                           label: '删除',
                                         ),
