@@ -8,10 +8,12 @@ import 'package:autoapi_example_flutter/utils/datetime.dart';
 import 'package:autoapi_example_flutter/utils/router.dart';
 import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:autoapi_example_flutter/widgets/card.dart';
+import 'package:autoapi_example_flutter/widgets/dialogs.dart';
 import 'package:autoapi_example_flutter/widgets/filter.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -21,11 +23,12 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  late BuildContext _scaffoldContext;
   List<UserInfoDto>? _resultDatas;
   int _currentPage = 1; // 当前页
   int? _pages; // 总页数
   final ScrollController _scrollController = ScrollController();
-  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final TextEditingController _userCodeController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   KeyValue? _userStatus;
@@ -123,6 +126,24 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
+  /// 删除用户
+  _handleRemoveUser(BuildContext context, UserInfoDto item) async {
+    bool? isConfirm = await showConfirmDialog(
+        context: context, title: '提示', content: '确认要删除当前用户吗?');
+    if (isConfirm == true) {
+      var params = RemoveUserRequest(id: item.id!);
+      await ApiUser.removeUser(params);
+      if (mounted) {
+        await ScaffoldMessenger.of(_scaffoldContext)
+            .showSnackBar(const SnackBar(
+                duration: Duration(seconds: 1), content: Text("操作成功")))
+            .closed;
+      }
+
+      _refreshIndicatorKey.currentState?.show();
+    }
+  }
+
   Widget userCard(BuildContext context, UserInfoDto item) {
     return Padding(
         padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
@@ -181,6 +202,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    _scaffoldContext = context;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -201,7 +223,24 @@ class _UserPageState extends State<UserPage> {
                       itemCount: _resultDatas?.length ?? 0,
                       itemBuilder: (context, index) {
                         var item = _resultDatas![index];
-                        return userCard(context, item);
+                        return GestureDetector(
+                            child: item.status == false
+                                ? Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: const ScrollMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: (context) =>
+                                              _handleRemoveUser(context, item),
+                                          backgroundColor: Colors.transparent,
+                                          foregroundColor: Colors.red,
+                                          icon: Icons.delete,
+                                          label: '删除',
+                                        ),
+                                      ],
+                                    ),
+                                    child: userCard(context, item))
+                                : userCard(context, item));
                       },
                     )),
       floatingActionButton: FloatingActionButton(
