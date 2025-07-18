@@ -1,5 +1,5 @@
 import 'package:autoapi_example_flutter/pages/user.dart';
-import 'package:autoapi_example_flutter/pages/user_add.dart';
+import 'package:autoapi_example_flutter/pages/user_detail.dart';
 import 'package:autoapi_example_flutter/widgets/photo/photo_gallery.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,7 @@ class Routes {
   static const user = '/user';
 
   /// 用户添加页
-  static const userAdd = '/user/add';
+  static const userDetail = '/user/detail';
 
   static Widget _navi(String url, dynamic params) {
     switch (url) {
@@ -19,8 +19,8 @@ class Routes {
         return PhotoGalleryPage(params);
       case user:
         return const UserPage();
-      case userAdd:
-        return UserAddPage(params);
+      case userDetail:
+        return UserDetailPage(params);
       default:
         return const SizedBox.shrink();
     }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:autoapi_example_flutter/utils/file.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -47,8 +46,7 @@ class _PhotoGalleryPageState extends State<PhotoGalleryPage> {
           itemCount: _photoList.length,
           builder: (BuildContext context, int index) {
             return PhotoViewGalleryPageOptions(
-                imageProvider: NetworkImage(
-                    FileUtil.getFileMappedFullName(_photoList[index])),
+                imageProvider: NetworkImage(_photoList[index]),
                 minScale: PhotoViewComputedScale.contained,
                 maxScale: PhotoViewComputedScale.covered * 2);
           },

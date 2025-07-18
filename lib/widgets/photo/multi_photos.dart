@@ -1,5 +1,6 @@
 import 'package:autoapi_example_flutter/apis/auto/demo/api_file.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
+import 'package:autoapi_example_flutter/utils/config.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,9 @@ class _MultiPhotosState extends State<MultiPhotos> {
           file = MultipartFile.fromFileSync(pickedFile.path, filename: pickedFile.name);
         }
         var req = UploadFileRequest(file: file);
-        var imageUrl = await ApiFile.uploadFile(req);
+        var imageId = await ApiFile.uploadFile(req);
         setState(() {
-          widget.imageUrls.add(imageUrl);
+          widget.imageUrls.add('${Config.apiHost}/file/$imageId');
           if (widget.saveHandler != null) {
             widget.saveHandler!(widget.imageUrls);
           }
@@ -106,7 +107,7 @@ class _MultiPhotosState extends State<MultiPhotos> {
             }
             var req = UploadFileRequest(file: file);
             var imageId = await ApiFile.uploadFile(req);
-            selectedImageUrls.add('/file/$imageId');
+            selectedImageUrls.add('${Config.apiHost}/file/$imageId');
           } else {
             invalidImageUrls.add(pickedFile.path);
           }
@@ -198,7 +199,7 @@ class _MultiPhotosState extends State<MultiPhotos> {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(4),
                     child: Image.network(
-                        FileUtil.getFileMappedFullName(widget.imageUrls[i]),
+                        widget.imageUrls[i],
                         fit: BoxFit.fill,
                         width: widget.avatarWidth,
                         height: widget.avatarHeight)))),

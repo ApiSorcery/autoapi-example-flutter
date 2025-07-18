@@ -2,6 +2,7 @@ import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/utils/validator.dart';
+import 'package:autoapi_example_flutter/widgets/command_footer.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_image_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_input_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_select_form_field.dart';
@@ -9,19 +10,20 @@ import 'package:autoapi_example_flutter/widgets/form/label_switch_form_field.dar
 import 'package:autoapi_example_flutter/widgets/form/lable_multiline_input_form_field.dart';
 import 'package:flutter/material.dart';
 
-class UserAddPage extends StatefulWidget {
+class UserDetailPage extends StatefulWidget {
   final Map orderData;
-  const UserAddPage(this.orderData, {super.key});
+  const UserDetailPage(this.orderData, {super.key});
 
   @override
-  State<UserAddPage> createState() => _UserAddPageState();
+  State<UserDetailPage> createState() => _UserDetailPageState();
 }
 
-class _UserAddPageState extends State<UserAddPage> {
+class _UserDetailPageState extends State<UserDetailPage> {
   final _formKey = GlobalKey<FormState>();
   late BuildContext _scaffoldContext;
   late Map<String, Function> _fieldSaveHandlerMap;
   late int? _userId;
+  String? _operateType;
   String? _userCode;
   String? _userName;
   String? _email;
@@ -34,6 +36,7 @@ class _UserAddPageState extends State<UserAddPage> {
   void initState() {
     super.initState();
     _userId = widget.orderData['userId'];
+    _operateType = widget.orderData['operateType'];
     _fieldSaveHandlerMap = {
       'userCode': (String val) => setState(() {
             _userCode = val;
@@ -57,7 +60,7 @@ class _UserAddPageState extends State<UserAddPage> {
             _status = val;
           }),
     };
-    if (_userId != null) {
+    if (_userId != null && _operateType != 'add') {
       _getInitData();
     }
   }
@@ -74,6 +77,45 @@ class _UserAddPageState extends State<UserAddPage> {
       _avatarList = (res.avatar ?? '').isNotEmpty ? [res.avatar!] : [];
       _status = res.status;
     });
+  }
+
+  /// 保存
+  Future _handleSave(BuildContext context) async {
+    _formKey.currentState?.save();
+    if (_operateType == 'add') {
+      await ApiUser.addUser(UserAddRequestDto(
+        code: _userCode,
+        name: _userName,
+        email: _email,
+        gender: _gender,
+        address: _address,
+        avatar: _avatarList?.isNotEmpty ?? false ? _avatarList![0] : '',
+        status: _status,
+      ));
+    } else {
+      await ApiUser.modifyUser(UserModifyRequestDto(
+        id: _userId,
+        code: _userCode,
+        name: _userName,
+        email: _email,
+        gender: _gender,
+        address: _address,
+        avatar: _avatarList?.isNotEmpty ?? false ? _avatarList![0] : '',
+        status: _status,
+      ));
+    }
+    if (!mounted) return;
+    await ScaffoldMessenger.of(_scaffoldContext)
+        .showSnackBar(const SnackBar(
+            duration: Duration(seconds: 1), content: Text("操作成功")))
+        .closed;
+    if (!mounted) return;
+    Navigator.of(_scaffoldContext).pop(true);
+  }
+
+  /// 取消
+  Future _handleCancel(BuildContext context) async {
+    Navigator.of(context).pop(false);
   }
 
   Widget _getfieldsWidget() {
@@ -138,21 +180,28 @@ class _UserAddPageState extends State<UserAddPage> {
   Widget build(BuildContext context) {
     _scaffoldContext = context;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text('添加用户'),
-      ),
-      body: Form(
-          key: _formKey,
-          child: Builder(
-            builder: (BuildContext context) {
-              _scaffoldContext = context;
-              return SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
-                child: _getfieldsWidget(),
-              );
-            },
-          )),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: const Text('添加用户'),
+        ),
+        body: Form(
+            key: _formKey,
+            child: Builder(
+              builder: (BuildContext context) {
+                _scaffoldContext = context;
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+                  child: _getfieldsWidget(),
+                );
+              },
+            )),
+        bottomNavigationBar: CommandFooter(
+            commandFooterData: CommandFooterData(
+                details: [],
+                commandsTitle: '操作',
+                commands: [
+                  FooterCommand('保存', _handleSave),
+                  FooterCommand('取消', _handleCancel),
+                ])));
   }
 }

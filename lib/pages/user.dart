@@ -224,6 +224,16 @@ class _UserPageState extends State<UserPage> {
                       itemBuilder: (context, index) {
                         var item = _resultDatas![index];
                         return GestureDetector(
+                            onTap: () async {
+                              bool? isSuccess = await Routes.push(
+                                  context, Routes.userDetail, {
+                                'operateType': 'edit',
+                                'userId': item.id,
+                              });
+                              if (isSuccess == true) {
+                                _refreshIndicatorKey.currentState?.show();
+                              }
+                            },
                             child: item.status == false
                                 ? Slidable(
                                     endActionPane: ActionPane(
@@ -247,7 +257,7 @@ class _UserPageState extends State<UserPage> {
                     )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Routes.push(context, Routes.userAdd, {});
+          Routes.push(context, Routes.userDetail, {'operateType': 'add'});
         },
         tooltip: '添加用户',
         child: const Icon(Icons.add),
