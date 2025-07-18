@@ -1,5 +1,4 @@
 import 'package:autoapi_example_flutter/utils/style.dart';
-import 'package:autoapi_example_flutter/widgets/formFields/text_form_field_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,7 +54,7 @@ class LabelInputFormField extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Expanded(
-                  child: TextFormFieldV2(
+                  child: TextFormField(
                 textAlign: TextAlign.right,
                 maxLines: 1,
                 decoration: InputDecoration(

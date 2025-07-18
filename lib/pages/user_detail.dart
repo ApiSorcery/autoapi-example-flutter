@@ -32,7 +32,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   int? _gender = 2;
   String? _address;
   List<String>? _avatarList;
-  bool? _status;
+  bool _status = false;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
       _avatarList = (_userInfoDto?.avatar ?? '').isNotEmpty
           ? [_userInfoDto!.avatar!]
           : [];
-      _status = _userInfoDto?.status;
+      _status = _userInfoDto?.status ?? false;
     });
   }
 
@@ -165,7 +165,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LabelSwitchFormField(
                 label: '状态:',
                 initialValue: TupleEntity<bool, String>(
-                    _status ?? false, _status == true ? '启用' : '禁用'),
+                    _status, _status == true ? '启用' : '禁用'),
                 saveHandler: _fieldSaveHandlerMap['status']!,
                 enabled: true,
               ),

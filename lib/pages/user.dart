@@ -256,8 +256,12 @@ class _UserPageState extends State<UserPage> {
                       },
                     )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Routes.push(context, Routes.userDetail, {'operateType': 'add'});
+        onPressed: () async {
+          bool? isSuccess = await Routes.push(
+              context, Routes.userDetail, {'operateType': 'add'});
+          if (isSuccess == true) {
+            _refreshIndicatorKey.currentState?.show();
+          }
         },
         tooltip: '添加用户',
         child: const Icon(Icons.add),
