@@ -8,6 +8,7 @@ import 'package:autoapi_example_flutter/widgets/form/label_input_form_field.dart
 import 'package:autoapi_example_flutter/widgets/form/label_select_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_switch_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/lable_multiline_input_form_field.dart';
+import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailPage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   final _formKey = GlobalKey<FormState>();
   late BuildContext _scaffoldContext;
   late Map<String, Function> _fieldSaveHandlerMap;
+  UserInfoDto? _userInfoDto;
   late int? _userId;
   String? _operateType;
   String? _userCode;
@@ -67,15 +69,17 @@ class _UserDetailPageState extends State<UserDetailPage> {
 
   void _getInitData() async {
     var req = GetUserOneRequest(id: _userId!);
-    var res = await ApiUser.getUserOne(req);
+    _userInfoDto = await ApiUser.getUserOne(req);
     setState(() {
-      _userCode = res.code;
-      _userName = res.name;
-      _email = res.email;
-      _gender = res.gender;
-      _address = res.address;
-      _avatarList = (res.avatar ?? '').isNotEmpty ? [res.avatar!] : [];
-      _status = res.status;
+      _userCode = _userInfoDto?.code;
+      _userName = _userInfoDto?.name;
+      _email = _userInfoDto?.email;
+      _gender = _userInfoDto?.gender;
+      _address = _userInfoDto?.address;
+      _avatarList = (_userInfoDto?.avatar ?? '').isNotEmpty
+          ? [_userInfoDto!.avatar!]
+          : [];
+      _status = _userInfoDto?.status;
     });
   }
 
@@ -128,7 +132,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 initialValue: _userCode,
                 validator: Validator.validateEmpty(message: '不能为空'),
                 saveHandler: _fieldSaveHandlerMap['userCode']!,
-                enabled: true,
+                enabled: _operateType == 'add',
                 allowEmpty: false,
               ),
               LabelInputFormField(
@@ -137,6 +141,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 validator: Validator.validateEmpty(message: '不能为空'),
                 saveHandler: _fieldSaveHandlerMap['userName']!,
                 enabled: true,
+                allowEmpty: false,
               ),
               LabelInputFormField(
                 label: '邮箱:',
@@ -144,6 +149,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 validator: Validator.validateEmpty(message: '不能为空'),
                 saveHandler: _fieldSaveHandlerMap['email']!,
                 enabled: true,
+                allowEmpty: false,
               ),
               LabelSelectFormField(
                 label: '性别:',
@@ -162,14 +168,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LableMultilineInputFormField(
                 label: '地址:',
                 initialValue: _address,
-                validator: Validator.validateEmpty(message: '不能为空'),
                 saveHandler: _fieldSaveHandlerMap['address']!,
                 enabled: true,
               ),
               LabelImageFormField(
                 label: '头像:',
                 initialValue: _avatarList,
-                validator: Validator.validateEmpty(message: '不能为空'),
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
                 enabled: true,
               ),
@@ -184,24 +188,28 @@ class _UserDetailPageState extends State<UserDetailPage> {
           backgroundColor: Colors.white,
           title: const Text('添加用户'),
         ),
-        body: Form(
-            key: _formKey,
-            child: Builder(
-              builder: (BuildContext context) {
-                _scaffoldContext = context;
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
-                  child: _getfieldsWidget(),
-                );
-              },
-            )),
-        bottomNavigationBar: CommandFooter(
-            commandFooterData: CommandFooterData(
-                details: [],
-                commandsTitle: '操作',
-                commands: [
-                  FooterCommand('保存', _handleSave),
-                  FooterCommand('取消', _handleCancel),
-                ])));
+        body: _operateType == 'edit' && _userInfoDto == null
+            ? const Loading()
+            : Form(
+                key: _formKey,
+                child: Builder(
+                  builder: (BuildContext context) {
+                    return SingleChildScrollView(
+                      padding:
+                          const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+                      child: _getfieldsWidget(),
+                    );
+                  },
+                )),
+        bottomNavigationBar: _operateType == 'edit' && _userInfoDto == null
+            ? const Loading()
+            : CommandFooter(
+                commandFooterData: CommandFooterData(
+                    details: [],
+                    commandsTitle: '操作',
+                    commands: [
+                      FooterCommand('保存', _handleSave),
+                      FooterCommand('取消', _handleCancel),
+                    ])));
   }
 }
