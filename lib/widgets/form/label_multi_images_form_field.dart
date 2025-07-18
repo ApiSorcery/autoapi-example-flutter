@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:autoapi_example_flutter/utils/style.dart';
-import 'package:autoapi_example_flutter/widgets/photo/multi_photos.dart';
+import 'package:autoapi_example_flutter/widgets/photo/multi_images.dart';
 
-class LabelImageFormField extends StatelessWidget {
+class LabelMultiImagesFormField extends StatelessWidget {
   /// 标签
   final String? label;
 
@@ -18,17 +18,14 @@ class LabelImageFormField extends StatelessWidget {
   /// 是否允许为空,默认true
   final bool allowEmpty;
 
-  /// 上传地址,默认‘up_image/’
-  final String uploadUrl;
-
-  const LabelImageFormField(
-      {super.key,
-      this.label,
-      this.initialValue,
-      this.saveHandler,
-      this.enabled = true,
-      this.allowEmpty = true,
-      this.uploadUrl = '/1.0/img/upload_file'});
+  const LabelMultiImagesFormField({
+    super.key,
+    this.label,
+    this.initialValue,
+    this.saveHandler,
+    this.enabled = true,
+    this.allowEmpty = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +54,11 @@ class LabelImageFormField extends StatelessWidget {
                 : Container(),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: MultiPhotos(initialValue ?? <String>[], imageEnabled,
-                  saveHandler: saveHandler,
-                  uploadUrl: uploadUrl),
+              child: MultiImages(
+                initialValue ?? <String>[],
+                imageEnabled,
+                saveHandler: saveHandler,
+              ),
             )
           ],
         ));

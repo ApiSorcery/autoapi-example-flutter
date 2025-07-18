@@ -11,46 +11,25 @@ import 'package:autoapi_example_flutter/utils/router.dart';
 import 'package:autoapi_example_flutter/utils/file.dart';
 import 'package:flutter/foundation.dart';
 
-class IconTextButton extends StatelessWidget {
-  final IconData? icon;
-  final String? text;
-  final GestureTapCallback? onTap;
-
-  const IconTextButton({super.key, this.icon, this.text, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: ListTile(
-        leading: Icon(icon ?? Icons.device_unknown),
-        title: Text(text ?? ""),
-      ),
-    );
-  }
-}
-
-class MultiPhotos extends StatefulWidget {
+class MultiImages extends StatefulWidget {
   final List<String> imageUrls;
   final bool enabled;
   final Function? saveHandler;
-  final String? uploadUrl;
   final double avatarWidth;
   final double avatarHeight;
   final Color preivewBgColor;
-  const MultiPhotos(this.imageUrls, this.enabled,
+  const MultiImages(this.imageUrls, this.enabled,
       {super.key,
       this.saveHandler,
-      this.uploadUrl,
       this.avatarWidth = 80,
       this.avatarHeight = 80,
       this.preivewBgColor = Colors.black});
 
   @override
-  State<MultiPhotos> createState() => _MultiPhotosState();
+  State<MultiImages> createState() => _MultiImagesState();
 }
 
-class _MultiPhotosState extends State<MultiPhotos> {
+class _MultiImagesState extends State<MultiImages> {
   List<AssetEntity> picked = [];
   final imagePicker = ImagePicker();
 
@@ -67,7 +46,8 @@ class _MultiPhotosState extends State<MultiPhotos> {
           final bytes = await pickedFile.readAsBytes();
           file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
         } else {
-          file = MultipartFile.fromFileSync(pickedFile.path, filename: pickedFile.name);
+          file = MultipartFile.fromFileSync(pickedFile.path,
+              filename: pickedFile.name);
         }
         var req = UploadFileRequest(file: file);
         var imageId = await ApiFile.uploadFile(req);
@@ -93,22 +73,21 @@ class _MultiPhotosState extends State<MultiPhotos> {
     List<String> invalidImageUrls = [];
     if (pickedFiles.isNotEmpty) {
       for (var pickedFile in pickedFiles) {
-        if (widget.uploadUrl != null) {
-          CompressFormat? format = FileUtil.getCompressFormat(pickedFile.name);
-          if (format != null) {
-            MultipartFile file;
-            if (kIsWeb) {
-              final bytes = await pickedFile.readAsBytes();
-              file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-            } else {
-              file = MultipartFile.fromFileSync(pickedFile.path, filename: pickedFile.name);
-            }
-            var req = UploadFileRequest(file: file);
-            var imageId = await ApiFile.uploadFile(req);
-            selectedImageUrls.add('${Config.apiHost}/file/$imageId');
+        CompressFormat? format = FileUtil.getCompressFormat(pickedFile.name);
+        if (format != null) {
+          MultipartFile file;
+          if (kIsWeb) {
+            final bytes = await pickedFile.readAsBytes();
+            file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
           } else {
-            invalidImageUrls.add(pickedFile.path);
+            file = MultipartFile.fromFileSync(pickedFile.path,
+                filename: pickedFile.name);
           }
+          var req = UploadFileRequest(file: file);
+          var imageId = await ApiFile.uploadFile(req);
+          selectedImageUrls.add('${Config.apiHost}/file/$imageId');
+        } else {
+          invalidImageUrls.add(pickedFile.path);
         }
       }
     }
@@ -136,16 +115,18 @@ class _MultiPhotosState extends State<MultiPhotos> {
           return SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                IconTextButton(
-                  icon: Icons.photo_camera,
-                  text: "拍照",
-                  onTap: _getCamera,
-                ),
-                IconTextButton(
-                  icon: Icons.photo,
-                  text: "相册",
-                  onTap: _getImages,
-                ),
+                InkWell(
+                    onTap: _getCamera,
+                    child: ListTile(
+                      leading: Icon(Icons.photo_camera),
+                      title: Text("拍照"),
+                    )),
+                InkWell(
+                    onTap: _getImages,
+                    child: ListTile(
+                      leading: Icon(Icons.photo),
+                      title: Text("相册"),
+                    )),
               ],
             ),
           );
@@ -196,8 +177,7 @@ class _MultiPhotosState extends State<MultiPhotos> {
                 },
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(4),
-                    child: Image.network(
-                        widget.imageUrls[i],
+                    child: Image.network(widget.imageUrls[i],
                         fit: BoxFit.fill,
                         width: widget.avatarWidth,
                         height: widget.avatarHeight)))),

@@ -3,9 +3,9 @@ import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/utils/validator.dart';
 import 'package:autoapi_example_flutter/widgets/command_footer.dart';
-import 'package:autoapi_example_flutter/widgets/form/label_image_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_input_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_select_form_field.dart';
+import 'package:autoapi_example_flutter/widgets/form/label_single_image_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_switch_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/lable_multiline_input_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
@@ -31,7 +31,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
   String? _email;
   int? _gender = 2;
   String? _address;
-  List<String>? _avatarList;
+  String? _avatar;
   bool _status = false;
 
   @override
@@ -55,8 +55,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
       'address': (String val) => setState(() {
             _address = val;
           }),
-      'avatar': (List<String> val) => setState(() {
-            _avatarList = val;
+      'avatar': (String val) => setState(() {
+            _avatar = val;
           }),
       'status': (bool val) => setState(() {
             _status = val;
@@ -76,9 +76,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
       _email = _userInfoDto?.email;
       _gender = _userInfoDto?.gender;
       _address = _userInfoDto?.address;
-      _avatarList = (_userInfoDto?.avatar ?? '').isNotEmpty
-          ? [_userInfoDto!.avatar!]
-          : [];
+      _avatar = _userInfoDto?.avatar;
       _status = _userInfoDto?.status ?? false;
     });
   }
@@ -102,7 +100,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
         email: _email,
         gender: _gender,
         address: _address,
-        avatar: _avatarList?.isNotEmpty ?? false ? _avatarList![0] : '',
+        avatar: _avatar,
         status: _status,
       ));
     } else {
@@ -113,7 +111,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
         email: _email,
         gender: _gender,
         address: _address,
-        avatar: _avatarList?.isNotEmpty ?? false ? _avatarList![0] : '',
+        avatar: _avatar,
         status: _status,
       ));
     }
@@ -175,11 +173,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 saveHandler: _fieldSaveHandlerMap['address']!,
                 enabled: true,
               ),
-              LabelImageFormField(
+              LabelSingleImageFormField(
                 label: '头像:',
-                initialValue: _avatarList,
+                initialValue: _avatar,
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
                 enabled: true,
+                avatarWidth: 100,
+                avatarHeight: 110,
               ),
             ])));
   }
