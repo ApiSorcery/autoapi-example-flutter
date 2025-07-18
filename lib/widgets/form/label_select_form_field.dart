@@ -50,7 +50,8 @@ class LabelSelectFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(color: Color.fromRGBO(255, 255, 255, 1)),
+        decoration:
+            const BoxDecoration(color: Color.fromRGBO(255, 255, 255, 1)),
         child: Flex(
             direction: Axis.horizontal,
             mainAxisSize: MainAxisSize.min,
@@ -74,6 +75,18 @@ class LabelSelectFormField extends StatelessWidget {
                               disabledBorder: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none),
+                          selectedItemBuilder: (context) {
+                            return options.keys.map((optionKey) {
+                              return Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(options[optionKey]!,
+                                    style: const TextStyle(
+                                      color: Color.fromRGBO(51, 51, 51, 1),
+                                      fontSize: 14,
+                                    )),
+                              );
+                            }).toList();
+                          },
                           value: (options.isNotEmpty)
                               ? (initialValue == '' ? null : initialValue)
                               : null,

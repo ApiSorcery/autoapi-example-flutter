@@ -12,6 +12,7 @@ class SelectFormField<T> extends FormField<T> {
     required List<DropdownMenuItem<T>> items,
     required this.onChanged,
     this.decoration = const InputDecoration(),
+    this.selectedItemBuilder,
     super.onSaved,
     super.validator,
     TextAlign textAlign = TextAlign.right,
@@ -53,6 +54,7 @@ class SelectFormField<T> extends FormField<T> {
                     items: items,
                     hint: hint,
                     onChanged: field.didChange,
+                    selectedItemBuilder: selectedItemBuilder,
                   ),
                 ),
               );
@@ -61,6 +63,7 @@ class SelectFormField<T> extends FormField<T> {
   /// Called when the user selects an item.
   final ValueChanged<T> onChanged;
   final InputDecoration decoration;
+  final DropdownButtonBuilder? selectedItemBuilder;
 
   @override
   FormFieldState<T> createState() => _SelectFormFieldState<T>();
