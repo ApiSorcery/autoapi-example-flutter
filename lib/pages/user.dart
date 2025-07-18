@@ -184,9 +184,6 @@ class _UserPageState extends State<UserPage> {
         }
       }
 
-      // 生成文件名
-      String fileName = '用户导出_${DateTime.now().millisecondsSinceEpoch}.xlsx';
-
       // 获取导出文件内容
       var req = ExportUsersRequest(
         code: _userCodeController.text,
@@ -196,10 +193,15 @@ class _UserPageState extends State<UserPage> {
       if (blobRes != null) {
         var fileBytes = blobRes.data;
         if (fileBytes != null) {
+          String fileName = blobRes.name ??
+              '用户_${DateTime.now().millisecondsSinceEpoch}.xlsx';
           if (kIsWeb) {
             // Web: Use AnchorElement to trigger download
             final blob = html.Blob([fileBytes]);
             final url = html.Url.createObjectUrlFromBlob(blob);
+            html.AnchorElement(href: url)
+              ..setAttribute('download', fileName)
+              ..click();
             html.Url.revokeObjectUrl(url);
             if (mounted) {
               await ScaffoldMessenger.of(_scaffoldContext)
