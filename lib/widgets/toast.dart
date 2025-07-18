@@ -17,3 +17,20 @@ toastInfo(BuildContext context, String msg) {
     autoCloseDuration: const Duration(seconds: 1),
   );
 }
+
+// 提示框
+toastWarning(BuildContext context, String msg) {
+  return toastification.show(
+    context: context, // optional if you use ToastificationWrapper
+    title: Text(
+      msg,
+      softWrap: true,
+    ),
+    type: ToastificationType.warning,
+    style: ToastificationStyle.flat,
+    alignment: Alignment.center,
+    backgroundColor: Colors.black,
+    foregroundColor: Colors.white,
+    autoCloseDuration: const Duration(seconds: 5),
+  );
+}

@@ -247,7 +247,7 @@ class _UserPageState extends State<UserPage> {
                     )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Routes.push(context, Routes.userAdd, null);
+          Routes.push(context, Routes.userAdd, {});
         },
         tooltip: '添加用户',
         child: const Icon(Icons.add),
