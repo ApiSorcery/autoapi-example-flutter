@@ -1,3 +1,4 @@
+import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,13 +12,12 @@ class BlobResponseInterceptor extends InterceptorsWrapper {
     // 返回blob格式，文件下载
     if (response.data is Uint8List) {
       var contentDisposition = response.headers.value('content-disposition');
-      response.data = {
-        'data': response.data,
-        'type': response.headers.value('content-type') ?? '',
-        'name': Uri.decodeComponent(contentDisposition
-                ?.substring(contentDisposition.indexOf('=') + 1) ??
-            '')
-      };
+      response.data = BlobResp(
+          data: response.data,
+          type: response.headers.value('content-type') ?? '',
+          name: Uri.decodeComponent(contentDisposition
+                  ?.substring(contentDisposition.indexOf('=') + 1) ??
+              ''));
     }
     // 业务异常处理 (0：正常)
     else if (response.data['status'] != 0) {

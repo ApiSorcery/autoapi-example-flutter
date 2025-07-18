@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
@@ -8,12 +9,18 @@ import 'package:autoapi_example_flutter/utils/datetime.dart';
 import 'package:autoapi_example_flutter/utils/router.dart';
 import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:autoapi_example_flutter/widgets/card.dart';
+import 'package:autoapi_example_flutter/widgets/command_footer.dart';
 import 'package:autoapi_example_flutter/widgets/dialogs.dart';
 import 'package:autoapi_example_flutter/widgets/filter.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart'; // for kIsWeb
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:html' as html; // for web file download
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -31,7 +38,8 @@ class _UserPageState extends State<UserPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _userCodeController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
-  KeyValue? _userStatus;
+  KeyValue? _userStatusKv;
+  bool _isExporting = false;
 
   @override
   void initState() {
@@ -59,7 +67,7 @@ class _UserPageState extends State<UserPage> {
         ),
         code: _userCodeController.text,
         name: _userNameController.text,
-        status: _userStatus == null ? null : (_userStatus!.id == 'true'),
+        status: _userStatusKv == null ? null : (_userStatusKv!.id == 'true'),
       );
       var response = await ApiUser.getUserPaged(params);
       setState(() {
@@ -80,7 +88,7 @@ class _UserPageState extends State<UserPage> {
     setState(() {
       _userCodeController.clear();
       _userNameController.clear();
-      _userStatus = null;
+      _userStatusKv = null;
     });
   }
 
@@ -92,10 +100,10 @@ class _UserPageState extends State<UserPage> {
   DropdownButton _getUserStatus() {
     return DropdownButton<KeyValue>(
       isExpanded: true,
-      value: _userStatus,
+      value: _userStatusKv,
       onChanged: (KeyValue? newValue) {
         setState(() {
-          _userStatus = newValue;
+          _userStatusKv = newValue;
         });
       },
       items: userStatusConst.map((KeyValue value) {
@@ -141,6 +149,105 @@ class _UserPageState extends State<UserPage> {
       }
 
       _refreshIndicatorKey.currentState?.show();
+    }
+  }
+
+  Future _handleAdd(BuildContext context) async {
+    bool? isSuccess =
+        await Routes.push(context, Routes.userDetail, {'operateType': 'add'});
+    if (isSuccess == true) {
+      _refreshIndicatorKey.currentState?.show();
+    }
+  }
+
+  Future _handleExport(BuildContext context) async {
+    try {
+      if (_isExporting) {
+        return;
+      }
+
+      setState(() {
+        _isExporting = true;
+      });
+
+      // 检查存储权限（仅在非Web平台）
+      if (!kIsWeb) {
+        var status = await Permission.storage.request();
+        if (!status.isGranted) {
+          if (mounted) {
+            toastWarning(_scaffoldContext, '需要存储权限才能导出文件');
+          }
+          setState(() {
+            _isExporting = false;
+          });
+          return;
+        }
+      }
+
+      // 生成文件名
+      String fileName = '用户导出_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+
+      // 获取导出文件内容
+      var req = ExportUsersRequest(
+        code: _userCodeController.text,
+        name: _userNameController.text,
+      );
+      BlobResp? blobRes = await ApiUser.exportUsers(req);
+      if (blobRes != null) {
+        var fileBytes = blobRes.data;
+        if (fileBytes != null) {
+          if (kIsWeb) {
+            // Web: Use AnchorElement to trigger download
+            final blob = html.Blob([fileBytes]);
+            final url = html.Url.createObjectUrlFromBlob(blob);
+            html.Url.revokeObjectUrl(url);
+            if (mounted) {
+              await ScaffoldMessenger.of(_scaffoldContext)
+                  .showSnackBar(const SnackBar(
+                      duration: Duration(seconds: 1), content: Text("导出成功")))
+                  .closed;
+            }
+          } else {
+            // Mobile/Desktop: Save to file system
+            Directory? directory = await getExternalStorageDirectory();
+            if (directory == null) {
+              if (mounted) {
+                toastWarning(_scaffoldContext, '无法获取存储目录');
+              }
+              setState(() {
+                _isExporting = false;
+              });
+              return;
+            }
+            String filePath = '${directory.path}/$fileName';
+            File(filePath)
+              ..createSync(recursive: true)
+              ..writeAsBytesSync(fileBytes);
+
+            if (mounted) {
+              await ScaffoldMessenger.of(_scaffoldContext)
+                  .showSnackBar(const SnackBar(
+                      duration: Duration(seconds: 1), content: Text("导出成功")))
+                  .closed;
+            }
+          }
+        }
+      } else {
+        if (mounted) {
+          toastWarning(_scaffoldContext, '导出失败');
+        }
+      }
+      setState(() {
+        _isExporting = false;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      if (mounted) {
+        toastWarning(_scaffoldContext, '导出失败: ${e.toString()}');
+      }
+      setState(() {
+        _isExporting = false;
+      });
     }
   }
 
@@ -255,16 +362,15 @@ class _UserPageState extends State<UserPage> {
                                 : userCard(context, item));
                       },
                     )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          bool? isSuccess = await Routes.push(
-              context, Routes.userDetail, {'operateType': 'add'});
-          if (isSuccess == true) {
-            _refreshIndicatorKey.currentState?.show();
-          }
-        },
-        tooltip: '添加用户',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: CommandFooter(
+        commandFooterData: CommandFooterData(
+          details: [],
+          commandsTitle: '操作',
+          commands: [
+            FooterCommand('添加用户', _handleAdd),
+            FooterCommand('导出', _handleExport)
+          ],
+        ),
       ),
     );
   }
