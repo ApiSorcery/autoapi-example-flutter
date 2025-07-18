@@ -77,6 +77,7 @@ class LableMultilineInputFormField extends StatelessWidget {
                 ],
                 initialValue: initialValue,
                 validator: validator as FormFieldValidator<String>?,
+                autovalidateMode: AutovalidateMode.always,
                 onSaved:  (value) {
                   if (saveHandler != null) {
                     saveHandler!(value);

@@ -65,7 +65,7 @@ class LabelInputFormField extends StatelessWidget {
                   enabledBorder: const UnderlineInputBorder(
                       borderSide:
                           BorderSide(color: Colors.black38, width: 1.5)),
-                  focusedBorder:  UnderlineInputBorder(
+                  focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                           color: Theme.of(context).colorScheme.primary,
                           width: 1.5)),
@@ -79,6 +79,7 @@ class LabelInputFormField extends StatelessWidget {
                 // controller: controller,
                 style: AppTextStyle.formText,
                 validator: validator as FormFieldValidator<String>?,
+                autovalidateMode: AutovalidateMode.always,
                 onSaved: (value) {
                   if (saveHandler != null) {
                     saveHandler!(value);

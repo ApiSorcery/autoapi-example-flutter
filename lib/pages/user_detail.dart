@@ -83,8 +83,17 @@ class _UserDetailPageState extends State<UserDetailPage> {
     });
   }
 
+  /// 取消
+  Future _handleCancel(BuildContext context) async {
+    Navigator.of(context).pop(false);
+  }
+
   /// 保存
   Future _handleSave(BuildContext context) async {
+    if (_formKey.currentState?.validate() == false) {
+      return;
+    }
+
     _formKey.currentState?.save();
     if (_operateType == 'add') {
       await ApiUser.addUser(UserAddRequestDto(
@@ -115,11 +124,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
         .closed;
     if (!mounted) return;
     Navigator.of(_scaffoldContext).pop(true);
-  }
-
-  /// 取消
-  Future _handleCancel(BuildContext context) async {
-    Navigator.of(context).pop(false);
   }
 
   Widget _getfieldsWidget() {

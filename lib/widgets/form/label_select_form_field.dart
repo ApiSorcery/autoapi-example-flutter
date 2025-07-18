@@ -85,6 +85,7 @@ class LabelSelectFormField extends StatelessWidget {
                             saveHandler(value);
                           },
                           validator: validator as FormFieldValidator<dynamic>?,
+                          autovalidateMode: AutovalidateMode.always,
                           items: (options.isNotEmpty)
                               ? options.keys.map((optionKey) {
                                   return DropdownMenuItem(

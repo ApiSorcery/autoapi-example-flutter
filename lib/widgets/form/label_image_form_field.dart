@@ -9,9 +9,6 @@ class LabelImageFormField extends StatelessWidget {
   /// 值
   final List<String>? initialValue;
 
-  /// 校验
-  final Function? validator;
-
   /// 保存
   final Function? saveHandler;
 
@@ -28,7 +25,6 @@ class LabelImageFormField extends StatelessWidget {
       {super.key,
       this.label,
       this.initialValue,
-      this.validator,
       this.saveHandler,
       this.enabled = true,
       this.allowEmpty = true,
@@ -62,7 +58,6 @@ class LabelImageFormField extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: MultiPhotos(initialValue ?? <String>[], imageEnabled,
-                  validator: validator,
                   saveHandler: saveHandler,
                   uploadUrl: uploadUrl),
             )

@@ -9,9 +9,6 @@ class LabelSwitchFormField extends StatelessWidget {
   /// 值
   final TupleEntity<bool, String>? initialValue;
 
-  /// 校验
-  final Function? validator;
-
   /// 保存
   final Function? saveHandler;
 
@@ -22,7 +19,6 @@ class LabelSwitchFormField extends StatelessWidget {
       {super.key,
       this.label,
       this.initialValue,
-      this.validator,
       this.saveHandler,
       this.enabled = true});
 
@@ -43,13 +39,13 @@ class LabelSwitchFormField extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: SizedBox(
                       child: SwitchListTile(
-                        activeColor: Color.fromRGBO(58, 102, 242, 1),
-                        contentPadding: EdgeInsets.only(right: 0),
-                        value: initialValue?.key ?? false,
-                        onChanged: switchEnabled
-                            ? saveHandler as ValueChanged<bool>?
-                            : null,
-                      ))))
+                    activeColor: Color.fromRGBO(58, 102, 242, 1),
+                    contentPadding: EdgeInsets.only(right: 0),
+                    value: initialValue?.key ?? false,
+                    onChanged: switchEnabled
+                        ? saveHandler as ValueChanged<bool>?
+                        : null,
+                  ))))
         ],
       ),
     );

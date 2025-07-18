@@ -33,7 +33,6 @@ class IconTextButton extends StatelessWidget {
 class MultiPhotos extends StatefulWidget {
   final List<String> imageUrls;
   final bool enabled;
-  final Function? validator;
   final Function? saveHandler;
   final String? uploadUrl;
   final double avatarWidth;
@@ -41,7 +40,6 @@ class MultiPhotos extends StatefulWidget {
   final Color preivewBgColor;
   const MultiPhotos(this.imageUrls, this.enabled,
       {super.key,
-      this.validator,
       this.saveHandler,
       this.uploadUrl,
       this.avatarWidth = 80,
