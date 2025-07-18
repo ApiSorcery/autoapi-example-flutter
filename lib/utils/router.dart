@@ -1,6 +1,6 @@
 import 'package:autoapi_example_flutter/pages/user.dart';
 import 'package:autoapi_example_flutter/pages/user_detail.dart';
-import 'package:autoapi_example_flutter/widgets/photo/photo_gallery.dart';
+import 'package:autoapi_example_flutter/widgets/photo/image_preview.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -16,7 +16,7 @@ class Routes {
   static Widget _navi(String url, dynamic params) {
     switch (url) {
       case imgView:
-        return PhotoGalleryPage(params);
+        return ImagePreviewPage(params);
       case user:
         return const UserPage();
       case userDetail:
