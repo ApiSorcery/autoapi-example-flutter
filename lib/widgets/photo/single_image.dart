@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:autoapi_example_flutter/utils/file.dart';
-import 'package:flutter/foundation.dart';
 
 class SingleImage extends StatefulWidget {
   final String? defaultImageUrl;
@@ -31,25 +30,12 @@ class SingleImage extends StatefulWidget {
 
 class _SingleImageState extends State<SingleImage> {
   String? _imageUrl;
+  final imagePicker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     _imageUrl = widget.defaultImageUrl;
-  }
-
-  final imagePicker = ImagePicker();
-
-  /// 将 XFile 转换为 MultipartFile，兼容 web 和非 web 平台。
-  /// [pickedFile] 选择的图片文件。
-  Future<MultipartFile> _xFileToMultipartFile(XFile pickedFile) async {
-    if (kIsWeb) {
-      final bytes = await pickedFile.readAsBytes();
-      return MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-    } else {
-      return MultipartFile.fromFileSync(pickedFile.path,
-          filename: pickedFile.name);
-    }
   }
 
   /// 处理图片选择后的逻辑，包括格式校验、转换为 MultipartFile、回调 uploadHandler、展示图片或弹出格式错误提示。
@@ -62,7 +48,7 @@ class _SingleImageState extends State<SingleImage> {
       CompressFormat? format = FileUtil.getCompressFormat(formatTarget);
       if (format != null) {
         if (widget.uploadHandler != null) {
-          MultipartFile file = await _xFileToMultipartFile(pickedFile);
+          MultipartFile file = await FileUtil.xFileToMultipartFile(pickedFile);
           String? imageUrl = await widget.uploadHandler!(file);
           if (imageUrl != null && mounted) {
             setState(() {

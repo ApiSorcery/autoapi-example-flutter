@@ -6,7 +6,6 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:autoapi_example_flutter/utils/router.dart';
 import 'package:autoapi_example_flutter/utils/file.dart';
-import 'package:flutter/foundation.dart';
 
 class MultiImages extends StatefulWidget {
   final List<String> imageUrls;
@@ -40,14 +39,7 @@ class _MultiImagesState extends State<MultiImages> {
     if (pickedFile != null) {
       CompressFormat? format = FileUtil.getCompressFormat(pickedFile.path);
       if (format != null) {
-        MultipartFile file;
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-        } else {
-          file = MultipartFile.fromFileSync(pickedFile.path,
-              filename: pickedFile.name);
-        }
+        MultipartFile file = await FileUtil.xFileToMultipartFile(pickedFile);
         String? imageUrl = await widget.uploadHandler?.call(file);
         setState(() {
           if (imageUrl != null) {
@@ -75,14 +67,7 @@ class _MultiImagesState extends State<MultiImages> {
       for (var pickedFile in pickedFiles) {
         CompressFormat? format = FileUtil.getCompressFormat(pickedFile.name);
         if (format != null) {
-          MultipartFile file;
-          if (kIsWeb) {
-            final bytes = await pickedFile.readAsBytes();
-            file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-          } else {
-            file = MultipartFile.fromFileSync(pickedFile.path,
-                filename: pickedFile.name);
-          }
+          MultipartFile file = await FileUtil.xFileToMultipartFile(pickedFile);
           String? imageUrl = await widget.uploadHandler?.call(file);
           if (imageUrl != null) {
             selectedImageUrls.add(imageUrl);
