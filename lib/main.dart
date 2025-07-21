@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AutoAPI 示例',
+      title: 'AutoAPI - Flutter示例',
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'SourceSansPro',
