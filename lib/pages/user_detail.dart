@@ -1,6 +1,8 @@
+import 'package:autoapi_example_flutter/apis/auto/demo/api_file.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/tuple_entity.dart';
+import 'package:autoapi_example_flutter/utils/config.dart';
 import 'package:autoapi_example_flutter/utils/validator.dart';
 import 'package:autoapi_example_flutter/widgets/command_footer.dart';
 import 'package:autoapi_example_flutter/widgets/form/label_input_form_field.dart';
@@ -9,6 +11,7 @@ import 'package:autoapi_example_flutter/widgets/form/label_single_image_form_fie
 import 'package:autoapi_example_flutter/widgets/form/label_switch_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/form/lable_multiline_input_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailPage extends StatefulWidget {
@@ -55,9 +58,14 @@ class _UserDetailPageState extends State<UserDetailPage> {
       'address': (String val) => setState(() {
             _address = val;
           }),
-      'avatar': (String val) => setState(() {
-            _avatar = val;
-          }),
+      'avatar': (MultipartFile file) async {
+        var req = UploadFileRequest(file: file);
+        var imageId = await ApiFile.uploadFile(req);
+        setState(() {
+          _avatar = '${Config.apiHost}/file/$imageId';
+        });
+        return _avatar;
+      },
       'status': (bool val) => setState(() {
             _status = val;
           }),
@@ -176,7 +184,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LabelSingleImageFormField(
                 label: '头像:',
                 initialValue: _avatar,
-                saveHandler: _fieldSaveHandlerMap['avatar']!,
+                saveHandler: _fieldSaveHandlerMap['avatar']! as Future<String?> Function(MultipartFile),
                 enabled: true,
                 avatarWidth: 100,
                 avatarHeight: 110,

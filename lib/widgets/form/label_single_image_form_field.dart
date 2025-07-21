@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:autoapi_example_flutter/widgets/photo/single_image.dart';
@@ -10,7 +11,7 @@ class LabelSingleImageFormField extends StatelessWidget {
   final String? initialValue;
 
   /// 保存
-  final Function? saveHandler;
+  final Future<String?> Function(MultipartFile file)? saveHandler;
 
   /// 是否可用,默认true
   final bool enabled;

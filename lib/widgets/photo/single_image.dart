@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:autoapi_example_flutter/apis/auto/demo/api_file.dart';
-import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
-import 'package:autoapi_example_flutter/utils/config.dart';
 import 'package:autoapi_example_flutter/utils/constants.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +12,7 @@ import 'package:flutter/foundation.dart';
 class SingleImage extends StatefulWidget {
   final String? defaultImageUrl;
   final bool enabled;
-  final Function? saveHandler;
+  final Future<String?> Function(MultipartFile file)? saveHandler;
   final double avatarWidth;
   final double avatarHeight;
   final Color preivewBgColor;
@@ -41,30 +38,34 @@ class _SingleImageState extends State<SingleImage> {
 
   final imagePicker = ImagePicker();
 
-  // 相机拍照
-  Future _getCamera() async {
-    Navigator.of(context).pop();
-    final XFile? pickedFile =
-        await imagePicker.pickImage(source: ImageSource.camera);
+  /// 将 XFile 转换为 MultipartFile，兼容 web 和非 web 平台。
+  /// [pickedFile] 选择的图片文件。
+  Future<MultipartFile> _xFileToMultipartFile(XFile pickedFile) async {
+    if (kIsWeb) {
+      final bytes = await pickedFile.readAsBytes();
+      return MultipartFile.fromBytes(bytes, filename: pickedFile.name);
+    } else {
+      return MultipartFile.fromFileSync(pickedFile.path, filename: pickedFile.name);
+    }
+  }
+
+  /// 处理图片选择后的逻辑，包括格式校验、转换为 MultipartFile、回调 saveHandler、展示图片或弹出格式错误提示。
+  /// [pickedFile] 选择的图片文件。
+  /// [usePath] 是否用 path 进行格式校验（拍照用 path，图库用 name）。
+  Future<void> _handlePickedFile(XFile? pickedFile, {required bool usePath}) async {
     if (pickedFile != null) {
-      CompressFormat? format = FileUtil.getCompressFormat(pickedFile.path);
+      String formatTarget = usePath ? pickedFile.path : pickedFile.name;
+      CompressFormat? format = FileUtil.getCompressFormat(formatTarget);
       if (format != null) {
-        MultipartFile file;
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-        } else {
-          file = MultipartFile.fromFileSync(pickedFile.path,
-              filename: pickedFile.name);
-        }
-        var req = UploadFileRequest(file: file);
-        var imageId = await ApiFile.uploadFile(req);
-        setState(() {
-          _imageUrl = '${Config.apiHost}/file/$imageId';
-          if (widget.saveHandler != null) {
-            widget.saveHandler!(_imageUrl);
+        if (widget.saveHandler != null) {
+          MultipartFile file = await _xFileToMultipartFile(pickedFile);
+          String? imageUrl = await widget.saveHandler!(file);
+          if (imageUrl != null && mounted) {
+            setState(() {
+              _imageUrl = imageUrl;
+            });
           }
-        });
+        }
       } else {
         if (mounted) {
           toastWarning(context, "无效的图片格式!");
@@ -73,36 +74,20 @@ class _SingleImageState extends State<SingleImage> {
     }
   }
 
-  // 选取图片，单选
+  /// 调用相机拍照并处理图片。
+  Future _getCamera() async {
+    Navigator.of(context).pop();
+    final XFile? pickedFile =
+        await imagePicker.pickImage(source: ImageSource.camera);
+    await _handlePickedFile(pickedFile, usePath: true);
+  }
+
+  /// 从相册选择图片并处理。
   Future _getImage() async {
     Navigator.of(context).pop();
     final XFile? pickedFile =
         await imagePicker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      CompressFormat? format = FileUtil.getCompressFormat(pickedFile.name);
-      if (format != null) {
-        MultipartFile file;
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          file = MultipartFile.fromBytes(bytes, filename: pickedFile.name);
-        } else {
-          file = MultipartFile.fromFileSync(pickedFile.path,
-              filename: pickedFile.name);
-        }
-        var req = UploadFileRequest(file: file);
-        var imageId = await ApiFile.uploadFile(req);
-        setState(() {
-          _imageUrl = '${Config.apiHost}/file/$imageId';
-          if (widget.saveHandler != null) {
-            widget.saveHandler!(_imageUrl);
-          }
-        });
-      } else {
-        if (mounted) {
-          toastWarning(context, "无效的图片格式!");
-        }
-      }
-    }
+    await _handlePickedFile(pickedFile, usePath: false);
   }
 
   Future _getActionSheet() async {
