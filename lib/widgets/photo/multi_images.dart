@@ -1,6 +1,3 @@
-import 'package:autoapi_example_flutter/apis/auto/demo/api_file.dart';
-import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
-import 'package:autoapi_example_flutter/utils/config.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +12,14 @@ class MultiImages extends StatefulWidget {
   final List<String> imageUrls;
   final bool enabled;
   final Function? saveHandler;
+  final Future<String?> Function(MultipartFile file)? uploadHandler;
   final double avatarWidth;
   final double avatarHeight;
   final Color preivewBgColor;
   const MultiImages(this.imageUrls, this.enabled,
       {super.key,
       this.saveHandler,
+      this.uploadHandler,
       this.avatarWidth = 80,
       this.avatarHeight = 80,
       this.preivewBgColor = Colors.black});
@@ -49,10 +48,11 @@ class _MultiImagesState extends State<MultiImages> {
           file = MultipartFile.fromFileSync(pickedFile.path,
               filename: pickedFile.name);
         }
-        var req = UploadFileRequest(file: file);
-        var imageId = await ApiFile.uploadFile(req);
+        String? imageUrl = await widget.uploadHandler?.call(file);
         setState(() {
-          widget.imageUrls.add('${Config.apiHost}/file/$imageId');
+          if (imageUrl != null) {
+            widget.imageUrls.add(imageUrl);
+          }
           if (widget.saveHandler != null) {
             widget.saveHandler!(widget.imageUrls);
           }
@@ -83,9 +83,10 @@ class _MultiImagesState extends State<MultiImages> {
             file = MultipartFile.fromFileSync(pickedFile.path,
                 filename: pickedFile.name);
           }
-          var req = UploadFileRequest(file: file);
-          var imageId = await ApiFile.uploadFile(req);
-          selectedImageUrls.add('${Config.apiHost}/file/$imageId');
+          String? imageUrl = await widget.uploadHandler?.call(file);
+          if (imageUrl != null) {
+            selectedImageUrls.add(imageUrl);
+          }
         } else {
           invalidImageUrls.add(pickedFile.path);
         }

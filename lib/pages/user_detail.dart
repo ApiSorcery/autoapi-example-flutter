@@ -58,14 +58,9 @@ class _UserDetailPageState extends State<UserDetailPage> {
       'address': (String val) => setState(() {
             _address = val;
           }),
-      'avatar': (MultipartFile file) async {
-        var req = UploadFileRequest(file: file);
-        var imageId = await ApiFile.uploadFile(req);
-        setState(() {
-          _avatar = '${Config.apiHost}/file/$imageId';
-        });
-        return _avatar;
-      },
+      'avatar': (String val) => setState(() {
+            _avatar = val;
+          }),
       'status': (bool val) => setState(() {
             _status = val;
           }),
@@ -184,7 +179,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LabelSingleImageFormField(
                 label: '头像:',
                 initialValue: _avatar,
-                saveHandler: _fieldSaveHandlerMap['avatar']! as Future<String?> Function(MultipartFile),
+                saveHandler: _fieldSaveHandlerMap['avatar']!,
+                uploadHandler: (MultipartFile file) async {
+                  var req = UploadFileRequest(file: file);
+                  var imageId = await ApiFile.uploadFile(req);
+                  return '${Config.apiHost}/file/$imageId';
+                },
                 enabled: true,
                 avatarWidth: 100,
                 avatarHeight: 110,

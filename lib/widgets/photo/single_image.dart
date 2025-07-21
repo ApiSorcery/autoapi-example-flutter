@@ -12,13 +12,15 @@ import 'package:flutter/foundation.dart';
 class SingleImage extends StatefulWidget {
   final String? defaultImageUrl;
   final bool enabled;
-  final Future<String?> Function(MultipartFile file)? saveHandler;
+  final Function? saveHandler;
+  final Future<String?> Function(MultipartFile file)? uploadHandler;
   final double avatarWidth;
   final double avatarHeight;
   final Color preivewBgColor;
   const SingleImage(this.defaultImageUrl, this.enabled,
       {super.key,
       this.saveHandler,
+      this.uploadHandler,
       this.avatarWidth = 80,
       this.avatarHeight = 80,
       this.preivewBgColor = Colors.black});
@@ -45,25 +47,30 @@ class _SingleImageState extends State<SingleImage> {
       final bytes = await pickedFile.readAsBytes();
       return MultipartFile.fromBytes(bytes, filename: pickedFile.name);
     } else {
-      return MultipartFile.fromFileSync(pickedFile.path, filename: pickedFile.name);
+      return MultipartFile.fromFileSync(pickedFile.path,
+          filename: pickedFile.name);
     }
   }
 
-  /// 处理图片选择后的逻辑，包括格式校验、转换为 MultipartFile、回调 saveHandler、展示图片或弹出格式错误提示。
+  /// 处理图片选择后的逻辑，包括格式校验、转换为 MultipartFile、回调 uploadHandler、展示图片或弹出格式错误提示。
   /// [pickedFile] 选择的图片文件。
   /// [usePath] 是否用 path 进行格式校验（拍照用 path，图库用 name）。
-  Future<void> _handlePickedFile(XFile? pickedFile, {required bool usePath}) async {
+  Future<void> _handlePickedFile(XFile? pickedFile,
+      {required bool usePath}) async {
     if (pickedFile != null) {
       String formatTarget = usePath ? pickedFile.path : pickedFile.name;
       CompressFormat? format = FileUtil.getCompressFormat(formatTarget);
       if (format != null) {
-        if (widget.saveHandler != null) {
+        if (widget.uploadHandler != null) {
           MultipartFile file = await _xFileToMultipartFile(pickedFile);
-          String? imageUrl = await widget.saveHandler!(file);
+          String? imageUrl = await widget.uploadHandler!(file);
           if (imageUrl != null && mounted) {
             setState(() {
               _imageUrl = imageUrl;
             });
+            if (widget.saveHandler != null) {
+              widget.saveHandler!(_imageUrl);
+            }
           }
         }
       } else {

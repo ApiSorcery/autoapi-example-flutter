@@ -10,8 +10,11 @@ class LabelSingleImageFormField extends StatelessWidget {
   /// 值
   final String? initialValue;
 
+  /// 上传
+  final Future<String?> Function(MultipartFile file)? uploadHandler;
+
   /// 保存
-  final Future<String?> Function(MultipartFile file)? saveHandler;
+  final Function? saveHandler;
 
   /// 是否可用,默认true
   final bool enabled;
@@ -27,6 +30,7 @@ class LabelSingleImageFormField extends StatelessWidget {
     super.key,
     this.label,
     this.initialValue,
+    this.uploadHandler,
     this.saveHandler,
     this.enabled = true,
     this.allowEmpty = true,
@@ -64,6 +68,7 @@ class LabelSingleImageFormField extends StatelessWidget {
               child: SingleImage(
                 initialValue,
                 imageEnabled,
+                uploadHandler: uploadHandler,
                 saveHandler: saveHandler,
                 avatarWidth: avatarWidth,
                 avatarHeight: avatarHeight,
