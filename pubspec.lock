@@ -105,6 +105,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.10.0"
+  castor_flutter:
+    dependency: "direct main"
+    description:
+      name: castor_flutter
+      sha256: "572e688d66d70b0270c09b9923a395d3301f13f77498361613495075a1979347"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
