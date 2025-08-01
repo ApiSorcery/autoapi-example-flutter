@@ -48,7 +48,7 @@ class _UserPageState extends State<UserPage> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        if (_pages != null && _pages! >= _currentPage) {
+        if (_pages != null && _pages! > _currentPage) {
           _getData(true);
         } else {
           toastInfo(context, 'Reached the end');

@@ -1,5 +1,7 @@
 import 'package:autoapi_example_flutter/pages/user.dart';
 import 'package:autoapi_example_flutter/utils/cupertino.dart';
+import 'package:autoapi_example_flutter/widgets/web_wrapper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
       ),
-      home: const UserPage(),
+      home: kIsWeb ? WebWrapper(child: const UserPage()) : const UserPage(),
       // Localization delegates
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
