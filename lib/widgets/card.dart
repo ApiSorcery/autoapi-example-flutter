@@ -43,7 +43,7 @@ Padding cardText(title, text) {
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
-          padding: const EdgeInsets.only(bottom: 4),
+          padding: const EdgeInsets.only(bottom: 4, right: 4),
           child: Text((title ?? '').isEmpty ? 'None' : title,
               style: const TextStyle(color: Colors.black87))),
       Text(
@@ -62,8 +62,9 @@ Padding cardSelect({String? title, String? value, List<KeyValue>? options}) {
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Text(title ?? 'None', style: TextStyle(color: Colors.black87))),
+          padding: const EdgeInsets.only(bottom: 4, right: 4),
+          child:
+              Text(title ?? 'None', style: TextStyle(color: Colors.black87))),
       Text(
         options?.firstWhere((KeyValue r) => r.id == value).name ?? 'None',
         style: TextStyle(
