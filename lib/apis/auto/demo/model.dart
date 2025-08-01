@@ -4,42 +4,42 @@ import 'dart:typed_data';
 
 part 'model.g.dart';
 
-/// 报文基类
+/// Base class for messages
 class TBase extends Object {
   Map<String, dynamic> toJson() => {};
 }
 
-/// FormData基类
+/// Base class for FormData
 class TFormData extends Object {
   FormData toFormData() => FormData.fromMap({});
 }
 
-/// 二进制数据返回类型
+/// Binary data response type
 class BlobResp extends Object {
-/// 文件类型
+/// File type
   String? type;
 
-/// 文件名
+/// File name
   String? name;
 
-/// 文件内容
+/// File content
   Uint8List? data;
 
   BlobResp({this.type, this.name, this.data});
 }
 
-/// 批量导出用户（Excel）请求参数
+/// Batch export users (Excel) request parameters
 @JsonSerializable()
 class ExportUsersRequest extends TBase {
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String? code;
 
-  /// 用户名称
+  /// User name
   @JsonKey(name: 'name')
   String? name;
 
-  /// 邮箱
+  /// Email address
   @JsonKey(name: 'email')
   String? email;
 
@@ -51,10 +51,10 @@ class ExportUsersRequest extends TBase {
   Map<String, dynamic> toJson() => _$ExportUsersRequestToJson(this);
 }
 
-/// 获取单个用户请求参数
+/// Get single user request parameters
 @JsonSerializable()
 class GetUserOneRequest extends TBase {
-  /// 用户ID
+  /// User ID
   @JsonKey(name: 'id')
   int id;
 
@@ -66,10 +66,10 @@ class GetUserOneRequest extends TBase {
   Map<String, dynamic> toJson() => _$GetUserOneRequestToJson(this);
 }
 
-/// 删除用户请求参数
+/// Delete user request parameters
 @JsonSerializable()
 class RemoveUserRequest extends TBase {
-  /// 用户ID
+  /// User ID
   @JsonKey(name: 'id')
   int id;
 
@@ -81,10 +81,10 @@ class RemoveUserRequest extends TBase {
   Map<String, dynamic> toJson() => _$RemoveUserRequestToJson(this);
 }
 
-/// 校验用户编号是否存在请求参数
+/// Validate if user code exists request parameters
 @JsonSerializable()
 class ValidateCodeRequest extends TBase {
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String code;
 
@@ -96,10 +96,10 @@ class ValidateCodeRequest extends TBase {
   Map<String, dynamic> toJson() => _$ValidateCodeRequestToJson(this);
 }
 
-/// 校验用户邮箱是否存在请求参数
+/// Validate if user email exists request parameters
 @JsonSerializable()
 class ValidateEmailRequest extends TBase {
-  /// 邮箱
+  /// Email address
   @JsonKey(name: 'email')
   String email;
 
@@ -111,10 +111,10 @@ class ValidateEmailRequest extends TBase {
   Map<String, dynamic> toJson() => _$ValidateEmailRequestToJson(this);
 }
 
-/// 删除文件请求参数
+/// Delete file request parameters
 @JsonSerializable()
 class DeleteFileRequest extends TBase {
-  /// 文件UUID
+  /// File UUID
   @JsonKey(name: 'id')
   String id;
 
@@ -126,10 +126,10 @@ class DeleteFileRequest extends TBase {
   Map<String, dynamic> toJson() => _$DeleteFileRequestToJson(this);
 }
 
-/// 获取文件请求参数
+/// Get file request parameters
 @JsonSerializable()
 class GetFileRequest extends TBase {
-  /// 文件UUID
+  /// File UUID
   @JsonKey(name: 'id')
   String id;
 
@@ -141,12 +141,12 @@ class GetFileRequest extends TBase {
   Map<String, dynamic> toJson() => _$GetFileRequestToJson(this);
 }
 
-/// 上传文件请求参数
+/// Upload file request parameters
 class UploadFileRequest extends TFormData {
-  /// 要上传的文件
+  /// File to upload
   MultipartFile? file;
 
-  /// 文件描述（可选）
+  /// File description (optional)
   String? description;
 
   UploadFileRequest({this.file,this.description});
@@ -160,7 +160,7 @@ class UploadFileRequest extends TFormData {
   }
 }
 
-/// 分页查询用户列表响应参数
+/// Query user list with pagination response parameters
 @JsonSerializable()
 class GetUserPagedResponse extends TBase {
   @JsonKey(name: 'results')
@@ -179,15 +179,15 @@ class GetUserPagedResponse extends TBase {
 
 @JsonSerializable()
 class ResultData extends TBase {
-  /// 状态码
+  /// Status code
   @JsonKey(name: 'status')
   double? status;
 
-  /// 状态描述
+  /// Status description
   @JsonKey(name: 'message')
   String? message;
 
-  /// 返回结果
+  /// Response data
   @JsonKey(name: 'data')
   dynamic data;
 
@@ -201,43 +201,43 @@ class ResultData extends TBase {
 
 @JsonSerializable()
 class UserInfoDto extends TBase {
-  /// 用户ID
+  /// User ID
   @JsonKey(name: 'id')
   int? id;
 
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String? code;
 
-  /// 用户名称
+  /// User name
   @JsonKey(name: 'name')
   String? name;
 
-  /// 邮箱
+  /// Email
   @JsonKey(name: 'email')
   String? email;
 
-  /// 性别
+  /// Gender
   @JsonKey(name: 'gender')
   int? gender;
 
-  /// 头像
+  /// Avatar
   @JsonKey(name: 'avatar')
   String? avatar;
 
-  /// 地址
+  /// Address
   @JsonKey(name: 'address')
   String? address;
 
-  /// 状态
+  /// Status
   @JsonKey(name: 'status')
   bool? status;
 
-  /// 创建时间
+  /// Created time
   @JsonKey(name: 'createdAt')
   String? createdAt;
 
-  /// 更新时间
+  /// Updated time
   @JsonKey(name: 'updatedAt')
   String? updatedAt;
 
@@ -251,19 +251,19 @@ class UserInfoDto extends TBase {
 
 @JsonSerializable()
 class Pagination extends TBase {
-  /// 页码
+  /// Page number
   @JsonKey(name: 'page')
   int? page;
 
-  /// 每页数量
+  /// Items per page
   @JsonKey(name: 'limit')
   int? limit;
 
-  /// 排序字段
+  /// Sort field
   @JsonKey(name: 'sortBy')
   String? sortBy;
 
-  /// 排序方式
+  /// Sort order
   @JsonKey(name: 'order')
   String? order;
 
@@ -277,19 +277,19 @@ class Pagination extends TBase {
 
 @JsonSerializable()
 class UserPageQueryDto extends TBase {
-  /// 分页参数
+  /// Pagination parameters
   @JsonKey(name: 'pagination')
   Pagination? pagination;
 
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String? code;
 
-  /// 用户姓名
+  /// User name
   @JsonKey(name: 'name')
   String? name;
 
-  /// 用户状态
+  /// User status
   @JsonKey(name: 'status')
   bool? status;
 
@@ -303,31 +303,31 @@ class UserPageQueryDto extends TBase {
 
 @JsonSerializable()
 class UserAddRequestDto extends TBase {
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String? code;
 
-  /// 用户名称
+  /// User name
   @JsonKey(name: 'name')
   String? name;
 
-  /// 邮箱
+  /// Email
   @JsonKey(name: 'email')
   String? email;
 
-  /// 性别
+  /// Gender
   @JsonKey(name: 'gender')
   int? gender;
 
-  /// 头像
+  /// Avatar
   @JsonKey(name: 'avatar')
   String? avatar;
 
-  /// 地址
+  /// Address
   @JsonKey(name: 'address')
   String? address;
 
-  /// 状态
+  /// Status
   @JsonKey(name: 'status')
   bool? status;
 
@@ -341,35 +341,35 @@ class UserAddRequestDto extends TBase {
 
 @JsonSerializable()
 class UserModifyRequestDto extends TBase {
-  /// 用户ID
+  /// User ID
   @JsonKey(name: 'id')
   int? id;
 
-  /// 用户编号
+  /// User code
   @JsonKey(name: 'code')
   String? code;
 
-  /// 用户名称
+  /// User name
   @JsonKey(name: 'name')
   String? name;
 
-  /// 邮箱
+  /// Email
   @JsonKey(name: 'email')
   String? email;
 
-  /// 性别
+  /// Gender
   @JsonKey(name: 'gender')
   int? gender;
 
-  /// 头像
+  /// Avatar
   @JsonKey(name: 'avatar')
   String? avatar;
 
-  /// 地址
+  /// Address
   @JsonKey(name: 'address')
   String? address;
 
-  /// 状态
+  /// Status
   @JsonKey(name: 'status')
   bool? status;
 

@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'base.dart';
 import 'model.dart';
 
-/// 文件管理
+/// File
 class ApiFile {
-  /// 删除文件
+  /// Delete file
   static Future deleteFile(DeleteFileRequest req) async {
     await createJsonRequest(
       url: '/file/${req.id}',
@@ -12,7 +12,7 @@ class ApiFile {
     );
   }
 
-  /// 获取文件
+  /// Get file
   static Future<String> getFile(GetFileRequest req) async {
     var response = await createJsonRequest(
       url: '/file/${req.id}',
@@ -21,7 +21,7 @@ class ApiFile {
     return response.data;
   }
 
-  /// 上传文件
+  /// Upload file
   static Future<String> uploadFile(UploadFileRequest req, {ProgressCallback? onSendProgress}) async {
     var response = await createUploadRequest(
       url: '/file/upload',

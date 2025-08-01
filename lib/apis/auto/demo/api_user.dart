@@ -1,9 +1,9 @@
 import 'base.dart';
 import 'model.dart';
 
-/// 用户管理
+/// User
 class ApiUser {
-  /// 新增用户
+  /// Add user
   static Future<double> addUser(UserAddRequestDto req) async {
     var response = await createJsonRequest(
       url: '/user',
@@ -14,7 +14,7 @@ class ApiUser {
     return response.data;
   }
 
-  /// 批量导出用户（Excel）
+  /// Batch export users (Excel)
   static Future<BlobResp?> exportUsers(ExportUsersRequest req) async {
     var response = await createDownloadRequest(
       url: '/user/export',
@@ -24,7 +24,7 @@ class ApiUser {
     return response.data;
   }
 
-  /// 获取单个用户
+  /// Get single user
   static Future<UserInfoDto> getUserOne(GetUserOneRequest req) async {
     var response = await createJsonRequest(
       url: '/user/${req.id}',
@@ -33,7 +33,7 @@ class ApiUser {
     return UserInfoDto.fromJson(response.data);
   }
 
-  /// 分页查询用户列表
+  /// Query user list with pagination
   static Future<GetUserPagedResponse> getUserPaged(UserPageQueryDto req) async {
     var response = await createJsonRequest(
       url: '/user/paged',
@@ -44,7 +44,7 @@ class ApiUser {
     return GetUserPagedResponse.fromJson(response.data);
   }
 
-  /// 修改用户信息
+  /// Modify user information
   static Future modifyUser(UserModifyRequestDto req) async {
     await createJsonRequest(
       url: '/user',
@@ -54,7 +54,7 @@ class ApiUser {
     );
   }
 
-  /// 删除用户
+  /// Delete user
   static Future removeUser(RemoveUserRequest req) async {
     await createJsonRequest(
       url: '/user/${req.id}',
@@ -62,7 +62,7 @@ class ApiUser {
     );
   }
 
-  /// 校验用户编号是否存在
+  /// Validate if user code exists
   static Future<bool> validateCode(ValidateCodeRequest req) async {
     var response = await createJsonRequest(
       url: '/user/validateCode',
@@ -72,7 +72,7 @@ class ApiUser {
     return response.data;
   }
 
-  /// 校验用户邮箱是否存在
+  /// Validate if user email exists
   static Future<bool> validateEmail(ValidateEmailRequest req) async {
     var response = await createJsonRequest(
       url: '/user/validateEmail',

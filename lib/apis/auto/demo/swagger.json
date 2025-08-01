@@ -4,11 +4,10 @@
     "/user/paged": {
       "post": {
         "operationId": "getUserPaged",
-        "summary": "分页查询用户列表",
+        "summary": "Query user list with pagination",
         "parameters": [],
         "requestBody": {
           "required": true,
-          "description": "分页查询用户列表请求参数",
           "content": {
             "application/json": {
               "schema": {
@@ -53,20 +52,20 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/user/export": {
       "get": {
         "operationId": "exportUsers",
-        "summary": "批量导出用户（Excel）",
+        "summary": "Batch export users (Excel)",
         "parameters": [
           {
             "name": "code",
             "required": false,
             "in": "query",
-            "description": "用户编号",
+            "description": "User code",
             "schema": {
               "type": "string"
             }
@@ -75,7 +74,7 @@
             "name": "name",
             "required": false,
             "in": "query",
-            "description": "用户名称",
+            "description": "User name",
             "schema": {
               "type": "string"
             }
@@ -84,7 +83,7 @@
             "name": "email",
             "required": false,
             "in": "query",
-            "description": "邮箱",
+            "description": "Email address",
             "schema": {
               "type": "string"
             }
@@ -96,20 +95,20 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/user/{id}": {
       "get": {
         "operationId": "getUserOne",
-        "summary": "获取单个用户",
+        "summary": "Get single user",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "用户ID",
+            "description": "User ID",
             "schema": {
               "type": "integer"
             }
@@ -139,18 +138,18 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       },
       "delete": {
         "operationId": "removeUser",
-        "summary": "删除用户",
+        "summary": "Delete user",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "用户ID",
+            "description": "User ID",
             "schema": {
               "type": "integer"
             }
@@ -181,20 +180,20 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/user/validateCode": {
       "get": {
         "operationId": "validateCode",
-        "summary": "校验用户编号是否存在",
+        "summary": "Validate if user code exists",
         "parameters": [
           {
             "name": "code",
             "required": true,
             "in": "query",
-            "description": "用户编号",
+            "description": "User code",
             "schema": {
               "type": "string"
             }
@@ -224,20 +223,20 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/user/validateEmail": {
       "get": {
         "operationId": "validateEmail",
-        "summary": "校验用户邮箱是否存在",
+        "summary": "Validate if user email exists",
         "parameters": [
           {
             "name": "email",
             "required": true,
             "in": "query",
-            "description": "邮箱",
+            "description": "Email address",
             "schema": {
               "type": "string"
             }
@@ -267,14 +266,14 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/user": {
       "post": {
         "operationId": "addUser",
-        "summary": "新增用户",
+        "summary": "Add user",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -310,12 +309,12 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       },
       "patch": {
         "operationId": "modifyUser",
-        "summary": "修改用户信息",
+        "summary": "Modify user information",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -352,14 +351,14 @@
           }
         },
         "tags": [
-          "用户管理"
+          "User"
         ]
       }
     },
     "/file/upload": {
       "post": {
         "operationId": "uploadFile",
-        "summary": "上传文件",
+        "summary": "Upload file",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -371,11 +370,11 @@
                   "file": {
                     "type": "string",
                     "format": "binary",
-                    "description": "要上传的文件"
+                    "description": "File to upload"
                   },
                   "description": {
                     "type": "string",
-                    "description": "文件描述（可选）"
+                    "description": "File description (optional)"
                   }
                 }
               }
@@ -406,20 +405,20 @@
           }
         },
         "tags": [
-          "文件管理"
+          "File"
         ]
       }
     },
     "/file/{id}": {
       "get": {
         "operationId": "getFile",
-        "summary": "获取文件",
+        "summary": "Get file",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "文件UUID",
+            "description": "File UUID",
             "schema": {
               "type": "string"
             }
@@ -449,18 +448,18 @@
           }
         },
         "tags": [
-          "文件管理"
+          "File"
         ]
       },
       "delete": {
         "operationId": "deleteFile",
-        "summary": "删除文件",
+        "summary": "Delete file",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
-            "description": "文件UUID",
+            "description": "File UUID",
             "schema": {
               "type": "string"
             }
@@ -491,24 +490,24 @@
           }
         },
         "tags": [
-          "文件管理"
+          "File"
         ]
       }
     }
   },
   "info": {
     "title": "Demo-Api",
-    "description": "Demo-Api 接口文档",
+    "description": "Demo-Api Interface Documentation",
     "version": "1.0.0",
     "contact": {}
   },
   "tags": [
     {
-      "name": "用户管理",
+      "name": "User",
       "description": ""
     },
     {
-      "name": "文件管理",
+      "name": "File",
       "description": ""
     }
   ],
@@ -528,16 +527,16 @@
           "status": {
             "type": "number",
             "default": 0,
-            "description": "状态码"
+            "description": "Status code"
           },
           "message": {
             "type": "string",
             "default": "OK",
-            "description": "状态描述"
+            "description": "Status description"
           },
           "data": {
             "type": "object",
-            "description": "返回结果"
+            "description": "Response data"
           }
         },
         "required": [
@@ -551,45 +550,45 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "用户ID"
+            "description": "User ID"
           },
           "code": {
             "type": "string",
-            "description": "用户编号"
+            "description": "User code"
           },
           "name": {
             "type": "string",
-            "description": "用户名称"
+            "description": "User name"
           },
           "email": {
             "type": "string",
-            "description": "邮箱"
+            "description": "Email"
           },
           "gender": {
             "type": "integer",
-            "description": "性别"
+            "description": "Gender"
           },
           "avatar": {
             "type": "string",
-            "description": "头像"
+            "description": "Avatar"
           },
           "address": {
             "type": "string",
-            "description": "地址"
+            "description": "Address"
           },
           "status": {
             "type": "boolean",
-            "description": "状态"
+            "description": "Status"
           },
           "createdAt": {
             "format": "date-time",
             "type": "string",
-            "description": "创建时间"
+            "description": "Created time"
           },
           "updatedAt": {
             "format": "date-time",
             "type": "string",
-            "description": "更新时间"
+            "description": "Updated time"
           }
         },
         "required": [
@@ -605,19 +604,19 @@
         "properties": {
           "page": {
             "type": "integer",
-            "description": "页码"
+            "description": "Page number"
           },
           "limit": {
             "type": "integer",
-            "description": "每页数量"
+            "description": "Items per page"
           },
           "sortBy": {
             "type": "string",
-            "description": "排序字段"
+            "description": "Sort field"
           },
           "order": {
             "type": "string",
-            "description": "排序方式"
+            "description": "Sort order"
           }
         }
       },
@@ -625,7 +624,7 @@
         "type": "object",
         "properties": {
           "pagination": {
-            "description": "分页参数",
+            "description": "Pagination parameters",
             "allOf": [
               {
                 "$ref": "#/components/schemas/Pagination"
@@ -634,15 +633,15 @@
           },
           "code": {
             "type": "string",
-            "description": "用户编号"
+            "description": "User code"
           },
           "name": {
             "type": "string",
-            "description": "用户姓名"
+            "description": "User name"
           },
           "status": {
             "type": "boolean",
-            "description": "用户状态"
+            "description": "User status"
           }
         }
       },
@@ -651,35 +650,35 @@
         "properties": {
           "code": {
             "type": "string",
-            "description": "用户编号"
+            "description": "User code"
           },
           "name": {
             "type": "string",
-            "description": "用户名称"
+            "description": "User name"
           },
           "email": {
             "type": "string",
-            "description": "邮箱"
+            "description": "Email"
           },
           "gender": {
             "type": "integer",
-            "description": "性别",
+            "description": "Gender",
             "default": 0
           },
           "avatar": {
             "type": "string",
             "default": "",
-            "description": "头像"
+            "description": "Avatar"
           },
           "address": {
             "type": "string",
             "default": "",
-            "description": "地址"
+            "description": "Address"
           },
           "status": {
             "type": "boolean",
             "default": false,
-            "description": "状态"
+            "description": "Status"
           }
         },
         "required": [
@@ -693,37 +692,37 @@
         "properties": {
           "id": {
             "type": "integer",
-            "description": "用户ID"
+            "description": "User ID"
           },
           "code": {
             "type": "string",
-            "description": "用户编号"
+            "description": "User code"
           },
           "name": {
             "type": "string",
-            "description": "用户名称"
+            "description": "User name"
           },
           "email": {
             "type": "string",
-            "description": "邮箱"
+            "description": "Email"
           },
           "gender": {
             "type": "integer",
-            "description": "性别"
+            "description": "Gender"
           },
           "avatar": {
             "type": "string",
-            "description": "头像"
+            "description": "Avatar"
           },
           "address": {
             "type": "string",
             "default": "",
-            "description": "地址"
+            "description": "Address"
           },
           "status": {
             "type": "boolean",
             "default": false,
-            "description": "状态"
+            "description": "Status"
           }
         },
         "required": [
@@ -733,7 +732,7 @@
     }
   },
   "externalDocs": {
-    "description": "Json文档",
+    "description": "JSON Documentation",
     "url": "/swagger-json"
   }
 }
