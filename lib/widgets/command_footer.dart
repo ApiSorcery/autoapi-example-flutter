@@ -25,7 +25,7 @@ class _CommandFooterState extends State<CommandFooter> {
     return Container(
         height: 56,
         decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-          //阴影
+          // Shadow
           BoxShadow(
               color: Colors.black54, offset: Offset(2.0, 2.0), blurRadius: 4.0)
         ]),
@@ -53,7 +53,7 @@ class _CommandFooterState extends State<CommandFooter> {
                 padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                 disabledBackgroundColor: Colors.grey,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero, // 设置为零表示没有圆角
+                  borderRadius: BorderRadius.zero, // Set to zero means no rounded corners
                 ),
               ),
               onPressed: _loading
@@ -100,7 +100,7 @@ class _CommandFooterState extends State<CommandFooter> {
               padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
               disabledBackgroundColor: Colors.grey,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero, // 设置为零表示没有圆角
+                borderRadius: BorderRadius.zero, // Set to zero means no rounded corners
               ),
             ),
             onPressed: _loading
@@ -202,7 +202,7 @@ class _CommandFooterState extends State<CommandFooter> {
           Padding(
             padding: const EdgeInsets.only(left: 2),
             child: Text(
-              value ?? '暂无',
+              value ?? 'None',
               maxLines: 2,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,

@@ -1,17 +1,17 @@
 import 'package:autoapi_example_flutter/entities/key_value.dart';
 import 'package:flutter/material.dart';
 
-// 列表页Card标题
+// List page Card title
 Widget cardTitleStatus(BuildContext context, String? title, String status,
     List<KeyValue> options) {
   var option = options.firstWhere((KeyValue r) => r.id == status,
-      orElse: () => const KeyValue('', '暂无', color: Colors.black87));
+      orElse: () => const KeyValue('', 'None', color: Colors.black87));
   return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(title ?? '暂无',
+          Text(title ?? 'None',
               style: TextStyle(
                   color: Colors.black87,
                   fontSize: 14,
@@ -37,17 +37,17 @@ Widget cardTitleStatus(BuildContext context, String? title, String status,
       ));
 }
 
-// 列表页文本
+// List page text
 Padding cardText(title, text) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Text((title ?? '').isEmpty ? '暂无' : title,
+          child: Text((title ?? '').isEmpty ? 'None' : title,
               style: const TextStyle(color: Colors.black87))),
       Text(
-        (text ?? '').isEmpty ? '暂无' : text,
+        (text ?? '').isEmpty ? 'None' : text,
         style: const TextStyle(color: Colors.black87),
         softWrap: true,
         overflow: TextOverflow.ellipsis,
@@ -56,16 +56,16 @@ Padding cardText(title, text) {
   );
 }
 
-// 清单状态文本
+// List status text
 Padding cardSelect({String? title, String? value, List<KeyValue>? options}) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
           padding: const EdgeInsets.only(bottom: 4),
-          child: Text(title ?? '暂无', style: TextStyle(color: Colors.black87))),
+          child: Text(title ?? 'None', style: TextStyle(color: Colors.black87))),
       Text(
-        options?.firstWhere((KeyValue r) => r.id == value).name ?? '暂无',
+        options?.firstWhere((KeyValue r) => r.id == value).name ?? 'None',
         style: TextStyle(
             fontSize: 15,
             color: (options?.firstWhere((KeyValue r) => r.id == value) ??
@@ -79,8 +79,8 @@ Padding cardSelect({String? title, String? value, List<KeyValue>? options}) {
   );
 }
 
-// 暂无数据卡片
-Container cardEmpty({String emptyText = '暂无数据'}) {
+// No data card
+Container cardEmpty({String emptyText = 'No data'}) {
   return Container(
     height: 64,
     decoration: BoxDecoration(

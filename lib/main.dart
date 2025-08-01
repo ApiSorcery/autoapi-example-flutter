@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AutoAPI - Flutter示例',
+      title: 'AutoAPI - Flutter Example',
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'SourceSansPro',
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const UserPage(),
-      // 本地化代理
+      // Localization delegates
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale('zh', 'CN'),
       supportedLocales: const [
-        Locale('en', 'US'), // 英语
-        Locale('zh', 'CN'), // 中文
+        Locale('en', 'US'), // English
+        Locale('zh', 'CN'), // Chinese
       ],
     );
   }

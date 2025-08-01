@@ -1,11 +1,11 @@
 import 'package:autoapi_example_flutter/utils/style.dart';
 import 'package:flutter/material.dart';
 
-// 查询页侧边栏输入框
+// Filter sidebar input field
 ListTile filterInput(
     BuildContext context, String? title, TextEditingController controller) {
   return ListTile(
-      title: Text(title ?? '暂无', style: AppTextStyle.filterLabel),
+      title: Text(title ?? 'None', style: AppTextStyle.filterLabel),
       subtitle: TextField(
         style: AppTextStyle.filterValue,
         decoration: InputDecoration(
@@ -19,15 +19,15 @@ ListTile filterInput(
       ));
 }
 
-// 查询侧边栏下拉框
+// Filter sidebar dropdown
 ListTile filterSelect(String? title, childWidget) {
   return ListTile(
-    title: Text(title ?? '暂无', style: AppTextStyle.filterLabel),
+    title: Text(title ?? 'None', style: AppTextStyle.filterLabel),
     subtitle: childWidget,
   );
 }
 
-// 抽屉底部按钮组件
+// Drawer bottom button component
 Widget filterButton(
     BuildContext context, Function clearFunc, Function commitFunc) {
   return Expanded(
@@ -46,7 +46,7 @@ Widget filterButton(
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           textStyle: TextStyle(fontSize: 16)),
-                      child: const Text('清空'),
+                      child: const Text('Clear'),
                       onPressed: () => clearFunc())),
               const Padding(padding: EdgeInsets.all(8)),
               Expanded(
@@ -59,7 +59,7 @@ Widget filterButton(
                           side: BorderSide(
                               color: Theme.of(context).colorScheme.primary),
                           textStyle: TextStyle(fontSize: 16)),
-                      child: const Text('确认'),
+                      child: const Text('Confirm'),
                       onPressed: () => commitFunc()))
             ],
           )));

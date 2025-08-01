@@ -33,8 +33,8 @@ class _UserPageState extends State<UserPage> {
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   late BuildContext _scaffoldContext;
   List<UserInfoDto>? _resultDatas;
-  int _currentPage = 1; // 当前页
-  int? _pages; // 总页数
+  int _currentPage = 1; // Current page
+  int? _pages; // Total pages
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _userCodeController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -51,7 +51,7 @@ class _UserPageState extends State<UserPage> {
         if (_pages != null && _pages! >= _currentPage) {
           _getData(true);
         } else {
-          toastInfo(context, '已经到底了');
+          toastInfo(context, 'Reached the end');
         }
       }
     });
@@ -123,10 +123,10 @@ class _UserPageState extends State<UserPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             const ListTile(
-                title: Text('快速查找', style: AppTextStyle.filterTitle)),
-            filterInput(context, '用户编号：', _userCodeController),
-            filterInput(context, '用户名称：', _userNameController),
-            filterSelect('用户状态：', _getUserStatus()),
+                title: Text('Quick Search', style: AppTextStyle.filterTitle)),
+            filterInput(context, 'User Code:', _userCodeController),
+            filterInput(context, 'User Name:', _userNameController),
+            filterSelect('User Status:', _getUserStatus()),
           ],
         ),
         filterButton(context, clear, commit)
@@ -134,17 +134,17 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  /// 删除用户
+  /// Delete user
   _handleRemoveUser(BuildContext context, UserInfoDto item) async {
     bool? isConfirm = await showConfirmDialog(
-        context: context, title: '提示', content: '确认要删除当前用户吗?');
+        context: context, title: 'Tip', content: 'Are you sure you want to delete the current user?');
     if (isConfirm == true) {
       var params = RemoveUserRequest(id: item.id!);
       await ApiUser.removeUser(params);
       if (mounted) {
         await ScaffoldMessenger.of(_scaffoldContext)
             .showSnackBar(const SnackBar(
-                duration: Duration(seconds: 1), content: Text("操作成功")))
+                duration: Duration(seconds: 1), content: Text("Operation successful")))
             .closed;
       }
 
@@ -170,12 +170,12 @@ class _UserPageState extends State<UserPage> {
         _isExporting = true;
       });
 
-      // 检查存储权限（仅在非Web平台）
+      // Check storage permission (non-web platforms only)
       if (!kIsWeb) {
         var status = await Permission.storage.request();
         if (!status.isGranted) {
           if (mounted) {
-            toastWarning(_scaffoldContext, '需要存储权限才能导出文件');
+            toastWarning(_scaffoldContext, 'Storage permission is required to export files');
           }
           setState(() {
             _isExporting = false;
@@ -184,7 +184,7 @@ class _UserPageState extends State<UserPage> {
         }
       }
 
-      // 获取导出文件内容
+      // Get export file content
       var req = ExportUsersRequest(
         code: _userCodeController.text,
         name: _userNameController.text,
@@ -194,7 +194,7 @@ class _UserPageState extends State<UserPage> {
         var fileBytes = blobRes.data;
         if (fileBytes != null) {
           String fileName = blobRes.name ??
-              '用户_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+              'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
           if (kIsWeb) {
             // Web: Use AnchorElement to trigger download
             final blob = html.Blob([fileBytes]);
@@ -206,7 +206,7 @@ class _UserPageState extends State<UserPage> {
             if (mounted) {
               await ScaffoldMessenger.of(_scaffoldContext)
                   .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("导出成功")))
+                      duration: Duration(seconds: 1), content: Text("Export successful")))
                   .closed;
             }
           } else {
@@ -214,7 +214,7 @@ class _UserPageState extends State<UserPage> {
             Directory? directory = await getExternalStorageDirectory();
             if (directory == null) {
               if (mounted) {
-                toastWarning(_scaffoldContext, '无法获取存储目录');
+                toastWarning(_scaffoldContext, 'Unable to access storage directory');
               }
               setState(() {
                 _isExporting = false;
@@ -229,14 +229,14 @@ class _UserPageState extends State<UserPage> {
             if (mounted) {
               await ScaffoldMessenger.of(_scaffoldContext)
                   .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("导出成功")))
+                      duration: Duration(seconds: 1), content: Text("Export successful")))
                   .closed;
             }
           }
         }
       } else {
         if (mounted) {
-          toastWarning(_scaffoldContext, '导出失败');
+          toastWarning(_scaffoldContext, 'Export failed');
         }
       }
       setState(() {
@@ -245,7 +245,7 @@ class _UserPageState extends State<UserPage> {
     } catch (e) {
       debugPrint(e.toString());
       if (mounted) {
-        toastWarning(_scaffoldContext, '导出失败: ${e.toString()}');
+        toastWarning(_scaffoldContext, 'Export failed: ${e.toString()}');
       }
       setState(() {
         _isExporting = false;
@@ -292,13 +292,13 @@ class _UserPageState extends State<UserPage> {
                         Expanded(
                             child: Column(children: <Widget>[
                           cardSelect(
-                              title: '性别：',
+                              title: 'Gender:',
                               value: item.gender.toString(),
                               options: userGenderConst),
-                          cardText('邮箱：', item.email),
-                          cardText('地址：', item.address),
+                          cardText('Email:', item.email),
+                          cardText('Address:', item.address),
                           cardText(
-                              '创建时间：',
+                              'Created Time:',
                               item.createdAt != null
                                   ? DateTimeUtil.formatDateTime(item.createdAt!)
                                   : ''),
@@ -315,7 +315,7 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('用户管理'),
+        title: const Text('User Management'),
       ),
       endDrawer: filter(),
       body: _resultDatas == null
@@ -356,7 +356,7 @@ class _UserPageState extends State<UserPage> {
                                           foregroundColor: Colors.red,
                                           padding: EdgeInsets.only(right: 20),
                                           icon: Icons.delete,
-                                          label: '删除',
+                                          label: 'Delete',
                                         ),
                                       ],
                                     ),
@@ -367,10 +367,10 @@ class _UserPageState extends State<UserPage> {
       bottomNavigationBar: CommandFooter(
         commandFooterData: CommandFooterData(
           details: [],
-          commandsTitle: '操作',
+          commandsTitle: 'Actions',
           commands: [
-            FooterCommand('添加用户', _handleAdd),
-            FooterCommand('导出', _handleExport)
+            FooterCommand('Add User', _handleAdd),
+            FooterCommand('Export', _handleExport)
           ],
         ),
       ),

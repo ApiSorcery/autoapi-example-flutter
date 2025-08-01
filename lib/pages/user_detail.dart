@@ -87,12 +87,12 @@ class _UserDetailPageState extends State<UserDetailPage> {
     });
   }
 
-  /// 取消
+  /// Cancel
   Future _handleCancel(BuildContext context) async {
     Navigator.of(context).pop(false);
   }
 
-  /// 保存
+  /// Save
   Future _handleSave(BuildContext context) async {
     if (_formKey.currentState?.validate() == false) {
       return;
@@ -124,7 +124,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
     if (!mounted) return;
     await ScaffoldMessenger.of(_scaffoldContext)
         .showSnackBar(const SnackBar(
-            duration: Duration(seconds: 1), content: Text("操作成功")))
+            duration: Duration(seconds: 1), content: Text("Operation successful")))
         .closed;
     if (!mounted) return;
     Navigator.of(_scaffoldContext).pop(true);
@@ -136,51 +136,51 @@ class _UserDetailPageState extends State<UserDetailPage> {
             padding: const EdgeInsets.all(8),
             child: Column(children: [
               LabelInputFormField(
-                label: '编号:',
+                label: 'Code:',
                 initialValue: _userCode,
-                validator: Validator.validateEmpty(message: '不能为空'),
+                validator: Validator.validateEmpty(message: 'Cannot be empty'),
                 saveHandler: _fieldSaveHandlerMap['userCode']!,
                 enabled: _operateType == 'add',
                 allowEmpty: false,
               ),
               LabelInputFormField(
-                label: '姓名:',
+                label: 'Name:',
                 initialValue: _userName,
-                validator: Validator.validateEmpty(message: '不能为空'),
+                validator: Validator.validateEmpty(message: 'Cannot be empty'),
                 saveHandler: _fieldSaveHandlerMap['userName']!,
                 enabled: true,
                 allowEmpty: false,
               ),
               LabelInputFormField(
-                label: '邮箱:',
+                label: 'Email:',
                 initialValue: _email,
-                validator: Validator.validateEmpty(message: '不能为空'),
+                validator: Validator.validateEmpty(message: 'Cannot be empty'),
                 saveHandler: _fieldSaveHandlerMap['email']!,
                 enabled: true,
                 allowEmpty: false,
               ),
               LabelSelectFormField(
-                label: '性别:',
+                label: 'Gender:',
                 initialValue: _gender,
-                options: const {0: '未知', 1: '男', 2: '女'},
+                options: const {0: 'Unknown', 1: 'Male', 2: 'Female'},
                 saveHandler: _fieldSaveHandlerMap['gender']!,
                 enabled: true,
               ),
               LabelSwitchFormField(
-                label: '状态:',
+                label: 'Status:',
                 initialValue: TupleEntity<bool, String>(
-                    _status, _status == true ? '启用' : '禁用'),
+                    _status, _status == true ? 'Enabled' : 'Disabled'),
                 saveHandler: _fieldSaveHandlerMap['status']!,
                 enabled: true,
               ),
               LabelMultilineInputFormField(
-                label: '地址:',
+                label: 'Address:',
                 initialValue: _address,
                 saveHandler: _fieldSaveHandlerMap['address']!,
                 enabled: true,
               ),
               LabelSingleImageFormField(
-                label: '头像:',
+                label: 'Avatar:',
                 initialValue: _avatar,
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
                 uploadHandler: (MultipartFile file) async {
@@ -201,7 +201,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: const Text('添加用户'),
+          title: const Text('Add User'),
         ),
         body: _operateType == 'edit' && _userInfoDto == null
             ? const Loading()
@@ -221,10 +221,10 @@ class _UserDetailPageState extends State<UserDetailPage> {
             : CommandFooter(
                 commandFooterData: CommandFooterData(
                     details: [],
-                    commandsTitle: '操作',
+                    commandsTitle: 'Actions',
                     commands: [
-                      FooterCommand('保存', _handleSave),
-                      FooterCommand('取消', _handleCancel),
+                      FooterCommand('Save', _handleSave),
+                      FooterCommand('Cancel', _handleCancel),
                     ])));
   }
 }

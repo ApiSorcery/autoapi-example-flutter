@@ -7,14 +7,14 @@ class RequestInterceptor extends InterceptorsWrapper {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (kDebugMode) {
-      debugPrint("【${options.hashCode}】请求baseUrl：${Config.apiHost}");
-      debugPrint("【${options.hashCode}】请求url：${options.path}");
-      debugPrint('【${options.hashCode}】请求头: ${options.headers}');
+      debugPrint("【${options.hashCode}】Request baseUrl: ${Config.apiHost}");
+      debugPrint("【${options.hashCode}】Request url: ${options.path}");
+      debugPrint('【${options.hashCode}】Request headers: ${options.headers}');
       if (options.method == 'GET') {
-        debugPrint('【${options.hashCode}】请求参数: ${options.queryParameters}');
+        debugPrint('【${options.hashCode}】Request parameters: ${options.queryParameters}');
       } else {
         if (options.data != null) {
-          debugPrint('【${options.hashCode}】请求参数: ${options.data}');
+          debugPrint('【${options.hashCode}】Request data: ${options.data}');
         }
       }
     }

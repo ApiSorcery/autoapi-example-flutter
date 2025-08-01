@@ -3,10 +3,10 @@ import '../../../utils/config.dart';
 import '../interceptors/blob_response.dart';
 import '../interceptors/request.dart';
 
-// api封装
+// API wrapper
 class DioBlobClient {
   static Dio? _dio;
-  // 基本设置
+  // Basic settings
   static BaseOptions options = BaseOptions(
       baseUrl: Config.apiHost,
       responseType: ResponseType.bytes,

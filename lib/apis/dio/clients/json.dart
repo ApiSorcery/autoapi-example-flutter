@@ -3,10 +3,10 @@ import '../../../utils/config.dart';
 import '../interceptors/json_response.dart';
 import '../interceptors/request.dart';
 
-// api封装
+// API wrapper
 class DioJsonClient {
   static Dio? _dio;
-  // 基本设置
+  // Basic settings
   static BaseOptions options = BaseOptions(
       baseUrl: Config.apiHost,
       responseType: ResponseType.json,

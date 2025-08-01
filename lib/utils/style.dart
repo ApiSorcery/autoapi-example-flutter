@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-// 文本样式
+// Text styles
 class AppTextStyle {
-  /// 查询抽屉标题
+  /// Filter drawer title
   static const filterTitle =
       TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
 
-  /// 查询-标签
+  /// Filter - label
   static const filterLabel =
       TextStyle(color: Color.fromRGBO(115, 115, 115, 1), fontSize: 14);
 
-  /// 查询-值
+  /// Filter - value
   static const filterValue = TextStyle(
     color: Color(0xFF111111),
     fontSize: 15.0,

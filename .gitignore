@@ -1,3 +1,4 @@
+deploy_web.sh
 # Miscellaneous
 *.class
 *.log

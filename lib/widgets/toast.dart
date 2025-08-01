@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-// 提示框
+// Toast notification
 toastInfo(BuildContext context, String msg) {
   return toastification.show(
     context: context, // optional if you use ToastificationWrapper
@@ -18,7 +18,7 @@ toastInfo(BuildContext context, String msg) {
   );
 }
 
-// 提示框
+// Toast notification
 toastWarning(BuildContext context, String msg) {
   return toastification.show(
     context: context, // optional if you use ToastificationWrapper

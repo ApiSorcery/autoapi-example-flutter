@@ -1,24 +1,19 @@
 {
   "application": {
-    "name": "示例应用",
+    "name": "DemoApplication",
     "language": "dart",
     "outputDir": "./lib/apis/auto"
   },
   "servers": [
     {
       "code": "demo",
-      "name": "示例服务",
+      "name": "DemoService",
       "token": "72735b33815c4e5c9c2a924a8f4907ef",
       "version": 3,
       "enabled": true,
       "source": "https://apisorcery.com/demo-api/swagger-json",
       "returnLevel": "second",
-      "returnSecondField": "data",
-      "tagNameMap": {
-        "用户管理": "User",
-        "用户认证": "Auth",
-        "文件管理": "File"
-      }
+      "returnSecondField": "data"
     }
   ]
 }

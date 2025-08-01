@@ -5,8 +5,8 @@ Future<bool?> showConfirmDialog(
     {required BuildContext context,
     required String title,
     required String content,
-    String confirmText = '确认',
-    String cancelText = '取消'}) {
+    String confirmText = 'Confirm',
+    String cancelText = 'Cancel'}) {
   return showDialog<bool>(
     context: context,
     builder: (context) {
@@ -16,12 +16,12 @@ Future<bool?> showConfirmDialog(
         actions: <Widget>[
           TextButton(
             child: Text(cancelText, style: AppTextStyle.dialogCancelButton),
-            onPressed: () => Navigator.of(context).pop(), //关闭对话框
+            onPressed: () => Navigator.of(context).pop(), // Close dialog
           ),
           TextButton(
             child: Text(confirmText, style: AppTextStyle.dialogConfirmButton),
             onPressed: () {
-              Navigator.of(context).pop(true); //关闭对话框
+              Navigator.of(context).pop(true); // Close dialog
             },
           ),
         ],

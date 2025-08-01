@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// loading组件
+// Loading component
 class Loading extends StatelessWidget {
   const Loading({super.key});
 
@@ -19,7 +19,7 @@ class Loading extends StatelessWidget {
                       Theme.of(context).colorScheme.primary)),
             ),
             Text(
-              '加载中...',
+              'Loading...',
               style: TextStyle(
                   color: Theme.of(context).colorScheme.primary, fontSize: 20),
             ), //

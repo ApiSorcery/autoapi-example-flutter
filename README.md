@@ -1,11 +1,11 @@
 # autoapi_example_flutter
 
-AutoAPI示例项目Flutter版本
+AutoAPI Example Project Flutter Version
 
-- flutter版本：3.27.4
-- dart版本：3.6.2
-- autoapi版本：1.0.9+
+- flutter version: 3.27.4
+- dart version: 3.6.2
+- autoapi version: 1.0.5+
 
 ## Getting Started
 
-参考官方文档
+Please refer to the [official documentation](https://apisorcery.com)

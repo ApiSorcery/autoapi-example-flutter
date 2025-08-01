@@ -3,10 +3,10 @@ import 'package:autoapi_example_flutter/pages/user_detail.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
-  /// 用户列表页
+  /// User list page
   static const user = '/user';
 
-  /// 用户添加页
+  /// User add page
   static const userDetail = '/user/detail';
 
   static Widget _navi(String url, dynamic params) {
