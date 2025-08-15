@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
-import '../../../utils/config.dart';
-import '../interceptors/json_response.dart';
-import '../interceptors/request.dart';
+import '../../../../utils/config.dart';
+import '../../interceptors/blob_response.dart';
+import '../../interceptors/request.dart';
 
 // API wrapper
-class DioJsonClient {
+class DioBlobClient {
   static Dio? _dio;
   // Basic settings
   static BaseOptions options = BaseOptions(
       baseUrl: Config.apiHost,
-      responseType: ResponseType.json,
+      responseType: ResponseType.bytes,
       connectTimeout: Duration(seconds: 15),
       receiveTimeout: Duration(seconds: 5),
       followRedirects: true);
@@ -18,7 +18,7 @@ class DioJsonClient {
     if (_dio == null) {
       _dio = Dio(options);
       _dio!.interceptors.add(RequestInterceptor());
-      _dio!.interceptors.add(JsonResponseInterceptor());
+      _dio!.interceptors.add(BlobResponseInterceptor());
     }
     return _dio!;
   }
