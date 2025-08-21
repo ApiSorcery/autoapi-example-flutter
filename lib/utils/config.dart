@@ -1,5 +1,5 @@
 class Config {
   static get apiHost {
-    return "https://apisorcery.com/demo-api";
+    return "https://www.apisorcery.com/demo-api";
   }
 }

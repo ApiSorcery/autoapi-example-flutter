@@ -8,4 +8,4 @@ AutoAPI Example Project Flutter Version
 
 ## Getting Started
 
-Please refer to the [official documentation](https://apisorcery.com)
+Please refer to the [official documentation](https://www.apisorcery.com)
