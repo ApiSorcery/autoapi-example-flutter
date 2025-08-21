@@ -5,7 +5,7 @@ class JsonResponseInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
-      debugPrint('【${response.requestOptions.hashCode}】返回结果: $response');
+      debugPrint('【${response.requestOptions.hashCode}】Response data: $response');
     }
 
     // 业务异常处理 (0：正常)

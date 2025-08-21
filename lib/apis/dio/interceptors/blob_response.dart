@@ -6,7 +6,7 @@ class BlobResponseInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
-      debugPrint('【${response.requestOptions.hashCode}】返回结果: $response');
+      debugPrint('【${response.requestOptions.hashCode}】Response data: $response');
     }
 
     // 返回blob格式，文件下载
