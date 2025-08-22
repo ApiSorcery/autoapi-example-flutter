@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
 import 'package:autoapi_example_flutter/pages/user.dart';
 import 'package:autoapi_example_flutter/pages/user_detail.dart';
-import 'package:flutter/material.dart';
+import 'package:autoapi_example_flutter/widgets/web_wrapper.dart';
 
 class Routes {
   /// User list page
@@ -14,7 +17,9 @@ class Routes {
       case user:
         return const UserPage();
       case userDetail:
-        return UserDetailPage(params);
+        return kIsWeb
+            ? WebWrapper(child: UserDetailPage(params))
+            : UserDetailPage(params);
       default:
         return const SizedBox.shrink();
     }

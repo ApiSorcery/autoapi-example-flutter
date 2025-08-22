@@ -109,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: castor_flutter
-      sha256: "572e688d66d70b0270c09b9923a395d3301f13f77498361613495075a1979347"
+      sha256: f1eac371754ea3d22614a7c0b85f9816b8124400cd990efa9e8609128b7716c3
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   characters:
     dependency: transitive
     description:

@@ -1,9 +1,11 @@
-import 'package:autoapi_example_flutter/pages/user.dart';
-import 'package:autoapi_example_flutter/utils/cupertino.dart';
-import 'package:autoapi_example_flutter/widgets/web_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:castor_flutter/castor_flutter.dart';
+
+import 'package:autoapi_example_flutter/pages/user.dart';
+import 'package:autoapi_example_flutter/utils/cupertino.dart';
+import 'package:autoapi_example_flutter/widgets/web_wrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,16 +41,14 @@ class MyApp extends StatelessWidget {
       home: kIsWeb ? WebWrapper(child: const UserPage()) : const UserPage(),
       // Localization delegates
       localizationsDelegates: const [
-        GlobalCupertinoLocalizations.delegate,
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         FallbackCupertinoLocalisationsDelegate()
       ],
-      locale: const Locale('zh', 'CN'),
-      supportedLocales: const [
-        Locale('en', 'US'), // English
-        Locale('zh', 'CN'), // Chinese
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('zh'),
     );
   }
 }

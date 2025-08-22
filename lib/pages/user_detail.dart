@@ -1,20 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:castor_flutter/castor_flutter.dart';
-import 'package:castor_flutter/ui/entities/tuple_entity.dart';
 
 import 'package:autoapi_example_flutter/apis/auto/demo/api_file.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
-// import 'package:autoapi_example_flutter/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/utils/config.dart';
 import 'package:autoapi_example_flutter/utils/validator.dart';
+import 'package:castor_flutter/ui/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/widgets/command_footer.dart';
-// import 'package:autoapi_example_flutter/widgets/form/label_input_form_field.dart';
-// import 'package:autoapi_example_flutter/widgets/form/label_select_form_field.dart';
-// import 'package:autoapi_example_flutter/widgets/form/label_single_image_form_field.dart';
-// import 'package:autoapi_example_flutter/widgets/form/label_switch_form_field.dart';
-// import 'package:autoapi_example_flutter/widgets/form/lable_multiline_input_form_field.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
 
 class UserDetailPage extends StatefulWidget {
