@@ -51,7 +51,7 @@ class _UserPageState extends State<UserPage> {
         if (_pages != null && _pages! > _currentPage) {
           _getData(true);
         } else {
-          toastInfo(context, 'Reached the end');
+          toastInfo(context, 'reached the end');
         }
       }
     });

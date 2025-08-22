@@ -14,7 +14,7 @@ toastInfo(BuildContext context, String msg) {
     alignment: Alignment.center,
     backgroundColor: Colors.black,
     foregroundColor: Colors.white,
-    autoCloseDuration: const Duration(seconds: 1),
+    autoCloseDuration: const Duration(seconds: 3),
   );
 }
 
