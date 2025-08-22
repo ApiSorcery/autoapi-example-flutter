@@ -34,6 +34,14 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script>
+    // 如果之前部署启用了 PWA，这里尝试注销已注册的 Service Worker，避免旧缓存干扰
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(reg) { reg.unregister(); });
+      }).catch(function() { /* ignore */ });
+    }
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

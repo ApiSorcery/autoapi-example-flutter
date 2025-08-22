@@ -2,6 +2,8 @@
 
 # 设置变量
 export FLUTTER_BASE_HREF="/flutter/"
+# 禁用 PWA（不生成 service worker）。可选值：none|offline-first|poor-network
+FLUTTER_PWA_STRATEGY="none"
 REMOTE_HOST="tx01"
 REMOTE_PATH="/var/projects/demo/frontend/flutter"
 LOCAL_BUILD_DIR="build"
@@ -10,14 +12,14 @@ ARCHIVE_NAME="flutter_web_$(date +%Y%m%d_%H%M%S).tar.gz"
 echo "开始构建 Flutter Web 应用..."
 
 # 构建 Flutter Web 应用
-flutter build web --base-href $FLUTTER_BASE_HREF
+flutter build web --base-href "$FLUTTER_BASE_HREF" --pwa-strategy "$FLUTTER_PWA_STRATEGY"
 
 if [ $? -ne 0 ]; then
     echo "构建失败，退出部署"
     exit 1
 fi
 
-echo "构建完成，开始打包..."
+echo "构建完成（PWA 已禁用），开始打包..."
 
 # 创建压缩包（直接压缩web文件夹）
 tar -czf $ARCHIVE_NAME --exclude='.DS_Store' --exclude='__MACOSX' -C $LOCAL_BUILD_DIR web
