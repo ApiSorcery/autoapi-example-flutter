@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         FallbackCupertinoLocalisationsDelegate()
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: const Locale('zh'),
+      locale: const Locale('en'),
     );
   }
 }
