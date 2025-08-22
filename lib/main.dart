@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
           },
         ),
-        cardTheme: const CardTheme(
+        cardTheme: const CardThemeData(
           color: Colors.white,
         ),
         drawerTheme: const DrawerThemeData(
