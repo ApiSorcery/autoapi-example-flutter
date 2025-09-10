@@ -1,6 +1,6 @@
 # autoapi_example_flutter
 
-AutoAPI Example Project Flutter Version
+Apisorcery Example Project Flutter Version
 
 - flutter version: 3.27.4
 - dart version: 3.6.2
