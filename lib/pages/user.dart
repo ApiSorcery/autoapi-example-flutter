@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // for kIsWeb
 // Web 专用下载逻辑通过条件导入隔离，避免非 Web 平台编译到 dart:js / js_util
 import 'package:autoapi_example_flutter/utils/download_stub.dart'
-  if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
+    if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -264,15 +264,14 @@ class _UserPageState extends State<UserPage> {
                   child: Divider(color: Color.fromRGBO(0, 0, 0, 0.3)),
                 ),
                 Padding(
-                    padding:
-                        EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                    padding: EdgeInsets.only(left: 8, right: 8),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           margin: EdgeInsets.only(right: 8),
-                          width: 120,
-                          height: 120,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                             image: DecorationImage(
@@ -294,7 +293,7 @@ class _UserPageState extends State<UserPage> {
                           cardText('Email:', item.email),
                           cardText('Address:', item.address),
                           cardText(
-                              'Created Time:',
+                              'Created At:',
                               item.createdAt != null
                                   ? DateTimeUtil.formatDateTime(item.createdAt!)
                                   : ''),
