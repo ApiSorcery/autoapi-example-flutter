@@ -16,8 +16,9 @@ import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // for kIsWeb
-import 'package:web/web.dart' as web; // for web file download
-import 'package:js/js_util.dart' as js_util;
+// Web 专用下载逻辑通过条件导入隔离，避免非 Web 平台编译到 dart:js / js_util
+import 'package:autoapi_example_flutter/utils/download_stub.dart'
+  if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -196,17 +197,8 @@ class _UserPageState extends State<UserPage> {
           String fileName = blobRes.name ??
               'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
           if (kIsWeb) {
-            // Web: Use package:web and js_util to trigger download
-            final blob = web.Blob(js_util.jsify([fileBytes]) as dynamic);
-            final urlObject = js_util.getProperty(web.window, 'URL');
-            final url = js_util.callMethod(urlObject, 'createObjectURL', [blob]);
-            final anchor = web.document.createElement('a');
-            anchor.setAttribute('href', url);
-            anchor.setAttribute('download', fileName);
-            web.document.body?.append(anchor);
-            js_util.callMethod(anchor, 'click', []);
-            anchor.remove();
-            js_util.callMethod(urlObject, 'revokeObjectURL', [url]);
+            // Web: 触发浏览器下载（条件导入实现），OhOS/其他平台不会编译此实现
+            await triggerWebDownload(fileBytes, fileName);
             if (mounted) {
               await ScaffoldMessenger.of(_scaffoldContext)
                   .showSnackBar(const SnackBar(
