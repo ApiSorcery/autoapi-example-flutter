@@ -81,21 +81,6 @@ class ValidateCodeRequest extends TBase {
   Map<String, dynamic> toJson() => _$ValidateCodeRequestToJson(this);
 }
 
-/// Validate if user email exists request parameters
-@JsonSerializable()
-class ValidateEmailRequest extends TBase {
-  /// Email address
-  @JsonKey(name: 'email')
-  String email;
-
-  ValidateEmailRequest({required this.email});
-
-  factory ValidateEmailRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateEmailRequestFromJson(srcJson);
-
-  @override
-  Map<String, dynamic> toJson() => _$ValidateEmailRequestToJson(this);
-}
-
 /// Delete file request parameters
 @JsonSerializable()
 class DeleteFileRequest extends TBase {

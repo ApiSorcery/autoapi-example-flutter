@@ -73,14 +73,4 @@ class ApiUser {
     return response.data;
   }
 
-  /// Validate if user email exists
-  static Future<bool> validateEmail(ValidateEmailRequest req) async {
-    var response = await createJsonRequest(
-      url: '/user/validateEmail',
-      method: 'GET',
-      queryParameters: {'email': req.email},
-    );
-    return response.data;
-  }
-
 }

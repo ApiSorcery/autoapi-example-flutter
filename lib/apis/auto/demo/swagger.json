@@ -99,6 +99,49 @@
         ]
       }
     },
+    "/user/validateCode": {
+      "get": {
+        "operationId": "validateCode",
+        "summary": "Validate if user code exists",
+        "parameters": [
+          {
+            "name": "code",
+            "required": true,
+            "in": "query",
+            "description": "User code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ResultData"
+                    },
+                    {
+                      "properties": {
+                        "data": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/user/{id}": {
       "get": {
         "operationId": "getUserOne",
@@ -170,92 +213,6 @@
                         "data": {
                           "type": "null",
                           "default": null
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/user/validateCode": {
-      "get": {
-        "operationId": "validateCode",
-        "summary": "Validate if user code exists",
-        "parameters": [
-          {
-            "name": "code",
-            "required": true,
-            "in": "query",
-            "description": "User code",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ResultData"
-                    },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "User"
-        ]
-      }
-    },
-    "/user/validateEmail": {
-      "get": {
-        "operationId": "validateEmail",
-        "summary": "Validate if user email exists",
-        "parameters": [
-          {
-            "name": "email",
-            "required": true,
-            "in": "query",
-            "description": "Email address",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/ResultData"
-                    },
-                    {
-                      "properties": {
-                        "data": {
-                          "type": "boolean"
                         }
                       }
                     }
