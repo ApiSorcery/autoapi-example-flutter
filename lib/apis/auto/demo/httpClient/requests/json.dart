@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import '../../../../utils/config.dart';
-import '../../interceptors/json_response.dart';
-import '../../interceptors/request.dart';
+import '/utils/config.dart';
+import '../interceptors/response.dart';
+import '../interceptors/request.dart';
 
 // API wrapper
 class DioJsonClient {
@@ -18,7 +18,7 @@ class DioJsonClient {
     if (_dio == null) {
       _dio = Dio(options);
       _dio!.interceptors.add(RequestInterceptor());
-      _dio!.interceptors.add(JsonResponseInterceptor());
+      _dio!.interceptors.add(ResponseInterceptor());
     }
     return _dio!;
   }

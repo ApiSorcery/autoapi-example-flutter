@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import '../../../../utils/config.dart';
-import '../../interceptors/blob_response.dart';
-import '../../interceptors/request.dart';
+import '/utils/config.dart';
+import '../interceptors/response.dart';
+import '../interceptors/request.dart';
 
 // API wrapper
 class DioBlobClient {
@@ -18,7 +18,7 @@ class DioBlobClient {
     if (_dio == null) {
       _dio = Dio(options);
       _dio!.interceptors.add(RequestInterceptor());
-      _dio!.interceptors.add(BlobResponseInterceptor());
+      _dio!.interceptors.add(ResponseInterceptor());
     }
     return _dio!;
   }
