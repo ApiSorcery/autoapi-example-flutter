@@ -1,4 +1,5 @@
 import 'base.dart';
+import 'httpClient/types/extension.dart';
 import 'model.dart';
 
 /// User

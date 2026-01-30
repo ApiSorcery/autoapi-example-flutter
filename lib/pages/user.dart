@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
+import 'package:autoapi_example_flutter/apis/auto/demo/httpClient/types/extension.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/key_value.dart';
 import 'package:autoapi_example_flutter/utils/constants.dart';

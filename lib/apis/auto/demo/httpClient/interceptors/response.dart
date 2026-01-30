@@ -1,6 +1,7 @@
-import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+
+import '../types/extension.dart';
 
 class ResponseInterceptor extends InterceptorsWrapper {
   @override
