@@ -1,4 +1,14 @@
-/// 非 Web 平台的占位实现，避免引用 web/js 相关库导致编译失败。
-Future<void> triggerWebDownload(List<int> bytes, String fileName) async {
-  // No-op on non-web platforms.
+/// 非 Web 平台实现：将导出的字节写入本地文件系统，并返回保存路径。
+library;
+
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
+Future<String?> triggerWebDownload(List<int> bytes, String fileName) async {
+  final Directory dir = await getApplicationDocumentsDirectory();
+  final String filePath = '${dir.path}/$fileName';
+  final file = File(filePath);
+  await file.create(recursive: true);
+  await file.writeAsBytes(bytes, flush: true);
+  return filePath;
 }

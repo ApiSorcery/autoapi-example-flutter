@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "debug": "flutter run -d 4UQ9K25528051389 lib/main.dart"
+  }
+}

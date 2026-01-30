@@ -1,5 +1,5 @@
 {
-  // Use IntelliSense to learn about related properties. 
+  // Use IntelliSense to learn about related properties.
   // Hover to view descriptions of existing properties.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
@@ -13,20 +13,18 @@
       "program": "lib/main.dart"
     },
     {
-      "name": "autoapi_example_flutter (profile mode)",
+      "name": "autoapi_example_flutter (ohos debug)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile",
-      "deviceId": "chrome",
-      "program": "lib/main.dart"
+      // 确保该 ID 与 `flutter devices` 输出中的 HarmonyOS 设备 ID 一致
+      "deviceId": "4UQ9K25528051389",
+      "program": "lib/main.dart",
+      "args": ["-d", "4UQ9K25528051389"]
     },
     {
-      "name": "autoapi_example_flutter (release mode)",
-      "request": "launch",
+      "name": "Flutter Attach",
       "type": "dart",
-      "flutterMode": "release",
-      "deviceId": "chrome",
-      "program": "lib/main.dart"
+      "request": "attach"
     }
   ]
 }

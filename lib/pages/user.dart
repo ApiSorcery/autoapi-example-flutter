@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
@@ -20,7 +19,6 @@ import 'package:flutter/foundation.dart'; // for kIsWeb
 import 'package:autoapi_example_flutter/utils/download_stub.dart'
     if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class UserPage extends StatefulWidget {
@@ -191,49 +189,33 @@ class _UserPageState extends State<UserPage> {
         name: _userNameController.text,
       );
       BlobResp? blobRes = await ApiUser.exportUsers(req);
-      if (blobRes != null) {
-        var fileBytes = blobRes.data;
-        if (fileBytes != null) {
-          String fileName = blobRes.name ??
-              'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
-          if (kIsWeb) {
-            // Web: 触发浏览器下载（条件导入实现），OhOS/其他平台不会编译此实现
-            await triggerWebDownload(fileBytes, fileName);
-            if (mounted) {
-              await ScaffoldMessenger.of(_scaffoldContext)
-                  .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("Export successful")))
-                  .closed;
-            }
-          } else {
-            // Mobile/Desktop: Save to file system
-            Directory? directory = await getExternalStorageDirectory();
-            if (directory == null) {
-              if (mounted) {
-                toastWarning(_scaffoldContext, 'Unable to access storage directory');
-              }
-              setState(() {
-                _isExporting = false;
-              });
-              return;
-            }
-            String filePath = '${directory.path}/$fileName';
-            File(filePath)
-              ..createSync(recursive: true)
-              ..writeAsBytesSync(fileBytes);
-
-            if (mounted) {
-              await ScaffoldMessenger.of(_scaffoldContext)
-                  .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("Export successful")))
-                  .closed;
-            }
-          }
-        }
-      } else {
+      if (blobRes == null || blobRes.data == null) {
         if (mounted) {
-          toastWarning(_scaffoldContext, 'Export failed');
+          toastWarning(_scaffoldContext, 'Export failed: empty response');
         }
+        setState(() {
+          _isExporting = false;
+        });
+        return;
+      }
+
+      var fileBytes = blobRes.data!;
+      String fileName = blobRes.name ??
+          'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+
+      // 统一入口：Web 触发浏览器下载，非 Web 写入本地文件系统
+      String? savedPath = await triggerWebDownload(fileBytes, fileName);
+
+      if (mounted) {
+        final snackBarText = savedPath == null || kIsWeb
+            ? const Text("Export successful")
+            : Text("Export successful: $savedPath");
+
+        await ScaffoldMessenger.of(_scaffoldContext)
+            .showSnackBar(SnackBar(
+                duration: const Duration(seconds: 2),
+                content: snackBarText))
+            .closed;
       }
       setState(() {
         _isExporting = false;
@@ -293,7 +275,7 @@ class _UserPageState extends State<UserPage> {
                           cardText('Email:', item.email),
                           cardText('Address:', item.address),
                           cardText(
-                              'Created At:',
+                              'Created At2:',
                               item.createdAt != null
                                   ? DateTimeUtil.formatDateTime(item.createdAt!)
                                   : ''),
