@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "autoapi_example_flutter",
+      "name": "chrome",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
@@ -13,7 +13,7 @@
       "program": "lib/main.dart"
     },
     {
-      "name": "autoapi_example_flutter (ohos debug)",
+      "name": "ohos debug",
       "request": "launch",
       "type": "dart",
       // 确保该 ID 与 `flutter devices` 输出中的 HarmonyOS 设备 ID 一致
@@ -22,7 +22,7 @@
       "args": ["-d", "4UQ9K25528051389"]
     },
     {
-      "name": "Flutter Attach",
+      "name": "Attach",
       "type": "dart",
       "request": "attach"
     }
