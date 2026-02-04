@@ -109,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: castor_flutter
-      sha256: f1eac371754ea3d22614a7c0b85f9816b8124400cd990efa9e8609128b7716c3
+      sha256: "5a9a49118952501f5a600eba86cd2d722d1afaf796c37eda7de7c98389ff06bb"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   characters:
     dependency: transitive
     description:
@@ -699,18 +699,18 @@ packages:
     dependency: "direct main"
     description:
       name: permission_handler
-      sha256: "59adad729136f01ea9e35a48f5d1395e25cba6cea552249ddbe9cf950f5d7849"
+      sha256: bc917da36261b00137bbc8896bf1482169cd76f866282368948f032c8c1caae1
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "11.4.0"
+    version: "12.0.1"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: d3971dcdd76182a0c198c096b5db2f0884b0d4196723d21a866fc4cdea057ebc
+      sha256: "1e3bc410ca1bf84662104b100eb126e066cb55791b7451307f9708d4007350e6"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "12.1.0"
+    version: "13.0.1"
   permission_handler_apple:
     dependency: transitive
     description:

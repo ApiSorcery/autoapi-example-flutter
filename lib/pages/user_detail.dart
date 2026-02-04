@@ -10,6 +10,7 @@ import 'package:autoapi_example_flutter/utils/validator.dart';
 import 'package:castor_flutter/ui/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/widgets/command_footer.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
+import 'package:autoapi_example_flutter/widgets/toast.dart';
 
 class UserDetailPage extends StatefulWidget {
   final Map orderData;
@@ -178,6 +179,16 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 initialValue: _avatar,
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
                 uploadHandler: (MultipartFile file) async {
+                  const int maxFileSizeBytes = 10 * 1024 * 1024; // 10MB
+                  
+                  if (file.length > maxFileSizeBytes) {
+                    toastWarning(
+                      context,
+                      'File size exceeds 10MB limit. Current size: ${(file.length / 1024 / 1024).toStringAsFixed(2)}MB',
+                    );
+                    return null;
+                  }
+                  
                   var req = UploadFileRequest(file: file);
                   var imageId = await ApiFile.uploadFile(req);
                   return '${Config.apiHost}/file/$imageId';
