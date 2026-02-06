@@ -109,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: castor_flutter
-      sha256: "5a9a49118952501f5a600eba86cd2d722d1afaf796c37eda7de7c98389ff06bb"
+      sha256: bf0e81bea7c19060f3c746c36277697f94a1a44de9c485b78d93d205c161a491
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   characters:
     dependency: transitive
     description:
@@ -438,13 +438,14 @@ packages:
     source: hosted
     version: "1.0.1"
   image_picker:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: image_picker
-      sha256: "736eb56a911cf24d1859315ad09ddec0b66104bc41a7f8c5b96b4e2620cf5041"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.2.0"
+      path: "packages/image_picker/image_picker"
+      ref: master
+      resolved-ref: "35fb467533e174411a117b2a030c15d2a3a9687c"
+      url: "https://gitee.com/openharmony-sig/flutter_packages.git"
+    source: git
+    version: "1.0.2"
   image_picker_android:
     dependency: transitive
     description:
@@ -485,6 +486,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.2"
+  image_picker_ohos:
+    dependency: transitive
+    description:
+      path: "packages/image_picker/image_picker_ohos"
+      ref: HEAD
+      resolved-ref: "35fb467533e174411a117b2a030c15d2a3a9687c"
+      url: "https://gitee.com/openharmony-sig/flutter_packages.git"
+    source: git
+    version: "0.8.7+4"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -913,10 +923,10 @@ packages:
     dependency: "direct main"
     description:
       name: toastification
-      sha256: "1e01495fe00b8fddce8a7f1da5e4775cd003763698e8363d7122bea4168a395e"
+      sha256: "69db2bff425b484007409650d8bcd5ed1ce2e9666293ece74dcd917dacf23112"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.1"
+    version: "3.0.3"
   typed_data:
     dependency: transitive
     description:
