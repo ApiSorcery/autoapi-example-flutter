@@ -93,6 +93,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
       return;
     }
 
+    if (_avatar == null || _avatar!.isEmpty) {
+      toastWarning(context, 'Avatar cannot be empty');
+      return;
+    }
+
     _formKey.currentState?.save();
     if (_operateType == 'add') {
       await ApiUser.addUser(UserAddRequestDto(
@@ -178,6 +183,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 label: 'Avatar:',
                 initialValue: _avatar,
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
+                allowEmpty: false,
                 uploadHandler: (MultipartFile file) async {
                   const int maxFileSizeBytes = 10 * 1024 * 1024; // 10MB
                   
