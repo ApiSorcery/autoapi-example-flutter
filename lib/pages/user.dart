@@ -16,6 +16,7 @@ import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // for kIsWeb
+import 'dart:io' show Platform;
 // Web 专用下载逻辑通过条件导入隔离，避免非 Web 平台编译到 dart:js / js_util
 import 'package:autoapi_example_flutter/utils/download_stub.dart'
     if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
@@ -172,15 +173,18 @@ class _UserPageState extends State<UserPage> {
 
       // Check storage permission (non-web platforms only)
       if (!kIsWeb) {
-        var status = await Permission.storage.request();
-        if (!status.isGranted) {
-          if (mounted) {
-            toastWarning(_scaffoldContext, 'Storage permission is required to export files');
+        // HarmonyOS 不需要申请 STORAGE 权限，跳过权限检查
+        if (Platform.operatingSystem != 'ohos') {
+          var status = await Permission.storage.request();
+          if (!status.isGranted) {
+            if (mounted) {
+              toastWarning(_scaffoldContext, 'Storage permission is required to export files');
+            }
+            setState(() {
+              _isExporting = false;
+            });
+            return;
           }
-          setState(() {
-            _isExporting = false;
-          });
-          return;
         }
       }
 
