@@ -11,7 +11,7 @@ class DioBlobClient {
       baseUrl: Config.apiHost,
       responseType: ResponseType.bytes,
       connectTimeout: Duration(seconds: 15),
-      receiveTimeout: Duration(seconds: 5),
+      receiveTimeout: Duration(seconds: 10),
       followRedirects: true);
 
   static Future<Dio> getInstance() async {
