@@ -5,7 +5,7 @@ import 'httpClient/types/extension.dart';
 /// User
 class ApiUser {
   /// Add user
-  static Future<double> addUser(UserAddRequestDto req) async {
+  static Future<int> addUser(UserAddRequestDto req) async {
     var response = await createJsonRequest(
       url: '/user',
       method: 'POST',
