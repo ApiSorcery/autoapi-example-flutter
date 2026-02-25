@@ -280,7 +280,7 @@ class _UserPageState extends State<UserPage> {
                           cardText('Email:', item.email),
                           cardText('Address:', item.address),
                           cardText(
-                              'Created At2:',
+                              'Created At:',
                               item.createdAt != null
                                   ? DateTimeUtil.formatDateTime(item.createdAt!)
                                   : ''),

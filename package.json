@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "debug:harmony": "flutter run -d 4UQ9K25528051389 lib/main.dart",
+    "debug:harmony": "flutter run -d 4UQ9K25528051389 lib/main.dart --hot",
     "build:harmony": "flutter build app --debug",
     "swagger": "autoapi generate",
     "outdated": "dart pub outdated --no-dev-dependencies --up-to-date --no-dependency-overrides"
