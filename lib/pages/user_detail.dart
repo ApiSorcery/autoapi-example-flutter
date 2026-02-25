@@ -154,7 +154,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LabelInputFormField(
                 label: 'Email:',
                 initialValue: _email,
-                validator: Validator.validateEmpty(message: 'Cannot be empty'),
+                validator: Validator.validateEmail(),
                 saveHandler: _fieldSaveHandlerMap['email']!,
                 enabled: true,
                 allowEmpty: false,
