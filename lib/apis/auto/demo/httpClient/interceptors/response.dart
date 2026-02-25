@@ -1,3 +1,4 @@
+import 'package:castor_flutter/ui/widgets/toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -45,6 +46,7 @@ class ResponseInterceptor extends InterceptorsWrapper {
       debugPrint('请求异常: $err');
       debugPrint('请求异常信息: ${err.response?.toString() ?? ""}');
     }
+    toastWarning('$err');
 
     handler.next(err);
   }
