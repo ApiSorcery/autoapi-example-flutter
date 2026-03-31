@@ -248,7 +248,7 @@ class _UserPageState extends State<UserPage> {
                     item.status.toString(), userStatusConst),
                 Padding(
                   padding: EdgeInsets.only(left: 8, right: 8),
-                  child: Divider(color: Color.fromRGBO(0, 0, 0, 0.3)),
+                  child: Divider(color: Color(0x4B000000)),
                 ),
                 Padding(
                     padding: EdgeInsets.only(left: 8, right: 8),
