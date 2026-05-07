@@ -10,6 +10,7 @@ import 'package:autoapi_example_flutter/utils/validator.dart';
 import 'package:castor_flutter/ui/entities/tuple_entity.dart';
 import 'package:autoapi_example_flutter/widgets/command_footer.dart';
 import 'package:autoapi_example_flutter/widgets/loading.dart';
+import 'package:autoapi_example_flutter/widgets/toast.dart';
 
 class UserDetailPage extends StatefulWidget {
   final Map orderData;
@@ -92,6 +93,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
       return;
     }
 
+    if (_avatar == null || _avatar!.isEmpty) {
+      toastWarning(context, 'Avatar cannot be empty');
+      return;
+    }
+
     _formKey.currentState?.save();
     if (_operateType == 'add') {
       await ApiUser.addUser(UserAddRequestDto(
@@ -148,7 +154,7 @@ class _UserDetailPageState extends State<UserDetailPage> {
               LabelInputFormField(
                 label: 'Email:',
                 initialValue: _email,
-                validator: Validator.validateEmpty(message: 'Cannot be empty'),
+                validator: Validator.validateEmail(),
                 saveHandler: _fieldSaveHandlerMap['email']!,
                 enabled: true,
                 allowEmpty: false,
@@ -177,7 +183,18 @@ class _UserDetailPageState extends State<UserDetailPage> {
                 label: 'Avatar:',
                 initialValue: _avatar,
                 saveHandler: _fieldSaveHandlerMap['avatar']!,
+                allowEmpty: false,
                 uploadHandler: (MultipartFile file) async {
+                  const int maxFileSizeBytes = 10 * 1024 * 1024; // 10MB
+                  
+                  if (file.length > maxFileSizeBytes) {
+                    toastWarning(
+                      context,
+                      'File size exceeds 10MB limit. Current size: ${(file.length / 1024 / 1024).toStringAsFixed(2)}MB',
+                    );
+                    return null;
+                  }
+                  
                   var req = UploadFileRequest(file: file);
                   var imageId = await ApiFile.uploadFile(req);
                   return '${Config.apiHost}/file/$imageId';

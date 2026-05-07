@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:castor_flutter/castor_flutter.dart';
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ToastificationWrapper(
+        child: MaterialApp(
       title: 'ApiSorcery - Flutter Example',
       theme: ThemeData(
         useMaterial3: true,
@@ -49,6 +51,6 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: const Locale('en'),
-    );
+    ));
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:autoapi_example_flutter/apis/auto/demo/api_user.dart';
+import 'package:autoapi_example_flutter/apis/auto/demo/httpClient/types/extension.dart';
 import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
 import 'package:autoapi_example_flutter/entities/key_value.dart';
 import 'package:autoapi_example_flutter/utils/constants.dart';
@@ -16,10 +16,11 @@ import 'package:autoapi_example_flutter/widgets/loading.dart';
 import 'package:autoapi_example_flutter/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart'; // for kIsWeb
-import 'package:web/web.dart' as web; // for web file download
-import 'package:js/js_util.dart' as js_util;
+import 'dart:io' show Platform;
+// Web 专用下载逻辑通过条件导入隔离，避免非 Web 平台编译到 dart:js / js_util
+import 'package:autoapi_example_flutter/utils/download_stub.dart'
+    if (dart.library.html) 'package:autoapi_example_flutter/utils/download_web.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class UserPage extends StatefulWidget {
@@ -172,15 +173,18 @@ class _UserPageState extends State<UserPage> {
 
       // Check storage permission (non-web platforms only)
       if (!kIsWeb) {
-        var status = await Permission.storage.request();
-        if (!status.isGranted) {
-          if (mounted) {
-            toastWarning(_scaffoldContext, 'Storage permission is required to export files');
+        // HarmonyOS 不需要申请 STORAGE 权限，跳过权限检查
+        if (Platform.operatingSystem != 'ohos') {
+          var status = await Permission.storage.request();
+          if (!status.isGranted) {
+            if (mounted) {
+              toastWarning(_scaffoldContext, 'Storage permission is required to export files');
+            }
+            setState(() {
+              _isExporting = false;
+            });
+            return;
           }
-          setState(() {
-            _isExporting = false;
-          });
-          return;
         }
       }
 
@@ -190,58 +194,33 @@ class _UserPageState extends State<UserPage> {
         name: _userNameController.text,
       );
       BlobResp? blobRes = await ApiUser.exportUsers(req);
-      if (blobRes != null) {
-        var fileBytes = blobRes.data;
-        if (fileBytes != null) {
-          String fileName = blobRes.name ??
-              'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
-          if (kIsWeb) {
-            // Web: Use package:web and js_util to trigger download
-            final blob = web.Blob(js_util.jsify([fileBytes]) as dynamic);
-            final urlObject = js_util.getProperty(web.window, 'URL');
-            final url = js_util.callMethod(urlObject, 'createObjectURL', [blob]);
-            final anchor = web.document.createElement('a');
-            anchor.setAttribute('href', url);
-            anchor.setAttribute('download', fileName);
-            web.document.body?.append(anchor);
-            js_util.callMethod(anchor, 'click', []);
-            anchor.remove();
-            js_util.callMethod(urlObject, 'revokeObjectURL', [url]);
-            if (mounted) {
-              await ScaffoldMessenger.of(_scaffoldContext)
-                  .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("Export successful")))
-                  .closed;
-            }
-          } else {
-            // Mobile/Desktop: Save to file system
-            Directory? directory = await getExternalStorageDirectory();
-            if (directory == null) {
-              if (mounted) {
-                toastWarning(_scaffoldContext, 'Unable to access storage directory');
-              }
-              setState(() {
-                _isExporting = false;
-              });
-              return;
-            }
-            String filePath = '${directory.path}/$fileName';
-            File(filePath)
-              ..createSync(recursive: true)
-              ..writeAsBytesSync(fileBytes);
-
-            if (mounted) {
-              await ScaffoldMessenger.of(_scaffoldContext)
-                  .showSnackBar(const SnackBar(
-                      duration: Duration(seconds: 1), content: Text("Export successful")))
-                  .closed;
-            }
-          }
-        }
-      } else {
+      if (blobRes == null || blobRes.data == null) {
         if (mounted) {
-          toastWarning(_scaffoldContext, 'Export failed');
+          toastWarning(_scaffoldContext, 'Export failed: empty response');
         }
+        setState(() {
+          _isExporting = false;
+        });
+        return;
+      }
+
+      var fileBytes = blobRes.data!;
+      String fileName = blobRes.name ??
+          'users_${DateTime.now().millisecondsSinceEpoch}.xlsx';
+
+      // 统一入口：Web 触发浏览器下载，非 Web 写入本地文件系统
+      String? savedPath = await triggerWebDownload(fileBytes, fileName);
+
+      if (mounted) {
+        final snackBarText = savedPath == null || kIsWeb
+            ? const Text("Export successful")
+            : Text("Export successful: $savedPath");
+
+        await ScaffoldMessenger.of(_scaffoldContext)
+            .showSnackBar(SnackBar(
+                duration: const Duration(seconds: 2),
+                content: snackBarText))
+            .closed;
       }
       setState(() {
         _isExporting = false;
@@ -269,18 +248,17 @@ class _UserPageState extends State<UserPage> {
                     item.status.toString(), userStatusConst),
                 Padding(
                   padding: EdgeInsets.only(left: 8, right: 8),
-                  child: Divider(color: Color.fromRGBO(0, 0, 0, 0.3)),
+                  child: Divider(color: Color(0x4B000000)),
                 ),
                 Padding(
-                    padding:
-                        EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                    padding: EdgeInsets.only(left: 8, right: 8),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           margin: EdgeInsets.only(right: 8),
-                          width: 120,
-                          height: 120,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(16)),
                             image: DecorationImage(
@@ -302,7 +280,7 @@ class _UserPageState extends State<UserPage> {
                           cardText('Email:', item.email),
                           cardText('Address:', item.address),
                           cardText(
-                              'Created Time:',
+                              'Created At:',
                               item.createdAt != null
                                   ? DateTimeUtil.formatDateTime(item.createdAt!)
                                   : ''),

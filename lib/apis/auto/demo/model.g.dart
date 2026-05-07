@@ -51,18 +51,6 @@ Map<String, dynamic> _$ValidateCodeRequestToJson(
       'code': instance.code,
     };
 
-ValidateEmailRequest _$ValidateEmailRequestFromJson(
-        Map<String, dynamic> json) =>
-    ValidateEmailRequest(
-      email: json['email'] as String,
-    );
-
-Map<String, dynamic> _$ValidateEmailRequestToJson(
-        ValidateEmailRequest instance) =>
-    <String, dynamic>{
-      'email': instance.email,
-    };
-
 DeleteFileRequest _$DeleteFileRequestFromJson(Map<String, dynamic> json) =>
     DeleteFileRequest(
       id: json['id'] as String,
