@@ -1,0 +1,59 @@
+{
+  "app": {
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersion": "5.0.2(14)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "profile"
+      },
+      {
+        "name": "release"
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/markhe/.ohos/config/default_ohos_s3RQ1_5OaQ__45TvTYJ7TTTokfu5fEub6BlJTQMhK2A=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B446CADD07A8EB28A5159412F75F622E393816B9A43DF6D1E4BEC132986B8ADE0D198CD2F2BEF08",
+          "profile": "/Users/markhe/.ohos/config/default_ohos_s3RQ1_5OaQ__45TvTYJ7TTTokfu5fEub6BlJTQMhK2A=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/markhe/.ohos/config/default_ohos_s3RQ1_5OaQ__45TvTYJ7TTTokfu5fEub6BlJTQMhK2A=.p12",
+          "storePassword": "0000001BC776A0B3B756623B188B8C25F644AB4390A851C232B799353831ED88C42E5D928E609508551EDF"
+        }
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

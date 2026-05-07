@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
-import '../../dio/clients/demo/blob.dart';
-import '../../dio/clients/demo/json.dart';
-import 'model.dart';
+import 'httpClient/requests/blob.dart';
+import 'httpClient/requests/json.dart';
+import 'httpClient/types/extension.dart';
 
 Future<Response> createJsonRequest({
   required String url,

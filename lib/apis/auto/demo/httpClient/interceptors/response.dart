@@ -1,12 +1,15 @@
-import 'package:autoapi_example_flutter/apis/auto/demo/model.dart';
+import 'package:castor_flutter/ui/widgets/toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-class BlobResponseInterceptor extends InterceptorsWrapper {
+import '../types/extension.dart';
+
+class ResponseInterceptor extends InterceptorsWrapper {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
-      debugPrint('【${response.requestOptions.hashCode}】Response data: $response');
+      debugPrint(
+          '【${response.requestOptions.hashCode}】Response data: $response');
     }
 
     // 返回blob格式，文件下载
@@ -18,16 +21,20 @@ class BlobResponseInterceptor extends InterceptorsWrapper {
           name: Uri.decodeComponent(contentDisposition
                   ?.substring(contentDisposition.indexOf('=') + 1) ??
               ''));
-    }
-    // 业务异常处理 (0：正常)
-    else if (response.data['status'] != 0) {
-      throw DioException(
-          requestOptions: response.requestOptions,
-          type: DioExceptionType.badResponse,
-          response: Response(
-              requestOptions: response.requestOptions,
-              statusCode: response.data['status'],
-              statusMessage: response.data['message']));
+    } else {
+      if (response.data['status'] != 0) {
+        // 业务异常处理 (0：正常)
+        throw DioException(
+            requestOptions: response.requestOptions,
+            type: DioExceptionType.badResponse,
+            response: Response(
+                requestOptions: response.requestOptions,
+                statusCode: response.data['status'],
+                statusMessage: response.data['message']));
+      } else {
+        // 正常JSON格式响应，提取data字段
+        response.data = response.data['data'];
+      }
     }
 
     handler.next(response);
@@ -39,6 +46,7 @@ class BlobResponseInterceptor extends InterceptorsWrapper {
       debugPrint('请求异常: $err');
       debugPrint('请求异常信息: ${err.response?.toString() ?? ""}');
     }
+    toastWarning('$err');
 
     handler.next(err);
   }

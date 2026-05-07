@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:typed_data';
 
 part 'model.g.dart';
 
@@ -12,20 +11,6 @@ class TBase extends Object {
 /// Base class for FormData
 class TFormData extends Object {
   FormData toFormData() => FormData.fromMap({});
-}
-
-/// Binary data response type
-class BlobResp extends Object {
-/// File type
-  String? type;
-
-/// File name
-  String? name;
-
-/// File content
-  Uint8List? data;
-
-  BlobResp({this.type, this.name, this.data});
 }
 
 /// Batch export users (Excel) request parameters
@@ -94,21 +79,6 @@ class ValidateCodeRequest extends TBase {
 
   @override
   Map<String, dynamic> toJson() => _$ValidateCodeRequestToJson(this);
-}
-
-/// Validate if user email exists request parameters
-@JsonSerializable()
-class ValidateEmailRequest extends TBase {
-  /// Email address
-  @JsonKey(name: 'email')
-  String email;
-
-  ValidateEmailRequest({required this.email});
-
-  factory ValidateEmailRequest.fromJson(Map<String, dynamic> srcJson) => _$ValidateEmailRequestFromJson(srcJson);
-
-  @override
-  Map<String, dynamic> toJson() => _$ValidateEmailRequestToJson(this);
 }
 
 /// Delete file request parameters

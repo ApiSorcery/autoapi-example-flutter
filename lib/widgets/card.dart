@@ -40,7 +40,7 @@ Widget cardTitleStatus(BuildContext context, String? title, String status,
 // List page text
 Padding cardText(title, text) {
   return Padding(
-    padding: const EdgeInsets.fromLTRB(8, 0, 16, 8),
+    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Padding(
           padding: const EdgeInsets.only(bottom: 4, right: 4),

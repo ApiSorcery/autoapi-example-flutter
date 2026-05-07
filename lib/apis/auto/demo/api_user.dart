@@ -1,10 +1,11 @@
 import 'base.dart';
 import 'model.dart';
+import 'httpClient/types/extension.dart';
 
 /// User
 class ApiUser {
   /// Add user
-  static Future<double> addUser(UserAddRequestDto req) async {
+  static Future<int> addUser(UserAddRequestDto req) async {
     var response = await createJsonRequest(
       url: '/user',
       method: 'POST',
@@ -68,16 +69,6 @@ class ApiUser {
       url: '/user/validateCode',
       method: 'GET',
       queryParameters: {'code': req.code},
-    );
-    return response.data;
-  }
-
-  /// Validate if user email exists
-  static Future<bool> validateEmail(ValidateEmailRequest req) async {
-    var response = await createJsonRequest(
-      url: '/user/validateEmail',
-      method: 'GET',
-      queryParameters: {'email': req.email},
     );
     return response.data;
   }
