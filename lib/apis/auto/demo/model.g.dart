@@ -71,22 +71,6 @@ Map<String, dynamic> _$GetFileRequestToJson(GetFileRequest instance) =>
       'id': instance.id,
     };
 
-GetUserPagedResponse _$GetUserPagedResponseFromJson(
-        Map<String, dynamic> json) =>
-    GetUserPagedResponse(
-      results: (json['results'] as List<dynamic>?)
-          ?.map((e) => UserInfoDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      total: (json['total'] as num?)?.toDouble(),
-    );
-
-Map<String, dynamic> _$GetUserPagedResponseToJson(
-        GetUserPagedResponse instance) =>
-    <String, dynamic>{
-      'results': instance.results,
-      'total': instance.total,
-    };
-
 ResultData _$ResultDataFromJson(Map<String, dynamic> json) => ResultData(
       status: (json['status'] as num?)?.toDouble(),
       message: json['message'] as String?,

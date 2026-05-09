@@ -130,23 +130,6 @@ class UploadFileRequest extends TFormData {
   }
 }
 
-/// Query user list with pagination response parameters
-@JsonSerializable()
-class GetUserPagedResponse extends TBase {
-  @JsonKey(name: 'results')
-  List<UserInfoDto>? results;
-
-  @JsonKey(name: 'total')
-  double? total;
-
-  GetUserPagedResponse({this.results,this.total});
-
-  factory GetUserPagedResponse.fromJson(Map<String, dynamic> srcJson) => _$GetUserPagedResponseFromJson(srcJson);
-
-  @override
-  Map<String, dynamic> toJson() => _$GetUserPagedResponseToJson(this);
-}
-
 @JsonSerializable()
 class ResultData extends TBase {
   /// Status code

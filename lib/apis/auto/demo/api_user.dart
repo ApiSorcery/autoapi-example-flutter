@@ -1,48 +1,43 @@
 import 'base.dart';
 import 'model.dart';
-import 'httpClient/types/extension.dart';
 
 /// User
 class ApiUser {
   /// Add user
-  static Future<int> addUser(UserAddRequestDto req) async {
-    var response = await createJsonRequest(
+  static Future addUser(UserAddRequestDto req) async {
+    await createJsonRequest(
       url: '/user',
       method: 'POST',
       contentType: 'application/json',
       data: req.toJson()
     );
-    return response.data;
   }
 
   /// Batch export users (Excel)
-  static Future<BlobResp?> exportUsers(ExportUsersRequest req) async {
-    var response = await createDownloadRequest(
+  static Future exportUsers(ExportUsersRequest req) async {
+    await createJsonRequest(
       url: '/user/export',
       method: 'GET',
       queryParameters: {'code': req.code,'name': req.name,'email': req.email},
     );
-    return response.data;
   }
 
   /// Get single user
-  static Future<UserInfoDto> getUserOne(GetUserOneRequest req) async {
-    var response = await createJsonRequest(
+  static Future getUserOne(GetUserOneRequest req) async {
+    await createJsonRequest(
       url: '/user/${req.id}',
       method: 'GET',
     );
-    return UserInfoDto.fromJson(response.data);
   }
 
   /// Query user list with pagination
-  static Future<GetUserPagedResponse> getUserPaged(UserPageQueryDto req) async {
-    var response = await createJsonRequest(
+  static Future getUserPaged(UserPageQueryDto req) async {
+    await createJsonRequest(
       url: '/user/paged',
       method: 'POST',
       contentType: 'application/json',
       data: req.toJson()
     );
-    return GetUserPagedResponse.fromJson(response.data);
   }
 
   /// Modify user information
@@ -64,13 +59,12 @@ class ApiUser {
   }
 
   /// Validate if user code exists
-  static Future<bool> validateCode(ValidateCodeRequest req) async {
-    var response = await createJsonRequest(
+  static Future validateCode(ValidateCodeRequest req) async {
+    await createJsonRequest(
       url: '/user/validateCode',
       method: 'GET',
       queryParameters: {'code': req.code},
     );
-    return response.data;
   }
 
 }
