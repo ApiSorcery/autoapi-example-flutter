@@ -4,13 +4,13 @@
 - **Run app**: `flutter run` (debug) or `flutter run --release` (production)
 - **Run tests**: `flutter test` (all) or `flutter test test/path/to/test.dart` (single test)
 - **Analyze**: `flutter analyze` (uses flutter_lints)
-- **Generate API code**: `dart run build_runner build` (regenerate from `.autoapirc.json`)
+- **Generate API code**: `dart run build_runner build` (regenerate from `.apisorceryrc.json`)
 - **Format**: `dart format lib/`
 - **Get dependencies**: `flutter pub get`
 
 ## Architecture & Structure
 - **Project Type**: Flutter multi-platform app (iOS, Android, macOS, Linux, Windows, HarmonyOS)
-- **API Generation**: Uses AutoAPI (v1.0.5+) configured in `.autoapirc.json`; generates to `lib/apis/auto/demo/`
+- **API Generation**: Uses AutoAPI (v1.0.5+) configured in `.apisorceryrc.json`; generates to `lib/apis/auto/demo/`
 - **SDK Requirements**: Dart ≥3.6.2, Flutter 3.27.4
 - **Key Dependencies**: dio (HTTP), json_serializable (serialization), flutter_lints (analysis)
 - **Key Directories**:

@@ -136,14 +136,14 @@ autoapi_example_flutter/
 ├── macos/                 # macOS platform code
 ├── linux/                 # Linux platform code
 ├── ohos/                  # HarmonyOS platform code
-├── .autoapirc.json        # AutoAPI configuration
+├── .apisorceryrc.json        # AutoAPI configuration
 ├── pubspec.yaml           # Flutter dependencies
 └── package.json           # Node.js dependencies (for AutoAPI)
 ```
 
 ## API Configuration
 
-The application uses AutoAPI to generate type-safe API client code. Configuration is in `.autoapirc.json`:
+The application uses AutoAPI to generate type-safe API client code. Configuration is in `.apisorceryrc.json`:
 
 ```json
 {
